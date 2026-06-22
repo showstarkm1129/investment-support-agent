@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI投資判断OS Agent構成まとめ</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d8e0ea;
+      --blue: #2563eb;
+      --blue-soft: #e8f0ff;
+      --green: #0f766e;
+      --green-soft: #e7f6f2;
+      --red: #b42318;
+      --red-soft: #fff0ed;
+      --amber: #b7791f;
+      --amber-soft: #fff7e6;
+      --purple: #6d28d9;
+      --purple-soft: #f1e9ff;
+      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      background: #101828;
+      color: #fff;
+      padding: 28px 32px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #cbd5e1;
+      max-width: 980px;
+      font-size: 14px;
+    }
+
+    main {
+      width: min(1280px, calc(100% - 32px));
+      margin: 22px auto 40px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 0; }
+
+    .muted { color: var(--muted); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge.blue { background: var(--blue-soft); color: var(--blue); }
+    .badge.green { background: var(--green-soft); color: var(--green); }
+    .badge.red { background: var(--red-soft); color: var(--red); }
+    .badge.amber { background: var(--amber-soft); color: var(--amber); }
+    .badge.purple { background: var(--purple-soft); color: var(--purple); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .flow-card {
+      min-height: 142px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .flow-card h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .lane-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .lane-title p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .module {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      min-height: 150px;
+    }
+
+    .module p,
+    .module li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .module ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .mindmap-wrap {
+      overflow-x: auto;
+      padding: 6px 0 2px;
+    }
+
+    .mindmap {
+      position: relative;
+      min-width: 1040px;
+      min-height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(135deg, #eef4ff, #f7fbff) border-box;
+    }
+
+    .mindmap svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .map-node {
+      position: absolute;
+      width: 190px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.07);
+    }
+
+    .map-node.center {
+      left: 425px;
+      top: 218px;
+      width: 200px;
+      border-color: var(--purple);
+      box-shadow: 0 10px 24px rgba(109, 40, 217, 0.14);
+    }
+
+    .map-node b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .map-node span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .map-node.n1 { left: 40px; top: 40px; }
+    .map-node.n2 { left: 285px; top: 40px; }
+    .map-node.n3 { left: 665px; top: 40px; }
+    .map-node.n4 { left: 810px; top: 210px; }
+    .map-node.n5 { left: 665px; top: 390px; }
+    .map-node.n6 { left: 285px; top: 390px; }
+    .map-node.n7 { left: 40px; top: 310px; }
+    .map-node.n8 { left: 40px; top: 170px; }
+
+    .small-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mini-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .agents {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .agent {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .agent .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .agent p, .agent li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .agent ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .loop {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(110px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      min-height: 104px;
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .rule {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .schema {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0f172a;
+      color: #e5e7eb;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1080px) {
+      .flow, .loop {
+        grid-template-columns: 1fr;
+      }
+
+      .agents {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .module-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      header { padding: 22px 18px; }
+      main { width: min(100% - 20px, 1280px); }
+      .agents, .two-col, .rule-grid, .schema, .module-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI投資判断OS Agent構成まとめ</h1>
+    <p>ここまで決めたMVP設計を、Agentの役割、入力、出力、つながりが分かるように整理した確認用ページです。</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>全体フロー</h2>
+      <div class="flow">
+        <div class="flow-card">
+          <span class="badge blue">Input</span>
+          <h3>対象銘柄・仮説・ポジション</h3>
+          <ul class="mini-list">
+            <li>日本株から1銘柄を選択</li>
+            <li>2週間から3か月の中期スイング</li>
+            <li>実ポジション / 仮想ポジション / 監視</li>
+          </ul>
+        </div>
+        <div class="flow-card">
+          <span class="badge blue">Plan</span>
+          <h3>探索設計Agent</h3>
+          <ul class="mini-list">
+            <li>今日見る論点を決める</li>
+            <li>不足情報から追加調査を設計</li>
+            <li>取得対象と優先順位を渡す</li>
+          </ul>
+        </div>
+        <div class="flow-card">
+          <span class="badge amber">Non LLM</span>
+          <h3>情報収集オーケストレーター</h3>
+          <ul class="mini-list">
+            <li>取得モジュールを実行</li>
+            <li>取得失敗をHealthに記録</li>
+            <li>素材を証拠化Agentへ渡す</li>
+          </ul>
+        </div>
+        <div class="flow-card">
+          <span class="badge purple">LLM</span>
+          <h3>証拠化Agent</h3>
+          <ul class="mini-list">
+            <li>素材を証拠カードへ成形</li>
+            <li>4軸評価と仮ラベル付け</li>
+            <li>証拠DBへ保存</li>
+          </ul>
+        </div>
+        <div class="flow-card">
+          <span class="badge green">Agents</span>
+          <h3>4つの検証Agent</h3>
+          <ul class="mini-list">
+            <li>強気Agent</li>
+            <li>弱気Agent</li>
+            <li>反証Agent</li>
+            <li>織り込みAgent</li>
+          </ul>
+        </div>
+        <div class="flow-card">
+          <span class="badge purple">Judge</span>
+          <h3>裁判官Agent</h3>
+          <ul class="mini-list">
+            <li>証拠DBとAgent出力だけで判定</li>
+            <li>不足時は追加調査を最大1回</li>
+            <li>最終方向スコアを出す</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="lane-title">
+        <div>
+          <h2>情報収集まわりの分担</h2>
+          <p>ここは「考えるAgent」と「決まった場所から取ってくるプログラム」を分けて扱います。</p>
+        </div>
+        <span class="badge amber">LLM負荷を下げる設計</span>
+      </div>
+      <div class="module-grid">
+        <article class="module">
+          <h3>情報収集オーケストレーター</h3>
+          <p>探索設計Agentの指示を受け、どの取得モジュールをいつ動かすかを管理する非LLM処理。</p>
+          <ul>
+            <li>対象銘柄と日付を渡す</li>
+            <li>取得順序を管理する</li>
+            <li>成功/失敗をHealthへ記録する</li>
+          </ul>
+        </article>
+        <article class="module">
+          <h3>J-Quants取得モジュール</h3>
+          <p>J-Quants API Lightから、株価、出来高、売買代金、財務、決算予定などを取得する。</p>
+          <ul>
+            <li>価格と出来高の更新</li>
+            <li>財務・決算予定の取得</li>
+            <li>定量データの素材化</li>
+          </ul>
+        </article>
+        <article class="module">
+          <h3>EDINET取得モジュール</h3>
+          <p>EDINET APIから、有報、臨時報告書、大量保有報告書などの公的開示を取得する。</p>
+          <ul>
+            <li>提出書類一覧の確認</li>
+            <li>書類IDとメタ情報の取得</li>
+            <li>必要に応じてPDF/XBRL/CSV取得</li>
+          </ul>
+        </article>
+        <article class="module">
+          <h3>IR / News取得モジュール</h3>
+          <p>企業IRページ、公開ニュース、イベント情報を確認し、新しい素材を集める。</p>
+          <ul>
+            <li>IR資料やPDFリンクを確認</li>
+            <li>公開ニュースを検索</li>
+            <li>タイトル、URL、短い本文候補を取得</li>
+          </ul>
+        </article>
+      </div>
+      <p class="small-note">取得モジュールは投資判断をしません。取ってきた素材を、証拠化Agentが固定フォーマットの証拠カードに整えます。</p>
+    </section>
+
+    <section class="panel">
+      <h2>つながりマインドマップ</h2>
+      <div class="mindmap-wrap">
+        <div class="mindmap" aria-label="Agent同士のつながり">
+          <svg viewBox="0 0 1040 560" preserveAspectRatio="none">
+            <line x1="520" y1="280" x2="135" y2="100" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="380" y2="100" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="760" y2="100" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="905" y2="270" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="760" y2="450" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="380" y2="450" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="135" y2="370" stroke="#98a2b3" stroke-width="2"/>
+            <line x1="520" y1="280" x2="135" y2="230" stroke="#98a2b3" stroke-width="2"/>
+          </svg>
+
+          <div class="map-node center">
+            <span class="badge purple">Core</span>
+            <b>証拠DB</b>
+            <span>全Agentが同じ根拠カードを読む共通土台。</span>
+          </div>
+
+          <div class="map-node n1">
+            <span class="badge blue">Plan</span>
+            <b>探索設計Agent</b>
+            <span>今日の論点、不足情報、追加調査タスクを決める。</span>
+          </div>
+
+          <div class="map-node n2">
+            <span class="badge amber">Non LLM</span>
+            <b>情報収集オーケストレーター</b>
+            <span>J-Quants、EDINET、IR、News取得を実行管理する。</span>
+          </div>
+
+          <div class="map-node n3">
+            <span class="badge purple">Format</span>
+            <b>証拠化Agent</b>
+            <span>素材を要約し、4軸評価と方向ラベルを付ける。</span>
+          </div>
+
+          <div class="map-node n4">
+            <span class="badge green">Bull</span>
+            <b>強気Agent</b>
+            <span>中期仮説を補強する材料の強さを出す。</span>
+          </div>
+
+          <div class="map-node n5">
+            <span class="badge red">Bear</span>
+            <b>弱気Agent</b>
+            <span>悪材料、過熱、ポジションリスクを検証する。</span>
+          </div>
+
+          <div class="map-node n6">
+            <span class="badge amber">反証</span>
+            <b>反証Agent</b>
+            <span>仮説が間違っている兆候を探す。</span>
+          </div>
+
+          <div class="map-node n7">
+            <span class="badge blue">Pricing</span>
+            <b>織り込みAgent</b>
+            <span>材料がすでに価格に反映されたかを見る。</span>
+          </div>
+
+          <div class="map-node n8">
+            <span class="badge purple">Judge</span>
+            <b>裁判官Agent</b>
+            <span>Agent主張を比較し、方向スコアと最終判定を出す。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Agent一覧</h2>
+      <div class="agents">
+        <article class="agent">
+          <div class="top">
+            <h3>探索設計Agent</h3>
+            <span class="badge blue">設計</span>
+          </div>
+          <p>今日調べるべき論点を決める。裁判官Agentから追加調査依頼が出た場合も、取得先と調査方針を組み立てる。</p>
+          <ul>
+            <li>入力: 仮説、対象銘柄、前回判定、不足情報</li>
+            <li>出力: 調査タスク、取得対象、優先順位</li>
+          </ul>
+        </article>
+
+        <article class="agent">
+          <div class="top">
+            <h3>証拠化Agent</h3>
+            <span class="badge purple">成形</span>
+          </div>
+          <p>取得モジュールが集めた素材を、固定フォーマットの証拠カードに変換する。最終投資判断はしない。</p>
+          <ul>
+            <li>入力: 取得素材、保存ポリシー、対象銘柄</li>
+            <li>出力: evidence_id付き証拠カード</li>
+            <li>評価: 4軸評価、direction_hint、重複処理</li>
+          </ul>
+        </article>
+
+        <article class="agent">
+          <div class="top">
+            <h3>強気Agent</h3>
+            <span class="badge green">Bull</span>
+          </div>
+          <p>証拠DBから、中期仮説を強める材料を探す。無理に強気化せず、論理的に言える強さだけを出す。</p>
+          <ul>
+            <li>入力: 証拠DB</li>
+            <li>出力: 強気結論、claim_strength、根拠ID</li>
+          </ul>
+        </article>
+
+        <article class="agent">
+          <div class="top">
+            <h3>弱気Agent</h3>
+            <span class="badge red">Bear</span>
+          </div>
+          <p>リスク、悪材料、過熱、ポジションを取る危険を検証する。弱気材料が弱い日は、重みの低い主張として出す。</p>
+          <ul>
+            <li>入力: 証拠DB</li>
+            <li>出力: 弱気結論、claim_strength、根拠ID</li>
+          </ul>
+        </article>
+
+        <article class="agent">
+          <div class="top">
+            <h3>反証Agent</h3>
+            <span class="badge amber">反証</span>
+          </div>
+          <p>「この投資仮説が間違っているなら何が見えるか」を検証する。仮説を壊す兆候を探す。</p>
+          <ul>
+            <li>入力: 証拠DB、中期仮説</li>
+            <li>出力: 反証候補、claim_strength、判定変更条件</li>
+          </ul>
+        </article>
+
+        <article class="agent">
+          <div class="top">
+            <h3>織り込みAgent</h3>
+            <span class="badge blue">Pricing</span>
+          </div>
+          <p>良い材料がすでに株価や需給に反映されていないかを見る。短期追撃リスクもここで扱う。</p>
+          <ul>
+            <li>入力: 証拠DB、価格/出来高</li>
+            <li>出力: 織り込み判定、過熱判定、claim_strength</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>裁判官Agentの役割</h2>
+      <div class="two-col">
+        <div class="rule">
+          <h3>見るもの</h3>
+          <ul class="mini-list">
+            <li>証拠DB</li>
+            <li>4つのAgent出力</li>
+            <li>中期投資仮説</li>
+            <li>ポジション情報</li>
+            <li>前回の裁判官判定</li>
+          </ul>
+        </div>
+        <div class="rule">
+          <h3>しないこと</h3>
+          <ul class="mini-list">
+            <li>新しい外部情報を勝手に検索しない</li>
+            <li>証拠DBにない情報を根拠にしない</li>
+            <li>両論併記だけで中立に逃げない</li>
+            <li>Agentの論理飛躍をそのまま採用しない</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>再調査ループ</h2>
+      <div class="loop">
+        <div class="step">
+          <b>1. 証拠DB</b>
+          <span>証拠化Agentが整えた根拠カードを保存する。</span>
+        </div>
+        <div class="step">
+          <b>2. 各Agent</b>
+          <span>与えられた視点で論理的に言える強さを出す。</span>
+        </div>
+        <div class="step">
+          <b>3. 裁判官</b>
+          <span>証拠と主張を比較し、不足情報を確認する。</span>
+        </div>
+        <div class="step">
+          <b>4. 不足あり</b>
+          <span>missing_information と next_research_tasks を出す。</span>
+        </div>
+        <div class="step">
+          <b>5. 追加調査</b>
+          <span>探索設計Agentと取得モジュールで最大1回だけ実行する。</span>
+        </div>
+        <div class="step">
+          <b>6. 再評価</b>
+          <span>証拠DBを更新し、各Agentを再実行する。</span>
+        </div>
+        <div class="step">
+          <b>7. 最終判定</b>
+          <span>弱気から強気までの判定と方向スコアを出す。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>設計ルール</h2>
+      <div class="rule-grid">
+        <div class="rule">
+          <h3>Agentは論者ではなく検証者</h3>
+          <p class="muted">自分の視点に沿って、証拠から論理的に言える範囲だけを主張する。証拠が弱い場合は弱い主張として出す。</p>
+        </div>
+        <div class="rule">
+          <h3>claim_strengthは0から100</h3>
+          <p class="muted">各Agent視点での主張の強さ。最終的な投資方向ではない。</p>
+        </div>
+        <div class="rule">
+          <h3>direction_scoreは裁判官だけ</h3>
+          <p class="muted">最終方向スコアは-100から+100。弱気、中立、保留、強気を裁判官Agentが決める。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>入出力イメージ</h2>
+      <div class="schema">
+        <div>
+          <h3>各Agentの出力</h3>
+          <pre>{
+  "agent_name": "bear",
+  "stance": "弱気材料とリスクを検証する",
+  "claim_strength": 18,
+  "evidence_ids": ["E20260622-004"],
+  "conclusion": "短期過熱リスクはあるが、中期仮説を崩す証拠は弱い",
+  "weight_reason": "根拠は価格上昇による過熱が中心",
+  "limitations": "信用残や空売りデータは未確認",
+  "counter_conditions": "出来高を伴う大陰線で弱気重み上昇"
+}</pre>
+        </div>
+        <div>
+          <h3>裁判官Agentの出力</h3>
+          <pre>{
+  "agent_name": "judge",
+  "direction_score": 62,
+  "judgement": "やや強気",
+  "confidence": "medium",
+  "evidence_weight": {
+    "bullish": 68,
+    "bearish": 17,
+    "contradiction": 9,
+    "priced_in": 6
+  },
+  "missing_information": [],
+  "conditions_to_change": ["出来高急増後に株価が崩れる"]
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
