@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI投資情報OS 全体構成図</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d8e0ea;
+      --nav: #101828;
+      --blue: #2563eb;
+      --blue-soft: #e8f0ff;
+      --green: #0f766e;
+      --green-soft: #e7f6f2;
+      --amber: #b7791f;
+      --amber-soft: #fff7e6;
+      --red: #b42318;
+      --red-soft: #fff0ed;
+      --purple: #6d28d9;
+      --purple-soft: #f1e9ff;
+      --gray-soft: #eef2f7;
+      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--nav);
+      color: #fff;
+      padding: 26px 32px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #cbd5e1;
+      max-width: 1080px;
+      font-size: 14px;
+    }
+
+    main {
+      width: min(1380px, calc(100% - 32px));
+      margin: 20px auto 42px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 0; }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .tag.llm { background: var(--purple-soft); color: var(--purple); }
+    .tag.module { background: var(--amber-soft); color: var(--amber); }
+    .tag.data { background: var(--blue-soft); color: var(--blue); }
+    .tag.ui { background: var(--green-soft); color: var(--green); }
+    .tag.internal { background: var(--gray-soft); color: #344054; }
+    .tag.warn { background: var(--red-soft); color: var(--red); }
+
+    .map {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .diagram {
+      min-width: 1180px;
+      display: grid;
+      grid-template-columns: 150px 190px 210px 230px 230px 190px;
+      gap: 12px;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .col {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .col-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0 2px;
+    }
+
+    .node {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 86px;
+      position: relative;
+    }
+
+    .node b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .node span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .node.llm { border-color: #c8b5ff; background: #fbf8ff; }
+    .node.module { border-color: #f1cf8a; background: #fffdf7; }
+    .node.data { border-color: #b9cffc; background: #f8fbff; }
+    .node.ui { border-color: #a6d8cf; background: #f8fffd; }
+    .node.internal { background: #f9fafb; }
+    .node.warn { border-color: #f2b8b3; background: #fffafa; }
+
+    .arrow {
+      color: var(--muted);
+      font-weight: 900;
+      text-align: center;
+      align-self: center;
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      min-height: 116px;
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .matrix th,
+    .matrix td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix th {
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 12px;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 960px) {
+      main { width: min(100% - 20px, 1380px); }
+      header { padding: 22px 18px; }
+      .two, .cards, .principles {
+        grid-template-columns: 1fr;
+      }
+      .flow-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI投資情報OS 全体構成図</h1>
+    <p>売買助言ではなく、対象銘柄に関する事実、証拠、変化、仮説への影響、不確実性を整理するための全体像です。</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>凡例</h2>
+      <p class="muted">色で役割を分けています。LLM Agentは考える係、取得モジュールは取ってくる係、Dataは保存される正本、UI/Outputはユーザーが触る場所です。</p>
+      <div class="legend">
+        <span class="tag llm">LLM Agent</span>
+        <span class="tag module">非LLM取得モジュール</span>
+        <span class="tag data">Data / 正本</span>
+        <span class="tag ui">UI / Output</span>
+        <span class="tag internal">内部監査</span>
+        <span class="tag warn">売買助言はしない</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>全体構成</h2>
+      <div class="map">
+        <div class="diagram">
+          <div class="col">
+            <div class="col-title">User</div>
+            <div class="node ui">
+              <b>ユーザー</b>
+              <span>朝に音声で把握し、引け後に情報を読む。疑問はChat Judgeへ聞く。</span>
+            </div>
+            <div class="node internal">
+              <b>人間メモ</b>
+              <span>判断、気づき、架空ポジション、後日検証の記録。</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-title">Sources</div>
+            <div class="node module">
+              <b>J-Quants Light</b>
+              <span>株価、出来高、売買代金、財務、決算予定。</span>
+            </div>
+            <div class="node module">
+              <b>EDINET API</b>
+              <span>大量保有報告書、有報、臨時報告書。</span>
+            </div>
+            <div class="node module">
+              <b>IR / News</b>
+              <span>企業IR、公開ニュース、イベント情報。</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-title">Collect / Format</div>
+            <div class="node module">
+              <b>情報収集オーケストレーター</b>
+              <span>取得モジュールを実行し、取得失敗や更新状況をHealthへ記録。</span>
+            </div>
+            <div class="node llm">
+              <b>証拠化Agent</b>
+              <span>素材を証拠カードへ成形。要約、重要数値、4軸評価、方向ラベルを付ける。</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-title">Data Core</div>
+            <div class="node data">
+              <b>Evidence DB</b>
+              <span>全Agentが読む共通土台。事実、証拠、評価、人間メモを保存。</span>
+            </div>
+            <div class="node data">
+              <b>Agent出力JSON</b>
+              <span>各Agentの主張、claim_strength、根拠、未確認情報を保存。</span>
+            </div>
+            <div class="node data">
+              <b>Report Judge JSON</b>
+              <span>方向スコア、confidence、情報状態、仮説影響、不確実性を保存。</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-title">Agents / Judges</div>
+            <div class="node llm">
+              <b>探索設計Agent</b>
+              <span>日次、週次、中期レビューなど、目的と期間に応じて調査論点を設計。</span>
+            </div>
+            <div class="node llm">
+              <b>分析Agent群</b>
+              <span>強気、弱気、反証、織り込みの視点で、論理的に言える範囲だけを出す。</span>
+            </div>
+            <div class="node llm">
+              <b>Report Judge</b>
+              <span>定型レポートの最終情報整理者。売買行動は提案しない。</span>
+            </div>
+            <div class="node llm">
+              <b>Chat Judge</b>
+              <span>ユーザー質問の司令塔。Quick、Context、Agent、Researchを使い分ける。</span>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="col-title">UI / Outputs</div>
+            <div class="node ui">
+              <b>朝レポート / 音声</b>
+              <span>起床後に耳で動向を把握する短時間ブリーフ。</span>
+            </div>
+            <div class="node ui">
+              <b>引け後レポート</b>
+              <span>その日の事実、重要証拠、方向感、未確認情報を整理。</span>
+            </div>
+            <div class="node ui">
+              <b>Evidence UI</b>
+              <span>1銘柄専用の高密度ニュースサイト。記事からAI質問も可能。</span>
+            </div>
+            <div class="node ui">
+              <b>Dashboard / Review / Health</b>
+              <span>全体状態、週次振り返り、内部チェックを表示。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>定時レポート生成の流れ</h2>
+      <div class="flow-row">
+        <div class="step">
+          <b>1. 目的を決める</b>
+          <span>朝レポート、引け後レポート、週次レビューなど。</span>
+        </div>
+        <div class="step">
+          <b>2. 探索設計</b>
+          <span>対象期間と目的に応じて、確認する論点を決める。</span>
+        </div>
+        <div class="step">
+          <b>3. 情報取得</b>
+          <span>J-Quants、EDINET、IR、Newsを取得モジュールが収集。</span>
+        </div>
+        <div class="step">
+          <b>4. 証拠化</b>
+          <span>証拠化Agentが証拠カードに変換し、Evidence DBへ保存。</span>
+        </div>
+        <div class="step">
+          <b>5. 視点別分析</b>
+          <span>強気、弱気、反証、織り込みAgentがclaim_strength付きで出力。</span>
+        </div>
+        <div class="step">
+          <b>6. Report Judge</b>
+          <span>情報状態、仮説影響、方向スコア、confidenceを整理。</span>
+        </div>
+        <div class="step">
+          <b>7. 出力</b>
+          <span>Markdown、音声用Markdown、HTML、Evidence UIへ展開。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Agent同士のつながり</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>探索設計Agent</h3>
+          <span class="tag llm">LLM Agent</span>
+          <ul>
+            <li>入力: 目的、期間、対象銘柄、前回判定、不足情報</li>
+            <li>出力: 調査論点、優先情報源、終了条件</li>
+            <li>次へ: 情報収集オーケストレーター</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>証拠化Agent</h3>
+          <span class="tag llm">LLM Agent</span>
+          <ul>
+            <li>入力: 取得素材</li>
+            <li>出力: Evidenceカード</li>
+            <li>次へ: Evidence DB、分析Agent群</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>分析Agent群</h3>
+          <span class="tag llm">LLM Agent</span>
+          <ul>
+            <li>強気: 仮説を補強する事実</li>
+            <li>弱気: 仮説を弱める事実</li>
+            <li>反証: 仮説を壊し得る事実</li>
+            <li>織り込み: 価格反映・過熱</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Report Judge</h3>
+          <span class="tag llm">LLM Agent</span>
+          <ul>
+            <li>入力: Evidence DB、Agent出力、中期仮説</li>
+            <li>出力: 情報状態、仮説影響、方向スコア</li>
+            <li>売買行動は提案しない</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>ユーザーとAgentのつながり</h2>
+      <div class="two">
+        <div>
+          <h3>定時で受け取る</h3>
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>接点</th>
+                <th>主な裏側</th>
+                <th>ユーザーが得るもの</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>朝レポート</td>
+                <td>探索設計、取得、証拠化、軽い差分整理</td>
+                <td>起床後に耳で重要動向を把握</td>
+              </tr>
+              <tr>
+                <td>引け後レポート</td>
+                <td>全Agent、Report Judge</td>
+                <td>その日の事実、方向感、不確実性</td>
+              </tr>
+              <tr>
+                <td>週次レビュー</td>
+                <td>過去Evidence、Judgeログ、Review集計</td>
+                <td>中期仮説の変化と見落とし</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>質問して使う</h3>
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>入口</th>
+                <th>Chat Judge Mode</th>
+                <th>動く範囲</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>記事のAI質問</td>
+                <td>Quick</td>
+                <td>選択中Evidenceと関連Evidenceのみ。新Agentは呼ばない。</td>
+              </tr>
+              <tr>
+                <td>銘柄について質問</td>
+                <td>Context</td>
+                <td>既存Evidence、既存Agentログ、Report Judge出力。</td>
+              </tr>
+              <tr>
+                <td>視点を指定</td>
+                <td>Agent</td>
+                <td>必要な特定Agentだけ呼ぶ。</td>
+              </tr>
+              <tr>
+                <td>新テーマ調査</td>
+                <td>Research</td>
+                <td>探索、取得、証拠化、複数Agentを動員。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Report Judgeが出すもの</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>information_status</h3>
+          <span class="tag data">情報状態</span>
+          <ul>
+            <li>強気材料優勢</li>
+            <li>弱気材料優勢</li>
+            <li>材料拮抗</li>
+            <li>情報不足</li>
+            <li>大きな変化なし</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>hypothesis_impact</h3>
+          <span class="tag data">仮説への影響</span>
+          <ul>
+            <li>補強</li>
+            <li>やや補強</li>
+            <li>中立</li>
+            <li>やや悪化</li>
+            <li>悪化</li>
+            <li>判定不能</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>uncertainty</h3>
+          <span class="tag data">不確実性</span>
+          <ul>
+            <li>未確認情報</li>
+            <li>情報品質</li>
+            <li>直接性不足</li>
+            <li>数値不足</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>view_change_conditions</h3>
+          <span class="tag data">見方が変わる条件</span>
+          <ul>
+            <li>行動指示ではない</li>
+            <li>情報解釈が変わる条件</li>
+            <li>仮説影響が変わる条件</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>このOSの原則</h2>
+      <div class="principles">
+        <div class="card">
+          <h3>売買助言をしない</h3>
+          <p class="muted">保有継続、追加、撤退などの行動提案は原則出さない。提供するのは事実と根拠。</p>
+        </div>
+        <div class="card">
+          <h3>全Agentは同じ証拠を見る</h3>
+          <p class="muted">Evidence DBを共通土台にし、伝言ゲームや根拠不明の主張を避ける。</p>
+        </div>
+        <div class="card">
+          <h3>ログは反省のため</h3>
+          <p class="muted">ポジションや架空ポジションは助言のためではなく、判断ログと後日検証のために使う。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

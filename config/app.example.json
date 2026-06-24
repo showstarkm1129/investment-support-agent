@@ -1,0 +1,27 @@
+{
+  "schema_version": "app_config_v1",
+  "timezone": "Asia/Tokyo",
+  "targets": [
+    {
+      "target_id": "TARGET-SAMPLE-6501",
+      "target_type": "stock",
+      "stock_code": "6501",
+      "company_name": "日立製作所",
+      "market": "prime",
+      "themes": ["AIインフラ", "データセンター", "電力インフラ"],
+      "auto_report_enabled": true
+    }
+  ],
+  "report_schedule": {
+    "morning_report_due": "07:00",
+    "close_report_window": {
+      "start": "16:00",
+      "end": "17:30"
+    }
+  },
+  "notebooklm": {
+    "mvp_minimum": "google_drive_or_docs_auto_save",
+    "also_generate_downloadable_markdown": true,
+    "full_auto_import": "future"
+  }
+}

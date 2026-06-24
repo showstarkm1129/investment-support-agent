@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidence / 証拠ボード</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <div class="app">
+    
+      <aside class="nav">
+        <div class="brand">
+          <b>AI投資情報OS</b>
+          <span>MVP connected UI</span>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link active" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+        </nav>
+      </aside>
+    
+    <main>
+      
+        <div class="topbar">
+          <div>
+            <h1>Evidence / 証拠ボード</h1>
+            <p class="subtitle">対象: 6501 日立製作所 / 厳選された材料を高密度で読む画面</p>
+          </div>
+          <div class="actions">
+            <a class="button" href="dashboard.html">Dashboardへ</a>
+            <a class="button" href="../reports/daily/2026-06-22_6501_close_audio.md">NotebookLM音声用</a>
+            <button class="primary">選択記事をAIに質問</button>
+          </div>
+        </div>
+
+        <section class="grid-4">
+          <div class="stat"><div class="label">表示中</div><div class="value">3</div></div>
+          <div class="stat"><div class="label">判断に使用</div><div class="value">3</div></div>
+          <div class="stat"><div class="label">未読</div><div class="value">3</div></div>
+          <div class="stat"><div class="label">重要度高</div><div class="value">1</div></div>
+        </section>
+
+        <section class="layout-evidence">
+          <details class="panel filters">
+            <summary>
+              <span class="filter-label">フィルタ</span>
+              <span class="badge blue">5</span>
+            </summary>
+            <div class="filter-body">
+              <h3>検索</h3>
+              <input value="AI サーバー 出来高" aria-label="証拠検索">
+              <div class="detail-section">
+                <h3>状態</h3>
+                <div class="chips"><span class="chip">今日追加</span><span class="chip">未読</span><span class="chip">判断に使用</span><span class="chip">後日検証</span></div>
+              </div>
+              <div class="detail-section">
+                <h3>方向</h3>
+                <div class="chips"><span class="chip">強気</span><span class="chip">弱気</span><span class="chip">反証</span><span class="chip">織り込み</span></div>
+              </div>
+              <div class="detail-section">
+                <h3>証拠品質</h3>
+                <div class="chips"><span class="chip">信頼A</span><span class="chip">直接 高</span><span class="chip">新鮮 高</span><span class="chip">影響 高</span></div>
+              </div>
+            </div>
+          </details>
+
+          <div class="panel">
+            <div class="topbar">
+              <div>
+                <h2>証拠カード</h2>
+                <p class="muted">IDなどの管理情報は隠し、日付・見出し・要約を中心に読む設計です。</p>
+              </div>
+              <div class="detail-header-actions">
+                <button class="detail-open-control" type="button" data-detail-open>詳細を表示</button>
+                <select aria-label="並び替え">
+                  <option>重要度順</option>
+                  <option>新しい順</option>
+                  <option>未読優先</option>
+                </select>
+              </div>
+            </div>
+            <div class="evidence-list">
+      <article class="card selected" id="E20260622-001">
+        <div class="card-top">
+          <div>
+            <div class="meta">
+              <span>2026-06-22</span>
+              <span>price_volume</span>
+              <span>J-Quants API Light</span>
+              <span>15:30発表 / 17:00取得</span>
+            </div>
+            <div class="title-row">
+              <a class="title" href="evidence.html#E20260622-001">出来高が20日平均の2.1倍に増加</a>
+              <button class="ask-icon" aria-label="この記事へ質問">?</button>
+            </div>
+          </div>
+          
+      <div class="quality-line">
+        <span class="badge green">信頼A</span>
+        <span class="badge green">直接 高</span>
+        <span class="badge green">新鮮 高</span>
+        <span class="badge amber">影響 中</span>
+        <span class="quality-separator">|</span>
+        <span class="badge green">強気</span>
+      </div>
+    
+        </div>
+        <p class="summary">株価は前日比+4.8%、出来高は20日平均の2.1倍。終値は高値圏を維持した。</p>
+        <div class="metrics"><span class="metric">終値 <b>4,820円</b></span><span class="metric">前日比 <b>+4.8%</b></span><span class="metric">出来高比 <b>2.1倍</b></span><span class="metric">売買代金 <b>185億円</b></span></div>
+      </article>
+    
+      <article class="card" id="E20260622-006">
+        <div class="card-top">
+          <div>
+            <div class="meta">
+              <span>2026-06-22</span>
+              <span>ir</span>
+              <span>企業IR</span>
+              <span>14:00発表 / 14:08取得</span>
+            </div>
+            <div class="title-row">
+              <a class="title" href="evidence.html#E20260622-006">AIインフラ向け新規受注の進捗を発表</a>
+              <button class="ask-icon" aria-label="この記事へ質問">?</button>
+            </div>
+          </div>
+          
+      <div class="quality-line">
+        <span class="badge green">信頼A</span>
+        <span class="badge green">直接 高</span>
+        <span class="badge green">新鮮 高</span>
+        <span class="badge green">影響 高</span>
+        <span class="quality-separator">|</span>
+        <span class="badge green">強気</span>
+      </div>
+    
+        </div>
+        <p class="summary">対象企業がAIインフラ関連の受注進捗を発表。中期仮説に直接関係する材料。</p>
+        <div class="metrics"><span class="metric">契約期間 <b>3年</b></span></div>
+      </article>
+    
+      <article class="card" id="E20260622-011">
+        <div class="card-top">
+          <div>
+            <div class="meta">
+              <span>2026-06-22</span>
+              <span>price_volume</span>
+              <span>J-Quants API Light</span>
+              <span>15:30発表 / 17:00取得</span>
+            </div>
+            <div class="title-row">
+              <a class="title" href="evidence.html#E20260622-011">株価が3営業日で+12%。短期過熱の可能性</a>
+              <button class="ask-icon" aria-label="この記事へ質問">?</button>
+            </div>
+          </div>
+          
+      <div class="quality-line">
+        <span class="badge green">信頼A</span>
+        <span class="badge green">直接 高</span>
+        <span class="badge green">新鮮 高</span>
+        <span class="badge amber">影響 中</span>
+        <span class="quality-separator">|</span>
+        <span class="badge blue">織り込み</span>
+      </div>
+    
+        </div>
+        <p class="summary">材料への反応は強いが、短期では一部織り込み済みの可能性がある。</p>
+        <div class="metrics"><span class="metric">3日騰落 <b>+12.0%</b></span><span class="metric">終値位置 <b>高値圏</b></span></div>
+      </article>
+    </div>
+          </div>
+
+          <article class="panel evidence-detail" id="evidence-detail">
+            <div class="card-top">
+              <div>
+                <p class="meta"><span>2026-06-22</span><span>price_volume</span><span>J-Quants API Light</span></p>
+                <h2>出来高が20日平均の2.1倍に増加</h2>
+              </div>
+              <div class="detail-header-actions">
+                <button class="ask-icon" aria-label="この記事へ質問">?</button>
+                <button class="icon-button" type="button" aria-label="詳細ペインを閉じる" title="詳細を閉じる" data-detail-close>×</button>
+              </div>
+            </div>
+            
+      <div class="quality-line">
+        <span class="badge green">信頼A</span>
+        <span class="badge green">直接 高</span>
+        <span class="badge green">新鮮 高</span>
+        <span class="badge amber">影響 中</span>
+        <span class="quality-separator">|</span>
+        <span class="badge green">強気</span>
+      </div>
+    
+            <p class="summary">株価は前日比+4.8%、出来高は20日平均の2.1倍。終値は高値圏を維持した。</p>
+            <div class="metrics"><span class="metric">終値 <b>4,820円</b></span><span class="metric">前日比 <b>+4.8%</b></span><span class="metric">出来高比 <b>2.1倍</b></span><span class="metric">売買代金 <b>185億円</b></span></div>
+
+            <div class="detail-section">
+              <h3>この記事で読むべきこと</h3>
+              <ul>
+                <li>出来高増加と価格維持が同時に出ているため、中期トレンド継続の初期シグナルとして扱える。</li>
+                <li>出来高増加の直接理由はまだ完全には特定できていない。</li>
+                <li>短期で急騰しているため、織り込みの確認も同時に必要。</li>
+              </ul>
+            </div>
+
+            <div class="detail-section">
+              <h3>AIに質問</h3>
+              <div class="ask-box">
+                <div class="ask-row">
+                  <input value="この出来高増加はどの程度強い根拠？" aria-label="AIへの質問">
+                  <button class="primary">質問</button>
+                </div>
+                <div class="chips">
+                  <span class="chip">弱点は？</span>
+                  <span class="chip">織り込み済み？</span>
+                  <span class="chip">追加で見る情報は？</span>
+                </div>
+                <p class="muted">この記事への質問はQuick想定。選択中Evidenceと関連Evidenceだけで答えます。</p>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h3>人間メモ</h3>
+              <textarea>ここに自分の確認メモを残す。</textarea>
+              <div class="chips">
+                <span class="chip">未読</span>
+                <span class="chip">判断に使う: はい</span>
+                <span class="chip">後日検証: 2026-07-06</span>
+              </div>
+            </div>
+          </article>
+        </section>
+        <script>
+          (() => {
+            const layout = document.querySelector(".layout-evidence");
+            const closeButton = document.querySelector("[data-detail-close]");
+            const openButton = document.querySelector("[data-detail-open]");
+            if (!layout || !closeButton || !openButton) return;
+
+            closeButton.addEventListener("click", () => {
+              layout.classList.add("detail-collapsed");
+              openButton.focus();
+            });
+
+            openButton.addEventListener("click", () => {
+              layout.classList.remove("detail-collapsed");
+              closeButton.focus();
+            });
+          })();
+        </script>
+        
+    </main>
+  </div>
+</body>
+</html>

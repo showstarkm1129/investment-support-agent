@@ -1,0 +1,66 @@
+{
+  "schema_version": "agent_outputs_bundle_v1",
+  "target_id": "TARGET-SAMPLE-6501",
+  "report_date": "2026-06-22",
+  "agent_outputs": [
+    {
+      "schema_version": "agent_output_v1",
+      "agent_name": "bull",
+      "run_id": "AR20260622-BULL-001",
+      "stance": "中期仮説を補強する事実を整理する",
+      "conclusion": "出来高増加、価格維持、AIインフラ関連材料が中期仮説を補強している。",
+      "claim_strength": 78,
+      "confidence": "medium",
+      "evidence_ids": ["E20260622-001", "E20260622-006"],
+      "key_points": [
+        "出来高増加と価格維持が同時に確認された",
+        "AIインフラ関連の公式材料がある"
+      ],
+      "limitations": ["出来高増加の直接理由はまだ完全には特定できない"]
+    },
+    {
+      "schema_version": "agent_output_v1",
+      "agent_name": "bear",
+      "run_id": "AR20260622-BEAR-001",
+      "stance": "中期仮説を弱める事実や過熱リスクを整理する",
+      "conclusion": "短期過熱リスクはあるが、中期仮説を崩す事実は弱い。",
+      "claim_strength": 18,
+      "confidence": "medium",
+      "evidence_ids": ["E20260622-011"],
+      "key_points": [
+        "3営業日で+12%の価格反応は短期過熱として扱う",
+        "業績悪化や仮説崩壊を示す直接情報はない"
+      ],
+      "limitations": ["信用残、空売り、売買主体が未確認"]
+    },
+    {
+      "schema_version": "agent_output_v1",
+      "agent_name": "contradiction",
+      "run_id": "AR20260622-CONTRA-001",
+      "stance": "中期仮説を壊し得る事実を整理する",
+      "conclusion": "仮説を明確に壊す事実は現時点では弱い。",
+      "claim_strength": 10,
+      "confidence": "medium",
+      "evidence_ids": [],
+      "key_points": [
+        "需要悪化や価格維持失敗を示す証拠は未確認"
+      ],
+      "limitations": ["競合企業の同領域コメントは未確認"]
+    },
+    {
+      "schema_version": "agent_output_v1",
+      "agent_name": "pricing",
+      "run_id": "AR20260622-PRICING-001",
+      "stance": "材料の価格反映と短期過熱を整理する",
+      "conclusion": "一部織り込み済みの可能性はあるが、中期材料の全織り込みとは言えない。",
+      "claim_strength": 22,
+      "confidence": "medium",
+      "evidence_ids": ["E20260622-011"],
+      "key_points": [
+        "短期価格反応は強い",
+        "中期受注継続や業績反映まではまだ確認されていない"
+      ],
+      "limitations": ["その後の出来高継続性が未確認"]
+    }
+  ]
+}

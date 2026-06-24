@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent指示書</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <div class="app">
+    
+      <aside class="nav">
+        <div class="brand">
+          <b>AI投資情報OS</b>
+          <span>MVP connected UI</span>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link active" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+        </nav>
+      </aside>
+    
+    <main>
+      
+        <div class="topbar">
+          <div>
+            <h1>Agent指示書</h1>
+            <p class="subtitle">対象: 6501 日立製作所 / 各Agentが迷わないためのCLAUDE.md一覧</p>
+          </div>
+          <div class="actions">
+            <a class="button" href="dashboard.html">Dashboardへ</a>
+            <a class="button" href="evidence.html">Evidenceへ</a>
+          </div>
+        </div>
+
+        <section class="panel">
+          <h2>共通ルール</h2>
+          <p>このチームは売買行動を提案するのではなく、Evidenceに基づいて情報状態、仮説への影響、不確実性、見方が変わる条件を整理します。</p>
+        </section>
+
+        <section class="grid-3">
+          
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>共通指示</h3>
+                  <p>全Agent共通の禁止事項、根拠ルール、出力方針。</p>
+                </div>
+                <a class="button" href="../agents/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>探索設計Agent</h3>
+                  <p>銘柄やテーマから何を調べるべきかを設計する。</p>
+                </div>
+                <a class="button" href="../agents/search_design/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>証拠化Agent</h3>
+                  <p>取得素材をEvidenceカードへ整える。</p>
+                </div>
+                <a class="button" href="../agents/evidence_builder/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>強気Agent</h3>
+                  <p>中期仮説を補強する事実を整理する。</p>
+                </div>
+                <a class="button" href="../agents/bull/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>弱気Agent</h3>
+                  <p>中期仮説を弱める事実や過熱リスクを整理する。</p>
+                </div>
+                <a class="button" href="../agents/bear/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>反証Agent</h3>
+                  <p>仮説の前提を壊し得る事実を探す。</p>
+                </div>
+                <a class="button" href="../agents/contradiction/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>織り込みAgent</h3>
+                  <p>材料の価格反映と短期過熱を整理する。</p>
+                </div>
+                <a class="button" href="../agents/pricing/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>Report Judge</h3>
+                  <p>定型レポートの最終情報整理を行う。</p>
+                </div>
+                <a class="button" href="../agents/report_judge/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <h3>Chat Judge</h3>
+                  <p>質問の重さに応じて情報とAgentを振り分ける。</p>
+                </div>
+                <a class="button" href="../agents/chat_judge/CLAUDE.md">開く</a>
+              </div>
+            </article>
+            
+        </section>
+        
+    </main>
+  </div>
+</body>
+</html>

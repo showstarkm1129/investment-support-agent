@@ -1,0 +1,93 @@
+{
+  "schema_version": "report_judge_output_v1",
+  "run_id": "JR20260622-001",
+  "agent_name": "report_judge",
+  "run_at": "2026-06-22T17:25:00+09:00",
+  "decision_stage": "final",
+  "target": {
+    "target_id": "TARGET-SAMPLE-6501",
+    "target_type": "stock",
+    "stock_code": "6501",
+    "company_name": "日立製作所",
+    "market": "prime",
+    "themes": ["AIインフラ", "データセンター", "電力インフラ"]
+  },
+  "judgement": {
+    "label": "slightly_bullish",
+    "direction_score": 62,
+    "confidence": "medium",
+    "summary": "中期仮説をやや補強する情報が優勢。ただし短期過熱と未確認情報が残る。"
+  },
+  "information_status": {
+    "label": "bullish_evidence_leading",
+    "summary": "強気材料が優勢。ただし短期過熱と未確認情報が残る。"
+  },
+  "hypothesis_impact": {
+    "label": "slightly_supportive",
+    "summary": "出来高増加、価格維持、AIインフラ関連材料により、中期仮説をやや補強する。"
+  },
+  "uncertainty": {
+    "level": "medium",
+    "factors": [
+      "信用残が未確認",
+      "出来高増加の直接理由が未確認",
+      "競合企業の同領域コメントが不足"
+    ]
+  },
+  "evidence_weight": {
+    "bullish": 68,
+    "bearish": 17,
+    "contradiction": 9,
+    "priced_in": 6
+  },
+  "view_change_conditions": [
+    {
+      "condition": "出来高増加後に価格が維持できない",
+      "effect": "強気材料の重みが下がる",
+      "related_hypothesis": "中期トレンド継続仮説",
+      "related_evidence_ids": ["E20260622-001"]
+    },
+    {
+      "condition": "競合企業も同領域の需要改善を示す",
+      "effect": "中期仮説の補強度が上がる",
+      "related_hypothesis": "AIインフラ需要継続仮説",
+      "related_evidence_ids": []
+    },
+    {
+      "condition": "信用買い残が急増している",
+      "effect": "過熱リスクの重みが上がる",
+      "related_hypothesis": "需給面の過熱",
+      "related_evidence_ids": []
+    }
+  ],
+  "missing_information": [
+    {
+      "item": "信用残の変化",
+      "importance": "medium",
+      "reason": "短期過熱か継続的な買い需要かを区別する補助情報になる"
+    },
+    {
+      "item": "競合企業の同領域コメント",
+      "importance": "medium",
+      "reason": "需要改善が対象銘柄固有か業界全体かを確認する材料になる"
+    }
+  ],
+  "used_evidence": [
+    {
+      "evidence_id": "E20260622-001",
+      "role": "main_bullish",
+      "reason": "価格と出来高の反応が中期仮説を補強する可能性がある"
+    },
+    {
+      "evidence_id": "E20260622-006",
+      "role": "main_bullish",
+      "reason": "AIインフラ関連の公式材料であり、対象銘柄への直接性が高い"
+    },
+    {
+      "evidence_id": "E20260622-011",
+      "role": "pricing_risk",
+      "reason": "短期上昇により一部織り込み済みの可能性を示す"
+    }
+  ],
+  "warnings": []
+}

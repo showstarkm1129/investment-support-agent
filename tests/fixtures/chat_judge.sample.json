@@ -1,0 +1,42 @@
+{
+  "schema_version": "chat_judge_output_v1",
+  "run_id": "CJ20260622-001",
+  "agent_name": "chat_judge",
+  "run_at": "2026-06-22T17:40:00+09:00",
+  "target_id": "TARGET-SAMPLE-6501",
+  "mode": "context",
+  "question": {
+    "text": "What evidence would change the current view?",
+    "asked_at": "2026-06-22T17:39:30+09:00"
+  },
+  "routing": {
+    "selected_flow": "chat_context",
+    "reason": "Existing report artifacts contain enough evidence for this question.",
+    "agents_called": ["chat_judge"]
+  },
+  "answer": {
+    "summary": "The view would change if price strength fails or competing demand signals improve.",
+    "body": "Current evidence is supportive but incomplete. The most important change conditions are already listed in the latest report judge output.",
+    "confidence": "medium",
+    "caveats": ["No new source collection was performed."]
+  },
+  "used_evidence": [
+    {
+      "evidence_id": "E20260622-001",
+      "reason": "Main price and volume evidence used by the latest judge."
+    }
+  ],
+  "agent_outputs_used": [
+    {
+      "agent_name": "pricing",
+      "run_id": "AR20260622-PRICING-001",
+      "reason": "Pricing risk affects whether the view is already reflected in price."
+    }
+  ],
+  "follow_up": {
+    "needs_research": false,
+    "suggested_flow": null,
+    "reason": "Existing artifacts are sufficient for a contextual answer."
+  },
+  "warnings": []
+}

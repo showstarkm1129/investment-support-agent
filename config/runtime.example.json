@@ -1,0 +1,15 @@
+{
+  "schema_version": "runtime_config_v1",
+  "timezone": "Asia/Tokyo",
+  "runs_dir": "runs",
+  "default_agent_command": null,
+  "validation": {
+    "validate_contracts_before_agents": true,
+    "validate_contracts_before_publish": true,
+    "allow_partial_connector_failures": true
+  },
+  "publishing": {
+    "generate_reports": true,
+    "generate_app_pages": true
+  }
+}

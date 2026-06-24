@@ -1,0 +1,133 @@
+{
+  "schema_version": "health_snapshot_v1",
+  "run_id": "HR20260622-001",
+  "run_at": "2026-06-22T17:31:00+09:00",
+  "target_id": "TARGET-SAMPLE-6501",
+  "overall_status": "warn",
+  "summary": "MVPサンプルでは主要なレポート生成は成功。外部サービス連携と一部追加データは未接続または未取得。",
+  "stats": {
+    "evidence_total": 3,
+    "evidence_added_today": 3,
+    "evidence_used_in_decision": 3,
+    "agent_success": 4,
+    "agent_failed": 0,
+    "report_outputs": 3,
+    "ui_pages": 4
+  },
+  "sections": [
+    {
+      "section_id": "source_collection",
+      "title": "情報取得",
+      "checks": [
+        {
+          "check_id": "jquants_light",
+          "label": "J-Quants Light",
+          "status": "ok",
+          "message": "価格・出来高サンプルを取得済み",
+          "detail": "本番ではAPIキー設定後、対象銘柄の日足、出来高、売買代金を取得する。",
+          "last_run_at": "2026-06-22T17:00:00+09:00"
+        },
+        {
+          "check_id": "edinet",
+          "label": "EDINET API",
+          "status": "warn",
+          "message": "今回サンプルでは該当開示なし",
+          "detail": "大量保有、有報、臨時報告書などの公的開示は接続予定。未取得時はレポートに欠損として出す。",
+          "last_run_at": "2026-06-22T17:05:00+09:00"
+        },
+        {
+          "check_id": "ir",
+          "label": "企業IR",
+          "status": "ok",
+          "message": "IRサンプル1件をEvidence化",
+          "detail": "本番では公式IR、決算資料、適時開示URLを対象にする。",
+          "last_run_at": "2026-06-22T14:08:00+09:00"
+        },
+        {
+          "check_id": "news",
+          "label": "News",
+          "status": "warn",
+          "message": "公開ニュースのみ。優先度の高い有料情報源は未接続",
+          "detail": "MVPでは公開情報から開始し、有料サービスは規約と取得手段を確認してから追加する。",
+          "last_run_at": "2026-06-22T14:20:00+09:00"
+        },
+        {
+          "check_id": "macro_policy",
+          "label": "Macro / Policy",
+          "status": "info",
+          "message": "対象テーマに強い政策イベントなし",
+          "detail": "要人発言、中央銀行、政府、規制当局、主要国政策は必要時に探索設計Agentが対象へ入れる。",
+          "last_run_at": "2026-06-22T16:50:00+09:00"
+        }
+      ]
+    },
+    {
+      "section_id": "processing",
+      "title": "証拠化とAgent",
+      "checks": [
+        {
+          "check_id": "evidence_builder",
+          "label": "証拠化Agent",
+          "status": "ok",
+          "message": "Evidence 3件を生成",
+          "detail": "信頼度、直接性、鮮度、影響度、方向ヒントを付与済み。",
+          "last_run_at": "2026-06-22T17:12:00+09:00"
+        },
+        {
+          "check_id": "analysis_agents",
+          "label": "分析Agent群",
+          "status": "ok",
+          "message": "強気・弱気・反証・織り込みの4Agentが成功",
+          "detail": "各Agentはclaim_strengthと根拠Evidenceを出力済み。",
+          "last_run_at": "2026-06-22T17:20:00+09:00"
+        },
+        {
+          "check_id": "report_judge",
+          "label": "Report Judge",
+          "status": "ok",
+          "message": "情報状態と見方が変わる条件を生成",
+          "detail": "recommended_actionsは出力せず、売買助言ではなく情報整理として生成。",
+          "last_run_at": "2026-06-22T17:25:00+09:00"
+        },
+        {
+          "check_id": "chat_judge",
+          "label": "Chat Judge",
+          "status": "info",
+          "message": "UIモードのみ準備。実問い合わせは未実行",
+          "detail": "Quick、Context、Agent、Researchの負荷モードをDashboardとEvidenceに表示。",
+          "last_run_at": null
+        }
+      ]
+    },
+    {
+      "section_id": "outputs",
+      "title": "出力と連携",
+      "checks": [
+        {
+          "check_id": "report_generation",
+          "label": "レポート生成",
+          "status": "ok",
+          "message": "詳細Markdown、音声Markdown、HTMLを生成",
+          "detail": "NotebookLM投入向けMarkdownとUI表示向けHTMLを分けて生成。",
+          "last_run_at": "2026-06-22T17:30:00+09:00"
+        },
+        {
+          "check_id": "dashboard_ui",
+          "label": "Dashboard UI",
+          "status": "ok",
+          "message": "Dashboard、Evidence、Health、Agent指示書を接続",
+          "detail": "各画面から相互に移動でき、AgentごとのCLAUDE.mdも確認できる状態。",
+          "last_run_at": "2026-06-22T17:31:00+09:00"
+        },
+        {
+          "check_id": "notebooklm",
+          "label": "NotebookLM / Drive",
+          "status": "warn",
+          "message": "Markdown生成まで。自動投入は未接続",
+          "detail": "MVP最低ラインはGoogle Docs/Drive自動保存。NotebookLM完全自動投入は公式手段と規約確認後。",
+          "last_run_at": "2026-06-22T17:30:00+09:00"
+        }
+      ]
+    }
+  ]
+}

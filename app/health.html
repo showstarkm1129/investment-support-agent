@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health / 実行状態</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <div class="app">
+    
+      <aside class="nav">
+        <div class="brand">
+          <b>AI投資情報OS</b>
+          <span>MVP connected UI</span>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link active" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+        </nav>
+      </aside>
+    
+    <main>
+      
+        <div class="topbar">
+          <div>
+            <h1>Health / 実行状態</h1>
+            <p class="subtitle">対象: 6501 日立製作所 / 取得・証拠化・Agent・出力の状態</p>
+          </div>
+          <div class="actions">
+            <a class="button" href="dashboard.html">Dashboardへ</a>
+            <a class="button" href="evidence.html">Evidenceへ</a>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="health-row">
+            <span class="status-pill status-warn">注意</span>
+            <div>
+              <h2>現在の状態</h2>
+              <p>MVPサンプルでは主要なレポート生成は成功。外部サービス連携と一部追加データは未接続または未取得。</p>
+              <p class="muted">エラーや欠損がある場合も、可能な範囲でレポートを生成し、不足情報として表示します。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid-4">
+          <div class="stat"><div class="label">Evidence</div><div class="value">3</div></div>
+          <div class="stat"><div class="label">使用Evidence</div><div class="value">3</div></div>
+          <div class="stat"><div class="label">Agent成功</div><div class="value">4</div></div>
+          <div class="stat"><div class="label">出力ファイル</div><div class="value">3</div></div>
+        </section>
+
+        
+            <section class="panel">
+              <h2>情報取得</h2>
+              <table class="table">
+                <thead><tr><th>状態</th><th>項目</th><th>内容</th><th>最終実行</th></tr></thead>
+                <tbody>
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>J-Quants Light</b><br><span class="muted">jquants_light</span></td>
+                  <td>価格・出来高サンプルを取得済み<br><span class="muted">本番ではAPIキー設定後、対象銘柄の日足、出来高、売買代金を取得する。</span></td>
+                  <td>2026-06-22T17:00:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-warn">注意</span></td>
+                  <td><b>EDINET API</b><br><span class="muted">edinet</span></td>
+                  <td>今回サンプルでは該当開示なし<br><span class="muted">大量保有、有報、臨時報告書などの公的開示は接続予定。未取得時はレポートに欠損として出す。</span></td>
+                  <td>2026-06-22T17:05:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>企業IR</b><br><span class="muted">ir</span></td>
+                  <td>IRサンプル1件をEvidence化<br><span class="muted">本番では公式IR、決算資料、適時開示URLを対象にする。</span></td>
+                  <td>2026-06-22T14:08:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-warn">注意</span></td>
+                  <td><b>News</b><br><span class="muted">news</span></td>
+                  <td>公開ニュースのみ。優先度の高い有料情報源は未接続<br><span class="muted">MVPでは公開情報から開始し、有料サービスは規約と取得手段を確認してから追加する。</span></td>
+                  <td>2026-06-22T14:20:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-info">情報</span></td>
+                  <td><b>Macro / Policy</b><br><span class="muted">macro_policy</span></td>
+                  <td>対象テーマに強い政策イベントなし<br><span class="muted">要人発言、中央銀行、政府、規制当局、主要国政策は必要時に探索設計Agentが対象へ入れる。</span></td>
+                  <td>2026-06-22T16:50:00+09:00</td>
+                </tr>
+                </tbody>
+              </table>
+            </section>
+            
+            <section class="panel">
+              <h2>証拠化とAgent</h2>
+              <table class="table">
+                <thead><tr><th>状態</th><th>項目</th><th>内容</th><th>最終実行</th></tr></thead>
+                <tbody>
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>証拠化Agent</b><br><span class="muted">evidence_builder</span></td>
+                  <td>Evidence 3件を生成<br><span class="muted">信頼度、直接性、鮮度、影響度、方向ヒントを付与済み。</span></td>
+                  <td>2026-06-22T17:12:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>分析Agent群</b><br><span class="muted">analysis_agents</span></td>
+                  <td>強気・弱気・反証・織り込みの4Agentが成功<br><span class="muted">各Agentはclaim_strengthと根拠Evidenceを出力済み。</span></td>
+                  <td>2026-06-22T17:20:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>Report Judge</b><br><span class="muted">report_judge</span></td>
+                  <td>情報状態と見方が変わる条件を生成<br><span class="muted">recommended_actionsは出力せず、売買助言ではなく情報整理として生成。</span></td>
+                  <td>2026-06-22T17:25:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-info">情報</span></td>
+                  <td><b>Chat Judge</b><br><span class="muted">chat_judge</span></td>
+                  <td>UIモードのみ準備。実問い合わせは未実行<br><span class="muted">Quick、Context、Agent、Researchの負荷モードをDashboardとEvidenceに表示。</span></td>
+                  <td>-</td>
+                </tr>
+                </tbody>
+              </table>
+            </section>
+            
+            <section class="panel">
+              <h2>出力と連携</h2>
+              <table class="table">
+                <thead><tr><th>状態</th><th>項目</th><th>内容</th><th>最終実行</th></tr></thead>
+                <tbody>
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>レポート生成</b><br><span class="muted">report_generation</span></td>
+                  <td>詳細Markdown、音声Markdown、HTMLを生成<br><span class="muted">NotebookLM投入向けMarkdownとUI表示向けHTMLを分けて生成。</span></td>
+                  <td>2026-06-22T17:30:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-ok">正常</span></td>
+                  <td><b>Dashboard UI</b><br><span class="muted">dashboard_ui</span></td>
+                  <td>Dashboard、Evidence、Health、Agent指示書を接続<br><span class="muted">各画面から相互に移動でき、AgentごとのCLAUDE.mdも確認できる状態。</span></td>
+                  <td>2026-06-22T17:31:00+09:00</td>
+                </tr>
+                
+                <tr>
+                  <td><span class="status-pill status-warn">注意</span></td>
+                  <td><b>NotebookLM / Drive</b><br><span class="muted">notebooklm</span></td>
+                  <td>Markdown生成まで。自動投入は未接続<br><span class="muted">MVP最低ラインはGoogle Docs/Drive自動保存。NotebookLM完全自動投入は公式手段と規約確認後。</span></td>
+                  <td>2026-06-22T17:30:00+09:00</td>
+                </tr>
+                </tbody>
+              </table>
+            </section>
+            
+        
+    </main>
+  </div>
+</body>
+</html>

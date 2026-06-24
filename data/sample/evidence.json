@@ -1,0 +1,135 @@
+[
+  {
+    "schema_version": "evidence_v1",
+    "evidence_id": "E20260622-001",
+    "identity": {
+      "target_id": "TARGET-SAMPLE-6501",
+      "stock_code": "6501",
+      "company_name": "日立製作所",
+      "collected_at": "2026-06-22T17:00:00+09:00",
+      "published_at": "2026-06-22T15:30:00+09:00"
+    },
+    "source": {
+      "source_type": "price_volume",
+      "source_name": "J-Quants API Light",
+      "source_url": null,
+      "source_reliability": "A",
+      "save_policy": "structured_data"
+    },
+    "content": {
+      "title": "出来高が20日平均の2.1倍に増加",
+      "summary": "株価は前日比+4.8%、出来高は20日平均の2.1倍。終値は高値圏を維持した。",
+      "excerpt": null,
+      "metrics": {
+        "close": 4820,
+        "change_pct": 4.8,
+        "volume_ratio_20d": 2.1,
+        "turnover_yen": 18500000000
+      }
+    },
+    "evaluation": {
+      "directness": "high",
+      "freshness": "high",
+      "impact_level": "medium",
+      "direction_hint": "bullish",
+      "related_topics": ["出来高", "価格維持", "買い需要"],
+      "hypothesis_impact": "中期トレンド継続仮説を補強する可能性",
+      "usable_for_judgement": true
+    },
+    "workflow": {
+      "human_review_status": "unread",
+      "human_note": "",
+      "used_in_decision": true,
+      "review_due_date": "2026-07-06",
+      "duplicate_of": null,
+      "related_evidence_ids": ["E20260622-011"]
+    }
+  },
+  {
+    "schema_version": "evidence_v1",
+    "evidence_id": "E20260622-006",
+    "identity": {
+      "target_id": "TARGET-SAMPLE-6501",
+      "stock_code": "6501",
+      "company_name": "日立製作所",
+      "collected_at": "2026-06-22T14:08:00+09:00",
+      "published_at": "2026-06-22T14:00:00+09:00"
+    },
+    "source": {
+      "source_type": "ir",
+      "source_name": "企業IR",
+      "source_url": "https://example.com/ir/sample",
+      "source_reliability": "A",
+      "save_policy": "summary_and_short_excerpt"
+    },
+    "content": {
+      "title": "AIインフラ向け新規受注の進捗を発表",
+      "summary": "対象企業がAIインフラ関連の受注進捗を発表。中期仮説に直接関係する材料。",
+      "excerpt": "AIインフラ向け案件の進捗に関する発表。",
+      "metrics": {
+        "contract_period_years": 3
+      }
+    },
+    "evaluation": {
+      "directness": "high",
+      "freshness": "high",
+      "impact_level": "high",
+      "direction_hint": "bullish",
+      "related_topics": ["AIインフラ", "受注", "中期仮説"],
+      "hypothesis_impact": "AIインフラ需要継続仮説を補強する可能性",
+      "usable_for_judgement": true
+    },
+    "workflow": {
+      "human_review_status": "unread",
+      "human_note": "",
+      "used_in_decision": true,
+      "review_due_date": "2026-07-06",
+      "duplicate_of": null,
+      "related_evidence_ids": []
+    }
+  },
+  {
+    "schema_version": "evidence_v1",
+    "evidence_id": "E20260622-011",
+    "identity": {
+      "target_id": "TARGET-SAMPLE-6501",
+      "stock_code": "6501",
+      "company_name": "日立製作所",
+      "collected_at": "2026-06-22T17:00:00+09:00",
+      "published_at": "2026-06-22T15:30:00+09:00"
+    },
+    "source": {
+      "source_type": "price_volume",
+      "source_name": "J-Quants API Light",
+      "source_url": null,
+      "source_reliability": "A",
+      "save_policy": "structured_data"
+    },
+    "content": {
+      "title": "株価が3営業日で+12%。短期過熱の可能性",
+      "summary": "材料への反応は強いが、短期では一部織り込み済みの可能性がある。",
+      "excerpt": null,
+      "metrics": {
+        "change_3d_pct": 12.0,
+        "close_position": "高値圏"
+      }
+    },
+    "evaluation": {
+      "directness": "high",
+      "freshness": "high",
+      "impact_level": "medium",
+      "direction_hint": "priced_in",
+      "related_topics": ["短期過熱", "価格反応", "織り込み"],
+      "hypothesis_impact": "中期仮説を否定しないが、短期価格反応として注意材料",
+      "usable_for_judgement": true
+    },
+    "workflow": {
+      "human_review_status": "unread",
+      "human_note": "",
+      "used_in_decision": true,
+      "review_due_date": "2026-06-25",
+      "duplicate_of": null,
+      "related_evidence_ids": ["E20260622-001"]
+    }
+  }
+]

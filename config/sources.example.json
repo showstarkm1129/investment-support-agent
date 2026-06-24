@@ -1,0 +1,30 @@
+{
+  "schema_version": "sources_config_v1",
+  "sources": {
+    "jquants": {
+      "enabled": true,
+      "priority": "required",
+      "output_dir": "data/raw/jquants"
+    },
+    "edinet": {
+      "enabled": true,
+      "priority": "important",
+      "output_dir": "data/raw/edinet"
+    },
+    "ir": {
+      "enabled": true,
+      "priority": "important",
+      "output_dir": "data/raw/ir"
+    },
+    "news": {
+      "enabled": true,
+      "priority": "optional",
+      "output_dir": "data/raw/news"
+    },
+    "macro_policy": {
+      "enabled": true,
+      "priority": "optional",
+      "output_dir": "data/raw/macro_policy"
+    }
+  }
+}

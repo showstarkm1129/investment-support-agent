@@ -65,6 +65,12 @@
       border-radius: 8px;
       color: #d9e2ef;
       font-size: 14px;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
     }
 
     .nav-item.active {
@@ -617,12 +623,12 @@
         <span>Evidence prototype</span>
       </div>
       <nav>
-        <div class="nav-item"><i class="dot green"></i><span>Dashboard</span></div>
-        <div class="nav-item active"><i class="dot blue"></i><span>Evidence</span></div>
-        <div class="nav-item"><i class="dot green"></i><span>Agents</span></div>
+        <a class="nav-item" href="app/dashboard.html"><i class="dot green"></i><span>Dashboard</span></a>
+        <a class="nav-item active" href="app/evidence.html"><i class="dot blue"></i><span>Evidence</span></a>
+        <a class="nav-item" href="app/agents.html"><i class="dot green"></i><span>Agents</span></a>
         <div class="nav-item"><i class="dot amber"></i><span>Position</span></div>
         <div class="nav-item"><i class="dot red"></i><span>Review</span></div>
-        <div class="nav-item"><i class="dot blue"></i><span>Health</span></div>
+        <a class="nav-item" href="app/health.html"><i class="dot blue"></i><span>Health</span></a>
       </nav>
     </aside>
 

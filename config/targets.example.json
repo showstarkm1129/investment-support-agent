@@ -1,0 +1,15 @@
+{
+  "schema_version": "targets_config_v1",
+  "targets": [
+    {
+      "target_id": "TARGET-SAMPLE-6501",
+      "target_type": "stock",
+      "stock_code": "6501",
+      "company_name": "Sample Manufacturing",
+      "market": "prime",
+      "themes": ["AI infrastructure", "data center", "power infrastructure"],
+      "auto_report_enabled": true,
+      "default_flows": ["morning_report", "close_report"]
+    }
+  ]
+}
