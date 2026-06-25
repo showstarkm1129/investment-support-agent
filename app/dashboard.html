@@ -6,6 +6,35 @@
   <title>6501 日立製作所 Dashboard</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/app.css">
+  
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+
 </head>
 <body>
   <div class="app">
@@ -16,8 +45,12 @@
           <span>MVP connected UI</span>
         </div>
         <nav class="nav-links">
-          <a class="nav-link active" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+          <a class="nav-link active" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="flow_builder.html"><i class="dot red"></i><span>Flow</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
         </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
       </aside>
     
     <main>
@@ -26,12 +59,6 @@
           <div>
             <h1>Dashboard / 管制塔</h1>
             <p class="subtitle">対象: 6501 日立製作所 / AIインフラ, データセンター, 電力インフラ / 2026-06-22 引け後</p>
-          </div>
-          <div class="actions">
-            <a class="button primary" href="evidence.html">Evidenceを見る</a>
-            <a class="button" href="../reports/daily/2026-06-22_6501_close.html">HTMLレポート</a>
-            <a class="button" href="../reports/daily/2026-06-22_6501_close_audio.md">音声用Markdown</a>
-            <a class="button" href="health.html">Health</a>
           </div>
         </div>
 
@@ -42,16 +69,26 @@
           <div class="stat"><div class="label">不確実性</div><div class="value">中</div></div>
         </section>
 
+        <section class="panel">
+          <div class="topbar">
+            <div>
+              <h2>出力</h2>
+              <p class="muted">生成済みのレポート、Markdown、NotebookLM向け音声用テキストを開きます。</p>
+            </div>
+            <div class="actions">
+              <a class="button" href="../reports/daily/2026-06-22_6501_close.html">HTMLレポート</a>
+              <a class="button" href="../reports/daily/2026-06-22_6501_close_analysis.md">詳細Markdown</a>
+              <a class="button" href="../reports/daily/2026-06-22_6501_close_audio.md">NotebookLM音声用</a>
+            </div>
+          </div>
+        </section>
+
         <section class="grid-2">
           <div class="panel">
             <h2>今日の情報整理</h2>
             <p><b>中期仮説をやや補強する情報が優勢。ただし短期過熱と未確認情報が残る。</b></p>
             <p>強気材料が優勢。ただし短期過熱と未確認情報が残る。</p>
             <p class="muted">これは売買行動の提案ではなく、EvidenceとAgent出力に基づく情報整理です。</p>
-            <div class="actions">
-              <a class="button" href="../reports/daily/2026-06-22_6501_close_analysis.md">詳細Markdown</a>
-              <a class="button" href="evidence.html">根拠カードへ</a>
-            </div>
           </div>
           <div class="panel">
             <h2>証拠重み</h2>

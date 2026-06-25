@@ -1,0 +1,26 @@
+{
+  "schema_version": "auto_search_config_v1",
+  "timezone": "Asia/Tokyo",
+  "routes": [
+    {
+      "route_id": "morning_search",
+      "label": "毎朝サーチ",
+      "enabled": true,
+      "time": "07:00",
+      "script_id": "semiconductor_sector_morning",
+      "provider": "codex",
+      "model": "default",
+      "mode": "simulate"
+    },
+    {
+      "route_id": "close_search",
+      "label": "引け後サーチ",
+      "enabled": false,
+      "time": "16:30",
+      "script_id": "semiconductor_sector_morning",
+      "provider": "codex",
+      "model": "default",
+      "mode": "simulate"
+    }
+  ]
+}

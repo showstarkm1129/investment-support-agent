@@ -28,15 +28,15 @@ AGENT_LABELS = {
 }
 
 AGENT_DOCS = [
-    ("共通指示", "../agents/CLAUDE.md", "全Agent共通の禁止事項、根拠ルール、出力方針。"),
-    ("探索設計Agent", "../agents/search_design/CLAUDE.md", "銘柄やテーマから何を調べるべきかを設計する。"),
-    ("証拠化Agent", "../agents/evidence_builder/CLAUDE.md", "取得素材をEvidenceカードへ整える。"),
-    ("強気Agent", "../agents/bull/CLAUDE.md", "中期仮説を補強する事実を整理する。"),
-    ("弱気Agent", "../agents/bear/CLAUDE.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
-    ("反証Agent", "../agents/contradiction/CLAUDE.md", "仮説の前提を壊し得る事実を探す。"),
-    ("織り込みAgent", "../agents/pricing/CLAUDE.md", "材料の価格反映と短期過熱を整理する。"),
-    ("Report Judge", "../agents/report_judge/CLAUDE.md", "定型レポートの最終情報整理を行う。"),
-    ("Chat Judge", "../agents/chat_judge/CLAUDE.md", "質問の重さに応じて情報とAgentを振り分ける。"),
+    ("共通指示", "../agents/AGENTS.md", "全Agent共通の禁止事項、根拠ルール、出力方針。"),
+    ("探索設計Agent", "../agents/search_design/AGENTS.md", "銘柄やテーマから何を調べるべきかを設計する。"),
+    ("証拠化Agent", "../agents/evidence_builder/AGENTS.md", "取得素材をEvidenceカードへ整える。"),
+    ("強気Agent", "../agents/bull/AGENTS.md", "中期仮説を補強する事実を整理する。"),
+    ("弱気Agent", "../agents/bear/AGENTS.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
+    ("反証Agent", "../agents/contradiction/AGENTS.md", "仮説の前提を壊し得る事実を探す。"),
+    ("織り込みAgent", "../agents/pricing/AGENTS.md", "材料の価格反映と短期過熱を整理する。"),
+    ("Report Judge", "../agents/report_judge/AGENTS.md", "定型レポートの最終情報整理を行う。"),
+    ("Chat Judge", "../agents/chat_judge/AGENTS.md", "質問の重さに応じて情報とAgentを振り分ける。"),
 ]
 
 
@@ -131,6 +131,7 @@ def nav(active: str) -> str:
         ("evidence", "Evidence", "evidence.html", "blue"),
         ("report", "Report", "../reports/daily/2026-06-22_6501_close.html", "green"),
         ("health", "Health", "health.html", "amber"),
+        ("flow", "Flow", "flow_builder.html", "red"),
         ("agents", "Agent指示書", "agents.html", "blue"),
     ]
     links = []
@@ -148,8 +149,44 @@ def nav(active: str) -> str:
         <nav class="nav-links">
           {''.join(links)}
         </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
       </aside>
     """
+
+
+def theme_script() -> str:
+    return """
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+"""
 
 
 def page(title: str, active: str, content: str) -> str:
@@ -161,6 +198,7 @@ def page(title: str, active: str, content: str) -> str:
   <title>{esc(title)}</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/app.css">
+  {theme_script()}
 </head>
 <body>
   <div class="app">
@@ -259,12 +297,6 @@ def build_dashboard(
             <h1>Dashboard / 管制塔</h1>
             <p class="subtitle">対象: {esc(target["stock_code"])} {esc(target["company_name"])} / {esc(", ".join(target["themes"]))} / {esc(agents["report_date"])} 引け後</p>
           </div>
-          <div class="actions">
-            <a class="button primary" href="evidence.html">Evidenceを見る</a>
-            <a class="button" href="{report_link}">HTMLレポート</a>
-            <a class="button" href="{audio_link}">音声用Markdown</a>
-            <a class="button" href="health.html">Health</a>
-          </div>
         </div>
 
         <section class="grid-4">
@@ -274,16 +306,26 @@ def build_dashboard(
           <div class="stat"><div class="label">不確実性</div><div class="value">{esc(label(uncertainty["level"]))}</div></div>
         </section>
 
+        <section class="panel">
+          <div class="topbar">
+            <div>
+              <h2>出力</h2>
+              <p class="muted">生成済みのレポート、Markdown、NotebookLM向け音声用テキストを開きます。</p>
+            </div>
+            <div class="actions">
+              <a class="button" href="{report_link}">HTMLレポート</a>
+              <a class="button" href="{analysis_link}">詳細Markdown</a>
+              <a class="button" href="{audio_link}">NotebookLM音声用</a>
+            </div>
+          </div>
+        </section>
+
         <section class="grid-2">
           <div class="panel">
             <h2>今日の情報整理</h2>
             <p><b>{esc(judgement["summary"])}</b></p>
             <p>{esc(info["summary"])}</p>
             <p class="muted">これは売買行動の提案ではなく、EvidenceとAgent出力に基づく情報整理です。</p>
-            <div class="actions">
-              <a class="button" href="{analysis_link}">詳細Markdown</a>
-              <a class="button" href="evidence.html">根拠カードへ</a>
-            </div>
           </div>
           <div class="panel">
             <h2>証拠重み</h2>
@@ -356,11 +398,6 @@ def build_evidence_page(evidence: list[dict[str, Any]], judge: dict[str, Any]) -
           <div>
             <h1>Evidence / 証拠ボード</h1>
             <p class="subtitle">対象: {esc(target["stock_code"])} {esc(target["company_name"])} / 厳選された材料を高密度で読む画面</p>
-          </div>
-          <div class="actions">
-            <a class="button" href="dashboard.html">Dashboardへ</a>
-            <a class="button" href="../reports/daily/2026-06-22_6501_close_audio.md">NotebookLM音声用</a>
-            <button class="primary">選択記事をAIに質問</button>
           </div>
         </div>
 
@@ -467,18 +504,28 @@ def build_evidence_page(evidence: list[dict[str, Any]], judge: dict[str, Any]) -
         <script>
           (() => {{
             const layout = document.querySelector(".layout-evidence");
+            const filters = document.querySelector(".filters");
             const closeButton = document.querySelector("[data-detail-close]");
             const openButton = document.querySelector("[data-detail-open]");
-            if (!layout || !closeButton || !openButton) return;
+            if (!layout || !filters || !closeButton || !openButton) return;
+
+            const closeDetail = (moveFocus = true) => {{
+              layout.classList.add("detail-collapsed");
+              if (moveFocus) openButton.focus();
+            }};
 
             closeButton.addEventListener("click", () => {{
-              layout.classList.add("detail-collapsed");
-              openButton.focus();
+              closeDetail();
             }});
 
             openButton.addEventListener("click", () => {{
+              filters.open = false;
               layout.classList.remove("detail-collapsed");
               closeButton.focus();
+            }});
+
+            filters.addEventListener("toggle", () => {{
+              if (filters.open) closeDetail(false);
             }});
           }})();
         </script>
@@ -526,11 +573,26 @@ def build_health_page(health: dict[str, Any], judge: dict[str, Any]) -> str:
             <h1>Health / 実行状態</h1>
             <p class="subtitle">対象: {esc(target["stock_code"])} {esc(target["company_name"])} / 取得・証拠化・Agent・出力の状態</p>
           </div>
-          <div class="actions">
-            <a class="button" href="dashboard.html">Dashboardへ</a>
-            <a class="button" href="evidence.html">Evidenceへ</a>
-          </div>
         </div>
+
+        <section class="panel">
+          <h2>このページで見ること</h2>
+          <p>Healthは、レポートがどこまで正しく作られたかを確認する運用チェック画面です。情報取得、Evidence化、Agent分析、Report Judge、NotebookLM用出力までの流れを並べ、失敗や不足があればここで見つけます。</p>
+          <div class="grid-3">
+            <article class="card">
+              <h3>入力が揃ったか</h3>
+              <p>価格、IR、ニュースなどの素材取得と、Evidence化の成功・失敗を確認します。</p>
+            </article>
+            <article class="card">
+              <h3>分析が通ったか</h3>
+              <p>強気、弱気、反証、織り込み、Report Judgeが根拠つきで出力できたかを確認します。</p>
+            </article>
+            <article class="card">
+              <h3>出力できたか</h3>
+              <p>Dashboard、Evidence、HTMLレポート、NotebookLM用Markdownが生成されたかを確認します。</p>
+            </article>
+          </div>
+        </section>
 
         <section class="panel">
           <div class="health-row">
@@ -579,11 +641,7 @@ def build_agents_page(judge: dict[str, Any]) -> str:
         <div class="topbar">
           <div>
             <h1>Agent指示書</h1>
-            <p class="subtitle">対象: {esc(target["stock_code"])} {esc(target["company_name"])} / 各Agentが迷わないためのCLAUDE.md一覧</p>
-          </div>
-          <div class="actions">
-            <a class="button" href="dashboard.html">Dashboardへ</a>
-            <a class="button" href="evidence.html">Evidenceへ</a>
+            <p class="subtitle">対象: {esc(target["stock_code"])} {esc(target["company_name"])} / 各Agentが迷わないためのAGENTS.md一覧</p>
           </div>
         </div>
 

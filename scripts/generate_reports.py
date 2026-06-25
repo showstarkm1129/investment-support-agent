@@ -334,6 +334,7 @@ def report_nav(report_href: str) -> str:
         ("evidence", "Evidence", "../../app/evidence.html", "blue"),
         ("report", "Report", report_href, "green"),
         ("health", "Health", "../../app/health.html", "amber"),
+        ("flow", "Flow", "../../app/flow_builder.html", "red"),
         ("agents", "Agent指示書", "../../app/agents.html", "blue"),
     ]
     links = []
@@ -351,8 +352,44 @@ def report_nav(report_href: str) -> str:
         <nav class="nav-links">
           {''.join(links)}
         </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
       </aside>
     """
+
+
+def theme_script() -> str:
+    return """
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+"""
 
 
 def build_html_report(
@@ -409,6 +446,7 @@ def build_html_report(
   <title>{html.escape(target["company_name"])} 引け後レポート</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="../../app/assets/app.css">
+  {theme_script()}
 </head>
 <body>
   <div class="app">

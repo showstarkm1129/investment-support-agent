@@ -63,6 +63,42 @@ class FlowIntegrityTests(unittest.TestCase):
             self.assertEqual("TARGET-SAMPLE-6501", context["target_id"])
             self.assertIn("evidence", context["outputs"])
 
+    def test_run_flow_script_generates_agent_trace(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts/run_flow.py"),
+                    "--script",
+                    "semiconductor_sector_morning",
+                    "--date",
+                    "2026-06-25",
+                    "--runs-dir",
+                    tmp,
+                    "--mode",
+                    "simulate",
+                    "--model",
+                    "gpt-5-codex",
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            run_dir = Path(tmp) / "2026-06-25" / "SECTOR-SEMICONDUCTOR" / "morning"
+            manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+            context = json.loads((run_dir / "context.json").read_text(encoding="utf-8"))
+            trace = json.loads((run_dir / "agent_trace.json").read_text(encoding="utf-8"))
+            self.assertEqual("semiconductor_sector_morning", manifest["script"]["script_id"])
+            self.assertEqual("gpt-5-codex", manifest["model"])
+            self.assertEqual("SECTOR-SEMICONDUCTOR", context["target_id"])
+            self.assertEqual(12, len(trace["steps"]))
+            self.assertEqual("gpt-5-codex", trace["model"])
+            self.assertIn("--model gpt-5-codex", trace["steps"][0]["suggested_command"])
+            self.assertTrue((run_dir / "prompts" / "01_search_design.md").is_file())
+            self.assertTrue((run_dir / "agent_outputs.json").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

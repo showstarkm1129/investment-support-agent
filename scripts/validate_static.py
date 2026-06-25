@@ -26,24 +26,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
     "README.md",
-    "agents/CLAUDE.md",
-    "agents/search_design/CLAUDE.md",
-    "agents/evidence_builder/CLAUDE.md",
-    "agents/bull/CLAUDE.md",
-    "agents/bear/CLAUDE.md",
-    "agents/contradiction/CLAUDE.md",
-    "agents/pricing/CLAUDE.md",
-    "agents/report_judge/CLAUDE.md",
-    "agents/chat_judge/CLAUDE.md",
+    "agents/AGENTS.md",
+    "agents/search_design/AGENTS.md",
+    "agents/evidence_builder/AGENTS.md",
+    "agents/bull/AGENTS.md",
+    "agents/bear/AGENTS.md",
+    "agents/contradiction/AGENTS.md",
+    "agents/pricing/AGENTS.md",
+    "agents/report_judge/AGENTS.md",
+    "agents/chat_judge/AGENTS.md",
     "app/assets/app.css",
     "app/dashboard.html",
     "app/evidence.html",
     "app/health.html",
     "app/agents.html",
+    "app/flow_builder.html",
     "config/app.example.json",
     "config/targets.example.json",
     "config/sources.example.json",
     "config/runtime.example.json",
+    "config/auto_search.example.json",
+    "config/flow_scripts/README.md",
+    "config/flow_scripts/semiconductor_sector_morning.json",
     "flows/README.md",
     "flows/morning_report.md",
     "flows/close_report.md",
@@ -58,6 +62,7 @@ REQUIRED_FILES = [
     "contracts/report_judge.schema.json",
     "contracts/chat_judge.schema.json",
     "contracts/health.schema.json",
+    "contracts/flow_script.schema.json",
     "contracts/artifact_contract.md",
     "connectors/README.md",
     "connectors/jquants/README.md",
@@ -90,12 +95,14 @@ REQUIRED_FILES = [
     "scripts/generate_reports.py",
     "scripts/generate_app_pages.py",
     "scripts/run_flow.py",
+    "scripts/flow_server.py",
     "scripts/prepare_agent_context.py",
     "tests/test_contracts.py",
     "tests/test_flow_integrity.py",
     "tests/test_static_validation.py",
     "tests/fixtures/chat_judge.sample.json",
     "docs/architecture.md",
+    "docs/flow_builder.md",
     "docs/operations.md",
     "docs/onboarding_agent_teams.md",
     "docs/project_structure.md",
@@ -106,14 +113,18 @@ HTML_FILES = [
     "app/evidence.html",
     "app/health.html",
     "app/agents.html",
+    "app/flow_builder.html",
     "Evidence画面プロトタイプ.html",
 ]
+
+EXPECTED_NAV_LABELS = ["Dashboard", "Evidence", "Report", "Health", "Flow", "Agent指示書"]
 
 SCRIPT_FILES = [
     "scripts/generate_reports.py",
     "scripts/generate_app_pages.py",
     "scripts/validate_static.py",
     "scripts/run_flow.py",
+    "scripts/flow_server.py",
     "scripts/prepare_agent_context.py",
 ]
 
@@ -132,6 +143,7 @@ CONTRACT_SCHEMA_FILES = [
     "contracts/report_judge.schema.json",
     "contracts/chat_judge.schema.json",
     "contracts/health.schema.json",
+    "contracts/flow_script.schema.json",
 ]
 
 CONFIG_EXAMPLE_FILES = [
@@ -139,6 +151,7 @@ CONFIG_EXAMPLE_FILES = [
     "config/targets.example.json",
     "config/sources.example.json",
     "config/runtime.example.json",
+    "config/auto_search.example.json",
 ]
 
 ALLOWED_SOURCE_TYPES = {
@@ -188,6 +201,16 @@ ALLOWED_HYPOTHESIS_IMPACT = {
     "undetermined",
 }
 ALLOWED_HEALTH_STATUS = {"ok", "warn", "error", "info", "skipped"}
+ALLOWED_FLOWS = {
+    "morning_report",
+    "close_report",
+    "chat_quick",
+    "chat_context",
+    "chat_agent",
+    "chat_research",
+}
+ALLOWED_PROVIDERS = {"manual", "codex", "claude", "openai_api", "anthropic_api", "gemini_api"}
+ALLOWED_RUN_MODES = {"prepare", "dry-run", "simulate", "live"}
 
 FORBIDDEN_ADVICE_PATTERNS = [
     r"買うべき",
@@ -242,11 +265,31 @@ class LinkParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.links: list[tuple[str, str]] = []
+        self.nav_labels: list[str] = []
+        self._in_nav_link = False
+        self._current_nav_text: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_dict = {name: value for name, value in attrs}
+        class_value = attr_dict.get("class") or ""
+        if tag == "a" and "nav-link" in class_value.split():
+            self._in_nav_link = True
+            self._current_nav_text = []
         for name, value in attrs:
             if name in {"href", "src"} and value:
                 self.links.append((name, value))
+
+    def handle_data(self, data: str) -> None:
+        if self._in_nav_link:
+            self._current_nav_text.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "a" and self._in_nav_link:
+            label = "".join(self._current_nav_text).strip()
+            if label:
+                self.nav_labels.append(label)
+            self._in_nav_link = False
+            self._current_nav_text = []
 
 
 def load_json(path: Path) -> Any:
@@ -586,6 +629,98 @@ def check_config(v: Validator, config: Any) -> None:
             require_keys(v, target, ["target_id", "target_type", "stock_code", "company_name", "themes", "auto_report_enabled"], f"config.targets[{index}]")
 
 
+def check_flow_scripts(v: Validator) -> set[str]:
+    script_ids: set[str] = set()
+    script_dir = v.root / "config/flow_scripts"
+    paths = sorted(script_dir.glob("*.json"))
+    if not paths:
+        v.error("config/flow_scripts: no flow scripts found")
+        return script_ids
+
+    for path in paths:
+        rel_path = path.relative_to(v.root).as_posix()
+        script = load_json(path)
+        ensure_type(v, script, dict, rel_path)
+        if not isinstance(script, dict):
+            continue
+        require_keys(v, script, ["schema_version", "script_id", "display_name", "flow", "target", "agent_groups", "agents"], rel_path)
+        v.check(script.get("schema_version") == "flow_script_v1", f"{rel_path}: schema_version must be flow_script_v1")
+        script_id = script.get("script_id")
+        if isinstance(script_id, str):
+            v.check(script_id == path.stem, f"{rel_path}: script_id must match filename")
+            v.check(bool(re.match(r"^[a-z0-9][a-z0-9_-]*$", script_id)), f"{rel_path}: script_id has invalid characters")
+            script_ids.add(script_id)
+        else:
+            v.error(f"{rel_path}: script_id must be string")
+
+        v.check(script.get("flow") in ALLOWED_FLOWS, f"{rel_path}: unknown flow {script.get('flow')!r}")
+        if "provider" in script:
+            v.check(script.get("provider") in ALLOWED_PROVIDERS, f"{rel_path}: unknown provider {script.get('provider')!r}")
+        if "model" in script:
+            v.check(isinstance(script.get("model"), str) and bool(script.get("model")), f"{rel_path}: model must be non-empty string")
+        if "mode" in script:
+            v.check(script.get("mode") in ALLOWED_RUN_MODES, f"{rel_path}: unknown mode {script.get('mode')!r}")
+
+        target = script.get("target", {})
+        ensure_type(v, target, dict, f"{rel_path}.target")
+        if isinstance(target, dict):
+            require_keys(v, target, ["target_id", "target_type", "company_name", "themes"], f"{rel_path}.target")
+            ensure_type(v, target.get("themes"), list, f"{rel_path}.target.themes")
+
+        groups = script.get("agent_groups", [])
+        agents = script.get("agents", [])
+        ensure_type(v, groups, list, f"{rel_path}.agent_groups")
+        ensure_type(v, agents, list, f"{rel_path}.agents")
+        step_ids = {
+            item.get("agent_id")
+            for item in agents
+            if isinstance(item, dict) and isinstance(item.get("agent_id"), str)
+        }
+        if isinstance(groups, list):
+            for index, group in enumerate(groups):
+                group_path = f"{rel_path}.agent_groups[{index}]"
+                ensure_type(v, group, dict, group_path)
+                if not isinstance(group, dict):
+                    continue
+                require_keys(v, group, ["group_id", "agents"], group_path)
+                group_agents = group.get("agents", [])
+                ensure_type(v, group_agents, list, f"{group_path}.agents")
+                if isinstance(group_agents, list):
+                    for agent_id in group_agents:
+                        v.check(isinstance(agent_id, str) and bool(agent_id), f"{group_path}.agents: agent id must be non-empty string")
+                        if isinstance(agent_id, str) and step_ids:
+                            v.check(agent_id in step_ids, f"{group_path}.agents: missing step definition for {agent_id}")
+    return script_ids
+
+
+def check_auto_search(v: Validator, script_ids: set[str]) -> None:
+    path = v.root / "config/auto_search.example.json"
+    if not path.exists():
+        return
+    config = load_json(path)
+    ensure_type(v, config, dict, "config/auto_search.example.json")
+    if not isinstance(config, dict):
+        return
+    require_keys(v, config, ["schema_version", "timezone", "routes"], "config/auto_search.example.json")
+    v.check(config.get("schema_version") == "auto_search_config_v1", "config/auto_search.example.json: unexpected schema_version")
+    routes = config.get("routes", [])
+    ensure_type(v, routes, list, "config/auto_search.example.json.routes")
+    if not isinstance(routes, list):
+        return
+    for index, route in enumerate(routes):
+        route_path = f"config/auto_search.example.json.routes[{index}]"
+        ensure_type(v, route, dict, route_path)
+        if not isinstance(route, dict):
+            continue
+        require_keys(v, route, ["route_id", "enabled", "time", "script_id", "provider", "mode"], route_path)
+        script_id = route.get("script_id")
+        v.check(script_id in script_ids, f"{route_path}.script_id: unknown script {script_id!r}")
+        v.check(route.get("provider") in ALLOWED_PROVIDERS, f"{route_path}.provider: unknown value {route.get('provider')!r}")
+        if "model" in route:
+            v.check(isinstance(route.get("model"), str) and bool(route.get("model")), f"{route_path}.model: must be non-empty string")
+        v.check(route.get("mode") in ALLOWED_RUN_MODES, f"{route_path}.mode: unknown value {route.get('mode')!r}")
+
+
 def check_html_links(v: Validator) -> None:
     for rel in HTML_FILES:
         path = v.root / rel
@@ -593,6 +728,11 @@ def check_html_links(v: Validator) -> None:
             continue
         parser = LinkParser()
         parser.feed(path.read_text(encoding="utf-8"))
+        if rel.startswith("app/") or rel.startswith("reports/"):
+            v.check(
+                parser.nav_labels == EXPECTED_NAV_LABELS,
+                f"{rel}: nav labels must be {EXPECTED_NAV_LABELS}, got {parser.nav_labels}",
+            )
         for attr, link in parser.links:
             parsed = urlparse(link)
             if parsed.scheme or parsed.path.startswith("mailto:"):
@@ -618,7 +758,7 @@ def check_forbidden_advice(v: Validator) -> None:
     scan_files = [
         *Path(v.root / "app").glob("*.html"),
         *Path(v.root / "reports/daily").glob("*"),
-        *Path(v.root / "agents").glob("**/CLAUDE.md"),
+        *Path(v.root / "agents").glob("**/AGENTS.md"),
         v.root / "data/sample/report_judge.json",
         v.root / "data/sample/agent_outputs.json",
     ]
@@ -702,6 +842,8 @@ def run_all_checks(check_generated: bool) -> int:
     agent_outputs = agents.get("agent_outputs", []) if isinstance(agents, dict) else []
     check_health(v, health, len(evidence) if isinstance(evidence, list) else 0, len(agent_outputs) if isinstance(agent_outputs, list) else 0)
     check_config(v, config)
+    script_ids = check_flow_scripts(v)
+    check_auto_search(v, script_ids)
     check_html_links(v)
     check_forbidden_advice(v)
     if check_generated:

@@ -21,14 +21,14 @@
 3. [docs/architecture.md](docs/architecture.md) で処理の流れを確認する。
 4. [flows/README.md](flows/README.md) と使いたい flow を読む。
 5. [contracts/README.md](contracts/README.md) と対象 schema を確認する。
-6. [agents/CLAUDE.md](agents/CLAUDE.md) と各 Agent の `CLAUDE.md` を読む。
+6. [agents/AGENTS.md](agents/AGENTS.md) と各 Agent の `AGENTS.md` を読む。
 
 ## 階層構造
 
 ```text
 investment-support-agent/
 ├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
-│  ├─ CLAUDE.md                    # 全 Agent 共通の基本ルール。
+│  ├─ AGENTS.md                    # 全 Agent 共通の基本ルール。
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
 │  ├─ bull/                        # 強気材料を整理する Agent。

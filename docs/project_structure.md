@@ -5,23 +5,23 @@
 ```text
 investment-support-agent/
 ├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
-│  ├─ CLAUDE.md                    # 全 Agent 共通の基本ルール。
+│  ├─ AGENTS.md                    # 全 Agent 共通の基本ルール。
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ bull/                        # 強気材料を整理する Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ bear/                        # 弱気材料やリスクを整理する Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ contradiction/               # 仮説に反する材料や矛盾を探す Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ pricing/                     # 材料が価格に織り込まれているかを見る Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  ├─ report_judge/                # レポート用の最終判断をまとめる Agent。
-│  │  └─ CLAUDE.md
+│  │  └─ AGENTS.md
 │  └─ chat_judge/                  # チャット質問の重さに応じて回答経路を選ぶ Agent。
-│     └─ CLAUDE.md
+│     └─ AGENTS.md
 │
 ├─ flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
 │  ├─ README.md                    # flow 全体の考え方と run 保存方針。
@@ -121,4 +121,4 @@ investment-support-agent/
 2. `docs/architecture.md` で処理の流れを理解する。
 3. `flows/README.md` と対象 flow を読んで、実行順を確認する。
 4. `contracts/README.md` と対象 schema を読んで、入出力の形を確認する。
-5. `agents/` の各 `CLAUDE.md` を読んで、Agent の役割を確認する。
+5. `agents/` の各 `AGENTS.md` を読んで、Agent の役割を確認する。

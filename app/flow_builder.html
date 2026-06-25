@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flow Builder</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/app.css">
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="app">
+    <aside class="nav">
+      <div class="brand">
+        <b>AI投資情報OS</b>
+        <span>MVP connected UI</span>
+      </div>
+      <nav class="nav-links">
+        <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a>
+        <a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a>
+        <a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a>
+        <a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a>
+        <a class="nav-link active" href="flow_builder.html"><i class="dot red"></i><span>Flow</span></a>
+        <a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+      </nav>
+      <div class="theme-switch" aria-label="テーマ切替">
+        <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+        <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div>
+          <h1>Flow Builder</h1>
+          <p class="subtitle">Agentスクリプトの作成、手動実行、自動サーチ参照先を管理します。</p>
+        </div>
+        <div class="actions">
+          <button class="button" type="button" id="refreshButton">更新</button>
+          <a class="button" href="../config/flow_scripts/semiconductor_sector_morning.json">半導体JSON</a>
+        </div>
+      </div>
+
+      <section class="grid-3">
+        <article class="stat">
+          <div class="label">登録スクリプト</div>
+          <div class="value" id="scriptCount">-</div>
+        </article>
+        <article class="stat">
+          <div class="label">自動ルート</div>
+          <div class="value" id="routeCount">-</div>
+        </article>
+        <article class="stat">
+          <div class="label">接続状態</div>
+          <div class="small-value" id="serverState">確認中</div>
+        </article>
+      </section>
+
+      <section class="grid-2 flow-grid">
+        <div class="panel stack">
+          <div class="topbar">
+            <div>
+              <h2>手動実行</h2>
+              <p class="muted">選んだスクリプトで run フォルダ、Agentプロンプト、トレースを作成します。</p>
+            </div>
+          </div>
+          <div class="form-grid compact">
+            <label class="field">
+              <span>スクリプト</span>
+              <select id="runScript"></select>
+            </label>
+            <label class="field">
+              <span>AI</span>
+              <select id="runProvider">
+                <option value="codex">Codex</option>
+                <option value="claude">Claude</option>
+                <option value="openai_api">OpenAI API</option>
+                <option value="anthropic_api">Anthropic API</option>
+                <option value="gemini_api">Gemini API</option>
+                <option value="manual">Manual</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>実行モード</span>
+              <input id="runModel" value="default" spellcheck="false">
+            </label>
+            <label class="field">
+              <span>Mode</span>
+              <select id="runMode">
+                <option value="simulate">simulate</option>
+                <option value="dry-run">dry-run</option>
+                <option value="prepare">prepare</option>
+                <option value="live">live</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>日付</span>
+              <input id="runDate" type="date">
+            </label>
+          </div>
+          <div class="actions">
+            <button class="primary" type="button" id="runButton">実行</button>
+          </div>
+          <pre class="run-log" id="runLog">ローカルサーバー起動: python scripts/flow_server.py</pre>
+        </div>
+
+        <div class="panel stack">
+          <div class="topbar">
+            <div>
+              <h2>自動サーチ</h2>
+              <p class="muted">毎朝などの自動処理が参照するスクリプトを選びます。</p>
+            </div>
+            <button class="button" type="button" id="saveAutomationButton">保存</button>
+          </div>
+          <div class="route-list" id="routeList"></div>
+        </div>
+      </section>
+
+      <section class="panel stack">
+        <div class="topbar">
+          <div>
+            <h2>スクリプト作成</h2>
+            <p class="muted">入力欄から Flow Script JSON を作成します。</p>
+          </div>
+          <div class="actions">
+            <button class="button" type="button" id="downloadButton">JSON保存</button>
+            <button class="primary" type="button" id="saveScriptButton">登録</button>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>ID</span>
+            <input id="scriptId" value="semiconductor_custom_morning" spellcheck="false">
+          </label>
+          <label class="field">
+            <span>表示名</span>
+            <input id="displayName" value="半導体カスタム朝サーチ">
+          </label>
+          <label class="field">
+            <span>Flow</span>
+            <select id="flow">
+              <option value="morning_report">morning_report</option>
+              <option value="close_report">close_report</option>
+              <option value="chat_research">chat_research</option>
+              <option value="chat_agent">chat_agent</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>調査深度</span>
+            <select id="depth">
+              <option value="normal">normal</option>
+              <option value="quick">quick</option>
+              <option value="deep">deep</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>対象ID</span>
+            <input id="targetId" value="SECTOR-SEMICONDUCTOR-CUSTOM" spellcheck="false">
+          </label>
+          <label class="field">
+            <span>対象名</span>
+            <input id="targetName" value="半導体セクター">
+          </label>
+          <label class="field wide">
+            <span>テーマ</span>
+            <input id="themes" value="半導体, 生成AI, データセンター, 装置, メモリ, 規制">
+          </label>
+          <label class="field wide">
+            <span>銘柄リスト</span>
+            <textarea id="watchlist">8035 東京エレクトロン
+6857 アドバンテスト
+6920 レーザーテック
+6146 ディスコ
+NVDA NVIDIA
+AMD Advanced Micro Devices
+TSM TSMC
+ASML ASML</textarea>
+          </label>
+        </div>
+
+        <div class="agent-checks" id="agentChecks">
+          <label><input type="checkbox" value="search_design" checked> search_design</label>
+          <label><input type="checkbox" value="connector:jquants" checked> jquants</label>
+          <label><input type="checkbox" value="connector:ir" checked> ir</label>
+          <label><input type="checkbox" value="connector:news" checked> news</label>
+          <label><input type="checkbox" value="connector:macro_policy" checked> macro_policy</label>
+          <label><input type="checkbox" value="evidence_builder" checked> evidence_builder</label>
+          <label><input type="checkbox" value="bull" checked> bull</label>
+          <label><input type="checkbox" value="bear" checked> bear</label>
+          <label><input type="checkbox" value="contradiction" checked> contradiction</label>
+          <label><input type="checkbox" value="pricing" checked> pricing</label>
+          <label><input type="checkbox" value="report_judge" checked> report_judge</label>
+          <label><input type="checkbox" value="health" checked> health</label>
+        </div>
+
+        <div class="grid-2 preview-grid">
+          <div class="preview-box">
+            <h3>プレビュー</h3>
+            <pre class="script-preview" id="scriptPreview"></pre>
+          </div>
+          <div class="preview-box">
+            <h3>保存先</h3>
+            <div class="command-list">
+              <code>config/flow_scripts/&lt;script_id&gt;.json</code>
+              <code>python scripts/run_flow.py --script &lt;script_id&gt; --mode simulate</code>
+              <code>python scripts/flow_server.py</code>
+            </div>
+            <div class="detail-section">
+              <h3>出力</h3>
+              <div class="chips">
+                <span class="chip">context.json</span>
+                <span class="chip">manifest.json</span>
+                <span class="chip">agent_trace.json</span>
+                <span class="chip">prompts/*.md</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const api = {
+      scripts: "/api/scripts",
+      automation: "/api/automation",
+      run: "/api/run"
+    };
+
+    const state = {
+      scripts: [],
+      automation: { schema_version: "auto_search_config_v1", timezone: "Asia/Tokyo", routes: [] }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const today = () => {
+      const date = new Date();
+      const offset = date.getTimezoneOffset();
+      const local = new Date(date.getTime() - offset * 60000);
+      return local.toISOString().slice(0, 10);
+    };
+
+    const splitList = (value) => value.split(",").map((item) => item.trim()).filter(Boolean);
+
+    const watchlistRows = () => $("watchlist").value
+      .split(/\n+/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const [ticker, ...rest] = line.split(/\s+/);
+        return {
+          ticker,
+          name: rest.join(" ") || ticker,
+          market: /^[0-9]+$/.test(ticker) ? "TSE" : "US"
+        };
+      });
+
+    const checkedAgents = () => [...document.querySelectorAll("#agentChecks input:checked")].map((input) => input.value);
+
+    const groupAgents = (agents) => {
+      const has = (value) => agents.includes(value);
+      return [
+        { group_id: "search_plan", parallel: false, agents: agents.filter((agent) => agent === "search_design") },
+        { group_id: "collect_inputs", parallel: true, agents: agents.filter((agent) => agent.startsWith("connector:")) },
+        { group_id: "build_evidence", parallel: false, agents: agents.filter((agent) => agent === "evidence_builder") },
+        { group_id: "analysis", parallel: true, agents: agents.filter((agent) => ["bull", "bear", "contradiction", "pricing"].includes(agent)) },
+        { group_id: "judge", parallel: false, agents: agents.filter((agent) => ["report_judge", "health"].includes(agent)) }
+      ].filter((group) => group.agents.length || has(group.group_id));
+    };
+
+    const buildScript = () => {
+      const scriptId = $("scriptId").value.trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "_");
+      const agents = checkedAgents();
+      return {
+        schema_version: "flow_script_v1",
+        script_id: scriptId || "custom_flow",
+        display_name: $("displayName").value.trim() || scriptId,
+        description: `${$("targetName").value.trim()} を対象にしたUI作成スクリプト。`,
+        flow: $("flow").value,
+        provider: $("runProvider").value,
+        model: $("runModel").value.trim() || "default",
+        mode: "simulate",
+        depth: $("depth").value,
+        timezone: "Asia/Tokyo",
+        execution: {
+          type: $("runProvider").value.endsWith("_api") ? "api" : ($("runProvider").value === "manual" ? "manual" : "cli")
+        },
+        target: {
+          target_id: $("targetId").value.trim() || "TARGET-CUSTOM",
+          target_type: "sector",
+          stock_code: "",
+          company_name: $("targetName").value.trim() || "カスタム対象",
+          market: "custom-watchlist",
+          themes: splitList($("themes").value),
+          auto_report_enabled: true,
+          watchlist: watchlistRows()
+        },
+        variables: {
+          sector: $("targetName").value.trim(),
+          lookback_hours: 24,
+          focus_questions: [
+            "前日から重要な変化はあるか",
+            "強気材料と弱気材料のどちらが増えたか",
+            "価格に織り込まれている可能性はあるか"
+          ]
+        },
+        agent_groups: groupAgents(agents),
+        agents: agents.map((agent) => ({
+          agent_id: agent,
+          inputs: ["context.json"],
+          outputs: ["runs/{date}/{target_id}/{bucket}/artifact.json"],
+          notes: ["UIで作成されたAgentステップです。"]
+        })),
+        outputs: ["markdown", "html", "notebooklm"],
+        automation: {
+          eligible: true,
+          default_route: "morning_search",
+          recommended_time: "07:00"
+        }
+      };
+    };
+
+    const renderScriptOptions = () => {
+      const options = state.scripts.map((script) => `<option value="${script.script_id}">${script.display_name}</option>`).join("");
+      $("runScript").innerHTML = options;
+      document.querySelectorAll("[data-script-select]").forEach((select) => {
+        const value = select.value;
+        select.innerHTML = options;
+        if ([...select.options].some((option) => option.value === value)) select.value = value;
+      });
+      $("scriptCount").textContent = String(state.scripts.length);
+    };
+
+    const renderAutomation = () => {
+      const routes = state.automation.routes || [];
+      $("routeCount").textContent = String(routes.length);
+      $("routeList").innerHTML = routes.map((route, index) => `
+        <div class="route-row" data-route-index="${index}">
+          <label class="switch-row">
+            <input type="checkbox" ${route.enabled ? "checked" : ""} data-route-enabled>
+            <span>${route.label || route.route_id}</span>
+          </label>
+          <input value="${route.time || "07:00"}" type="time" data-route-time>
+          <select data-script-select data-route-script></select>
+          <select data-route-provider>
+            <option value="codex">Codex</option>
+            <option value="claude">Claude</option>
+            <option value="openai_api">OpenAI API</option>
+            <option value="anthropic_api">Anthropic API</option>
+            <option value="gemini_api">Gemini API</option>
+            <option value="manual">Manual</option>
+          </select>
+          <input value="${route.model || "default"}" data-route-model spellcheck="false">
+          <select data-route-mode>
+            <option value="simulate">simulate</option>
+            <option value="dry-run">dry-run</option>
+            <option value="prepare">prepare</option>
+            <option value="live">live</option>
+          </select>
+        </div>
+      `).join("");
+      renderScriptOptions();
+      document.querySelectorAll(".route-row").forEach((row) => {
+        const route = routes[Number(row.dataset.routeIndex)];
+        row.querySelector("[data-route-script]").value = route.script_id || "";
+        row.querySelector("[data-route-provider]").value = route.provider || "codex";
+        row.querySelector("[data-route-mode]").value = route.mode || "simulate";
+      });
+    };
+
+    const refreshPreview = () => {
+      $("scriptPreview").textContent = JSON.stringify(buildScript(), null, 2);
+    };
+
+    const setServerState = (message, ok = true) => {
+      $("serverState").textContent = message;
+      $("serverState").className = ok ? "small-value" : "small-value status-error-text";
+    };
+
+    const refresh = async () => {
+      try {
+        const [scriptsRes, automationRes] = await Promise.all([fetch(api.scripts), fetch(api.automation)]);
+        const scriptsJson = await scriptsRes.json();
+        const automationJson = await automationRes.json();
+        state.scripts = scriptsJson.scripts || [];
+        state.automation = automationJson.automation || state.automation;
+        renderScriptOptions();
+        renderAutomation();
+        setServerState("接続中", true);
+      } catch (error) {
+        setServerState("未接続", false);
+        $("runLog").textContent = "python scripts/flow_server.py を起動して http://127.0.0.1:8765/flow_builder.html を開いてください。";
+      }
+      refreshPreview();
+    };
+
+    const runSelectedScript = async () => {
+      $("runLog").textContent = "running...";
+      try {
+        const response = await fetch(api.run, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            script_id: $("runScript").value,
+            provider: $("runProvider").value,
+            model: $("runModel").value.trim() || "default",
+            mode: $("runMode").value,
+            date: $("runDate").value || today()
+          })
+        });
+        const payload = await response.json();
+        $("runLog").textContent = [
+          `ok: ${payload.ok}`,
+          `returncode: ${payload.returncode}`,
+          payload.stdout || "",
+          payload.stderr || ""
+        ].join("\n").trim();
+      } catch (error) {
+        $("runLog").textContent = String(error);
+      }
+    };
+
+    const saveAutomation = async () => {
+      const routes = [...document.querySelectorAll(".route-row")].map((row) => {
+        const base = state.automation.routes[Number(row.dataset.routeIndex)] || {};
+        return {
+          ...base,
+          enabled: row.querySelector("[data-route-enabled]").checked,
+          time: row.querySelector("[data-route-time]").value,
+          script_id: row.querySelector("[data-route-script]").value,
+          provider: row.querySelector("[data-route-provider]").value,
+          model: row.querySelector("[data-route-model]").value.trim() || "default",
+          mode: row.querySelector("[data-route-mode]").value
+        };
+      });
+      const automation = { ...state.automation, routes };
+      const response = await fetch(api.automation, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ automation })
+      });
+      const payload = await response.json();
+      state.automation = payload.automation || automation;
+      $("runLog").textContent = payload.ok ? `saved: ${payload.path}` : payload.error;
+      renderAutomation();
+    };
+
+    const saveScript = async () => {
+      const script = buildScript();
+      const response = await fetch(api.scripts, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ script })
+      });
+      const payload = await response.json();
+      $("runLog").textContent = payload.ok ? `saved: ${payload.path}` : payload.error;
+      await refresh();
+      $("runScript").value = script.script_id;
+    };
+
+    const downloadScript = () => {
+      const script = buildScript();
+      const blob = new Blob([JSON.stringify(script, null, 2) + "\n"], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${script.script_id}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+
+    window.addEventListener("DOMContentLoaded", () => {
+      $("runDate").value = today();
+      $("refreshButton").addEventListener("click", refresh);
+      $("runButton").addEventListener("click", runSelectedScript);
+      $("saveAutomationButton").addEventListener("click", saveAutomation);
+      $("saveScriptButton").addEventListener("click", saveScript);
+      $("downloadButton").addEventListener("click", downloadScript);
+      document.querySelectorAll("input, select, textarea").forEach((element) => {
+        element.addEventListener("input", refreshPreview);
+        element.addEventListener("change", refreshPreview);
+      });
+      refresh();
+    });
+  </script>
+</body>
+</html>

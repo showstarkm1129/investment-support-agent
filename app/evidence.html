@@ -6,6 +6,35 @@
   <title>Evidence / 証拠ボード</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/app.css">
+  
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+
 </head>
 <body>
   <div class="app">
@@ -16,8 +45,12 @@
           <span>MVP connected UI</span>
         </div>
         <nav class="nav-links">
-          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link active" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link active" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="flow_builder.html"><i class="dot red"></i><span>Flow</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
         </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
       </aside>
     
     <main>
@@ -26,11 +59,6 @@
           <div>
             <h1>Evidence / 証拠ボード</h1>
             <p class="subtitle">対象: 6501 日立製作所 / 厳選された材料を高密度で読む画面</p>
-          </div>
-          <div class="actions">
-            <a class="button" href="dashboard.html">Dashboardへ</a>
-            <a class="button" href="../reports/daily/2026-06-22_6501_close_audio.md">NotebookLM音声用</a>
-            <button class="primary">選択記事をAIに質問</button>
           </div>
         </div>
 
@@ -233,18 +261,28 @@
         <script>
           (() => {
             const layout = document.querySelector(".layout-evidence");
+            const filters = document.querySelector(".filters");
             const closeButton = document.querySelector("[data-detail-close]");
             const openButton = document.querySelector("[data-detail-open]");
-            if (!layout || !closeButton || !openButton) return;
+            if (!layout || !filters || !closeButton || !openButton) return;
+
+            const closeDetail = (moveFocus = true) => {
+              layout.classList.add("detail-collapsed");
+              if (moveFocus) openButton.focus();
+            };
 
             closeButton.addEventListener("click", () => {
-              layout.classList.add("detail-collapsed");
-              openButton.focus();
+              closeDetail();
             });
 
             openButton.addEventListener("click", () => {
+              filters.open = false;
               layout.classList.remove("detail-collapsed");
               closeButton.focus();
+            });
+
+            filters.addEventListener("toggle", () => {
+              if (filters.open) closeDetail(false);
             });
           })();
         </script>

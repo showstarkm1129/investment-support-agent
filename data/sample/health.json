@@ -12,7 +12,7 @@
     "agent_success": 4,
     "agent_failed": 0,
     "report_outputs": 3,
-    "ui_pages": 4
+    "ui_pages": 5
   },
   "sections": [
     {
@@ -116,7 +116,7 @@
           "label": "Dashboard UI",
           "status": "ok",
           "message": "Dashboard、Evidence、Health、Agent指示書を接続",
-          "detail": "各画面から相互に移動でき、AgentごとのCLAUDE.mdも確認できる状態。",
+          "detail": "各画面から相互に移動でき、AgentごとのAGENTS.mdも確認できる状態。",
           "last_run_at": "2026-06-22T17:31:00+09:00"
         },
         {

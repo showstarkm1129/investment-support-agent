@@ -1,6 +1,6 @@
 investment-support-agent/
 ├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
-│  ├─ CLAUDE.md
+│  ├─ AGENTS.md
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
 │  ├─ bull/                        # 強気材料を整理する Agent。

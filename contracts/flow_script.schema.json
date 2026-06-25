@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.investment-support-agent/contracts/flow_script.schema.json",
+  "title": "Flow script definition",
+  "type": "object",
+  "required": ["schema_version", "script_id", "display_name", "flow", "target", "agent_groups", "agents"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": { "const": "flow_script_v1" },
+    "script_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "display_name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "flow": {
+      "type": "string",
+      "enum": ["morning_report", "close_report", "chat_quick", "chat_context", "chat_agent", "chat_research"]
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["manual", "codex", "claude", "openai_api", "anthropic_api", "gemini_api"]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["prepare", "dry-run", "simulate", "live"]
+    },
+    "depth": {
+      "type": "string",
+      "enum": ["quick", "normal", "deep"]
+    },
+    "target": { "$ref": "#/$defs/target" },
+    "agent_groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/agentGroup" }
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/agentStep" }
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "execution": { "$ref": "#/$defs/execution" },
+    "automation": { "type": "object" },
+    "variables": { "type": "object" }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "required": ["target_id", "target_type", "company_name", "themes"],
+      "additionalProperties": true,
+      "properties": {
+        "target_id": { "type": "string", "minLength": 1 },
+        "target_type": {
+          "type": "string",
+          "enum": ["stock", "index", "sector", "theme"]
+        },
+        "stock_code": { "type": "string" },
+        "company_name": { "type": "string", "minLength": 1 },
+        "market": { "type": "string" },
+        "themes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "agentGroup": {
+      "type": "object",
+      "required": ["group_id", "agents"],
+      "additionalProperties": true,
+      "properties": {
+        "group_id": { "type": "string", "minLength": 1 },
+        "parallel": { "type": "boolean" },
+        "agents": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "agentStep": {
+      "type": "object",
+      "required": ["agent_id"],
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1 },
+        "inputs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "outputs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["manual", "cli", "api"]
+        },
+        "env_key": { "type": "string" },
+        "base_url": { "type": "string" }
+      }
+    }
+  }
+}

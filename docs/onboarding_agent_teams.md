@@ -4,8 +4,8 @@ Use this checklist when handing work to Claude Code Agent Teams.
 
 ## Read First
 
-1. `agents/CLAUDE.md`
-2. the specific `agents/{agent}/CLAUDE.md`
+1. `agents/AGENTS.md`
+2. the specific `agents/{agent}/AGENTS.md`
 3. the selected flow in `flows/`
 4. the relevant schema in `contracts/`
 5. the run `context.json`

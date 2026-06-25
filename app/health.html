@@ -6,6 +6,35 @@
   <title>Health / 実行状態</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/app.css">
+  
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+
 </head>
 <body>
   <div class="app">
@@ -16,8 +45,12 @@
           <span>MVP connected UI</span>
         </div>
         <nav class="nav-links">
-          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link active" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+          <a class="nav-link" href="dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link" href="../reports/daily/2026-06-22_6501_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link active" href="health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="flow_builder.html"><i class="dot red"></i><span>Flow</span></a><a class="nav-link" href="agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
         </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
       </aside>
     
     <main>
@@ -27,11 +60,26 @@
             <h1>Health / 実行状態</h1>
             <p class="subtitle">対象: 6501 日立製作所 / 取得・証拠化・Agent・出力の状態</p>
           </div>
-          <div class="actions">
-            <a class="button" href="dashboard.html">Dashboardへ</a>
-            <a class="button" href="evidence.html">Evidenceへ</a>
-          </div>
         </div>
+
+        <section class="panel">
+          <h2>このページで見ること</h2>
+          <p>Healthは、レポートがどこまで正しく作られたかを確認する運用チェック画面です。情報取得、Evidence化、Agent分析、Report Judge、NotebookLM用出力までの流れを並べ、失敗や不足があればここで見つけます。</p>
+          <div class="grid-3">
+            <article class="card">
+              <h3>入力が揃ったか</h3>
+              <p>価格、IR、ニュースなどの素材取得と、Evidence化の成功・失敗を確認します。</p>
+            </article>
+            <article class="card">
+              <h3>分析が通ったか</h3>
+              <p>強気、弱気、反証、織り込み、Report Judgeが根拠つきで出力できたかを確認します。</p>
+            </article>
+            <article class="card">
+              <h3>出力できたか</h3>
+              <p>Dashboard、Evidence、HTMLレポート、NotebookLM用Markdownが生成されたかを確認します。</p>
+            </article>
+          </div>
+        </section>
 
         <section class="panel">
           <div class="health-row">
@@ -146,7 +194,7 @@
                 <tr>
                   <td><span class="status-pill status-ok">正常</span></td>
                   <td><b>Dashboard UI</b><br><span class="muted">dashboard_ui</span></td>
-                  <td>Dashboard、Evidence、Health、Agent指示書を接続<br><span class="muted">各画面から相互に移動でき、AgentごとのCLAUDE.mdも確認できる状態。</span></td>
+                  <td>Dashboard、Evidence、Health、Agent指示書を接続<br><span class="muted">各画面から相互に移動でき、AgentごとのAGENTS.mdも確認できる状態。</span></td>
                   <td>2026-06-22T17:31:00+09:00</td>
                 </tr>
                 
