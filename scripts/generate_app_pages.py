@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import html
-import json
 from pathlib import Path
 from typing import Any
 
@@ -21,8 +20,8 @@ STATUS_LABELS = {
 }
 
 AGENT_LABELS = {
-    "bull": "強気Agent",
-    "bear": "弱気Agent",
+    "bull": "上方向材料Agent",
+    "bear": "下方向材料Agent",
     "contradiction": "反証Agent",
     "pricing": "織り込みAgent",
 }
@@ -31,8 +30,8 @@ AGENT_DOCS = [
     ("共通指示", "../agents/AGENTS.md", "全Agent共通の禁止事項、根拠ルール、出力方針。"),
     ("探索設計Agent", "../agents/search_design/AGENTS.md", "銘柄やテーマから何を調べるべきかを設計する。"),
     ("証拠化Agent", "../agents/evidence_builder/AGENTS.md", "取得素材をEvidenceカードへ整える。"),
-    ("強気Agent", "../agents/bull/AGENTS.md", "中期仮説を補強する事実を整理する。"),
-    ("弱気Agent", "../agents/bear/AGENTS.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
+    ("上方向材料Agent", "../agents/bull/AGENTS.md", "中期仮説を補強する事実を整理する。"),
+    ("下方向材料Agent", "../agents/bear/AGENTS.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
     ("反証Agent", "../agents/contradiction/AGENTS.md", "仮説の前提を壊し得る事実を探す。"),
     ("織り込みAgent", "../agents/pricing/AGENTS.md", "材料の価格反映と短期過熱を整理する。"),
     ("Report Judge", "../agents/report_judge/AGENTS.md", "定型レポートの最終情報整理を行う。"),
@@ -110,7 +109,7 @@ def quality_line(item: dict[str, Any]) -> str:
     direction_class = "green"
     if evaluation.get("direction_hint") in {"priced_in", "neutral", "unknown"}:
         direction_class = "blue"
-    if evaluation.get("direction_hint") in {"bearish", "contradiction"}:
+    if evaluation.get("direction_hint") in {"downside", "contradiction"}:
         direction_class = "red"
     impact_class = "green" if evaluation["impact_level"] == "high" else "amber"
     return f"""
@@ -254,7 +253,7 @@ def build_dashboard(
     health: dict[str, Any],
 ) -> str:
     target = judge["target"]
-    judgement = judge["judgement"]
+    market_readout = judge["market_readout"]
     info = judge["information_status"]
     hypo = judge["hypothesis_impact"]
     uncertainty = judge["uncertainty"]
@@ -302,7 +301,7 @@ def build_dashboard(
         <section class="grid-4">
           <div class="stat"><div class="label">情報状態</div><div class="small-value">{esc(label(info["label"]))}</div></div>
           <div class="stat"><div class="label">仮説への影響</div><div class="small-value">{esc(label(hypo["label"]))}</div></div>
-          <div class="stat"><div class="label">方向スコア</div><div class="value">{judgement["direction_score"]:+}</div></div>
+          <div class="stat"><div class="label">材料バランス</div><div class="value">{market_readout["evidence_balance_score"]:+}</div></div>
           <div class="stat"><div class="label">不確実性</div><div class="value">{esc(label(uncertainty["level"]))}</div></div>
         </section>
 
@@ -323,15 +322,15 @@ def build_dashboard(
         <section class="grid-2">
           <div class="panel">
             <h2>今日の情報整理</h2>
-            <p><b>{esc(judgement["summary"])}</b></p>
+            <p><b>{esc(market_readout["summary"])}</b></p>
             <p>{esc(info["summary"])}</p>
             <p class="muted">これは売買行動の提案ではなく、EvidenceとAgent出力に基づく情報整理です。</p>
           </div>
           <div class="panel">
             <h2>証拠重み</h2>
             <div class="bar-list">
-              <div class="bar-row"><span>強気</span><div class="bar-track"><div class="bar-fill green" style="width:{weights["bullish"]}%"></div></div><b>{weights["bullish"]}%</b></div>
-              <div class="bar-row"><span>弱気</span><div class="bar-track"><div class="bar-fill amber" style="width:{weights["bearish"]}%"></div></div><b>{weights["bearish"]}%</b></div>
+              <div class="bar-row"><span>上方向材料</span><div class="bar-track"><div class="bar-fill green" style="width:{weights["upside"]}%"></div></div><b>{weights["upside"]}%</b></div>
+              <div class="bar-row"><span>下方向材料</span><div class="bar-track"><div class="bar-fill amber" style="width:{weights["downside"]}%"></div></div><b>{weights["downside"]}%</b></div>
               <div class="bar-row"><span>反証</span><div class="bar-track"><div class="bar-fill red" style="width:{weights["contradiction"]}%"></div></div><b>{weights["contradiction"]}%</b></div>
               <div class="bar-row"><span>織り込み</span><div class="bar-track"><div class="bar-fill blue" style="width:{weights["priced_in"]}%"></div></div><b>{weights["priced_in"]}%</b></div>
             </div>
@@ -423,7 +422,7 @@ def build_evidence_page(evidence: list[dict[str, Any]], judge: dict[str, Any]) -
               </div>
               <div class="detail-section">
                 <h3>方向</h3>
-                <div class="chips"><span class="chip">強気</span><span class="chip">弱気</span><span class="chip">反証</span><span class="chip">織り込み</span></div>
+                <div class="chips"><span class="chip">上方向材料</span><span class="chip">下方向材料</span><span class="chip">反証</span><span class="chip">織り込み</span></div>
               </div>
               <div class="detail-section">
                 <h3>証拠品質</h3>
@@ -585,7 +584,7 @@ def build_health_page(health: dict[str, Any], judge: dict[str, Any]) -> str:
             </article>
             <article class="card">
               <h3>分析が通ったか</h3>
-              <p>強気、弱気、反証、織り込み、Report Judgeが根拠つきで出力できたかを確認します。</p>
+              <p>上方向材料、下方向材料、反証、織り込み、Report Judgeが根拠つきで出力できたかを確認します。</p>
             </article>
             <article class="card">
               <h3>出力できたか</h3>

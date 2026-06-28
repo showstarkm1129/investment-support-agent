@@ -1,0 +1,40 @@
+{
+  "name": "investment-support-agent",
+  "version": "1.0.0",
+  "description": "投資判断を「情報収集、証拠化、複数 Agent の分析、Judge による整理、レポート化」まで一貫して扱うための Agent Teams 向けプロジェクトです。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "lint:md": "markdownlint-cli2",
+    "check:links": "find . -path ./node_modules -prune -o -path ./playwright-report -prune -o -path ./test-results -prune -o -path ./blob-report -prune -o -path ./runs/YYYY-MM-DD -prune -o -name '*.md' -print0 | xargs -0 -n1 markdown-link-check -q -c .markdown-link-check.json",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/showstarkm1129/investment-support-agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/showstarkm1129/investment-support-agent/issues"
+  },
+  "homepage": "https://github.com/showstarkm1129/investment-support-agent#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1",
+    "markdown-link-check": "^3.13.7",
+    "markdownlint-cli2": "^0.22.1"
+  },
+  "overrides": {
+    "markdownlint-cli2": {
+      "js-yaml": "^4.3.0",
+      "markdown-it": "^14.2.0"
+    }
+  }
+}

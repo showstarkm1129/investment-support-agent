@@ -11,7 +11,7 @@ The project has three separate control layers:
 Flow names map to run directories:
 
 | Flow | Run bucket | Primary output |
-|---|---|---|
+| --- | --- | --- |
 | `morning_report` | `morning` | pre-market report package |
 | `close_report` | `close` | after-close report package |
 | `chat_quick` | `chat` | low-latency answer |

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://local.investment-support-agent/contracts/report_judge.schema.json",
-  "title": "Report judge output",
+  "title": "Report readout output",
   "type": "object",
-  "required": ["schema_version", "run_id", "agent_name", "run_at", "decision_stage", "target", "judgement", "information_status", "hypothesis_impact", "uncertainty", "evidence_weight", "view_change_conditions", "missing_information", "used_evidence", "warnings"],
+  "required": ["schema_version", "run_id", "agent_name", "run_at", "decision_stage", "target", "market_readout", "information_status", "hypothesis_impact", "uncertainty", "evidence_weight", "view_change_conditions", "missing_information", "used_evidence", "warnings"],
   "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "report_judge_output_v1" },
+    "schema_version": { "const": "report_readout_v1" },
     "run_id": { "type": "string", "minLength": 1 },
     "agent_name": { "const": "report_judge" },
     "run_at": { "$ref": "#/$defs/isoDateTimeWithOffset" },
@@ -15,7 +15,7 @@
       "enum": ["draft", "final"]
     },
     "target": { "$ref": "#/$defs/target" },
-    "judgement": { "$ref": "#/$defs/judgement" },
+    "market_readout": { "$ref": "#/$defs/marketReadout" },
     "information_status": { "$ref": "#/$defs/informationStatus" },
     "hypothesis_impact": { "$ref": "#/$defs/hypothesisImpact" },
     "uncertainty": { "$ref": "#/$defs/uncertainty" },
@@ -67,16 +67,16 @@
         }
       }
     },
-    "judgement": {
+    "marketReadout": {
       "type": "object",
-      "required": ["label", "direction_score", "confidence", "summary"],
+      "required": ["label", "evidence_balance_score", "confidence", "summary"],
       "additionalProperties": false,
       "properties": {
         "label": {
           "type": "string",
-          "enum": ["bullish", "slightly_bullish", "neutral", "pending", "slightly_bearish", "bearish"]
+          "enum": ["upside", "slightly_upside", "neutral", "pending", "slightly_downside", "downside"]
         },
-        "direction_score": {
+        "evidence_balance_score": {
           "type": "integer",
           "minimum": -100,
           "maximum": 100
@@ -92,7 +92,7 @@
       "properties": {
         "label": {
           "type": "string",
-          "enum": ["bullish_evidence_leading", "bearish_evidence_leading", "mixed", "insufficient_information", "no_material_change"]
+          "enum": ["upside_evidence_leading", "downside_evidence_leading", "mixed", "insufficient_information", "no_material_change"]
         },
         "summary": { "type": "string", "minLength": 1 }
       }
@@ -123,11 +123,11 @@
     },
     "evidenceWeight": {
       "type": "object",
-      "required": ["bullish", "bearish", "contradiction", "priced_in"],
+      "required": ["upside", "downside", "contradiction", "priced_in"],
       "additionalProperties": false,
       "properties": {
-        "bullish": { "type": "integer", "minimum": 0, "maximum": 100 },
-        "bearish": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "upside": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "downside": { "type": "integer", "minimum": 0, "maximum": 100 },
         "contradiction": { "type": "integer", "minimum": 0, "maximum": 100 },
         "priced_in": { "type": "integer", "minimum": 0, "maximum": 100 }
       }

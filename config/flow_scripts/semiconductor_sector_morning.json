@@ -110,7 +110,7 @@
       "agent_id": "bull",
       "inputs": ["evidence.json", "contracts/agent_output.schema.json"],
       "outputs": ["runs/{date}/{target_id}/morning/agent_outputs.json"],
-      "notes": ["強気材料だけでなく、強さの根拠と時間軸を明示する。"]
+      "notes": ["上方向材料だけでなく、強さの根拠と時間軸を明示する。"]
     },
     {
       "agent_id": "bear",

@@ -1,5 +1,5 @@
 {
-  "schema_version": "report_judge_output_v1",
+  "schema_version": "report_readout_v1",
   "run_id": "JR20260622-001",
   "agent_name": "report_judge",
   "run_at": "2026-06-22T17:25:00+09:00",
@@ -12,15 +12,15 @@
     "market": "prime",
     "themes": ["AIインフラ", "データセンター", "電力インフラ"]
   },
-  "judgement": {
-    "label": "slightly_bullish",
-    "direction_score": 62,
+  "market_readout": {
+    "label": "slightly_upside",
+    "evidence_balance_score": 62,
     "confidence": "medium",
     "summary": "中期仮説をやや補強する情報が優勢。ただし短期過熱と未確認情報が残る。"
   },
   "information_status": {
-    "label": "bullish_evidence_leading",
-    "summary": "強気材料が優勢。ただし短期過熱と未確認情報が残る。"
+    "label": "upside_evidence_leading",
+    "summary": "上方向材料が優勢。ただし短期過熱と未確認情報が残る。"
   },
   "hypothesis_impact": {
     "label": "slightly_supportive",
@@ -35,15 +35,15 @@
     ]
   },
   "evidence_weight": {
-    "bullish": 68,
-    "bearish": 17,
+    "upside": 68,
+    "downside": 17,
     "contradiction": 9,
     "priced_in": 6
   },
   "view_change_conditions": [
     {
       "condition": "出来高増加後に価格が維持できない",
-      "effect": "強気材料の重みが下がる",
+      "effect": "上方向材料の重みが下がる",
       "related_hypothesis": "中期トレンド継続仮説",
       "related_evidence_ids": ["E20260622-001"]
     },
@@ -75,12 +75,12 @@
   "used_evidence": [
     {
       "evidence_id": "E20260622-001",
-      "role": "main_bullish",
+      "role": "main_upside",
       "reason": "価格と出来高の反応が中期仮説を補強する可能性がある"
     },
     {
       "evidence_id": "E20260622-006",
-      "role": "main_bullish",
+      "role": "main_upside",
       "reason": "AIインフラ関連の公式材料であり、対象銘柄への直接性が高い"
     },
     {

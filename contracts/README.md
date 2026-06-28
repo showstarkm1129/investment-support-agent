@@ -7,7 +7,7 @@ Required contracts:
 - `evidence.schema.json`: normalized facts from source material.
 - `agent_output.schema.json`: outputs from bull, bear, contradiction, and
   pricing agents.
-- `report_judge.schema.json`: final daily or close report judgement.
+- `report_judge.schema.json`: final daily or close report readout.
 - `chat_judge.schema.json`: chat answer and routing decision.
 - `health.schema.json`: runtime and data-quality status.
 - `artifact_contract.md`: path and naming conventions for generated artifacts.

@@ -77,7 +77,7 @@
           "check_id": "analysis_agents",
           "label": "分析Agent群",
           "status": "ok",
-          "message": "強気・弱気・反証・織り込みの4Agentが成功",
+        "message": "上方向材料・下方向材料・反証・織り込みの4Agentが成功",
           "detail": "各Agentはclaim_strengthと根拠Evidenceを出力済み。",
           "last_run_at": "2026-06-22T17:20:00+09:00"
         },

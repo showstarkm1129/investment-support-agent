@@ -103,7 +103,7 @@
     },
     "evaluation": {
       "type": "object",
-      "required": ["directness", "freshness", "impact_level", "direction_hint", "related_topics", "hypothesis_impact", "usable_for_judgement"],
+      "required": ["directness", "freshness", "impact_level", "direction_hint", "related_topics", "hypothesis_impact", "usable_for_market_readout"],
       "additionalProperties": false,
       "properties": {
         "directness": { "$ref": "#/$defs/level" },
@@ -111,14 +111,14 @@
         "impact_level": { "$ref": "#/$defs/level" },
         "direction_hint": {
           "type": "string",
-          "enum": ["bullish", "bearish", "contradiction", "priced_in", "neutral", "unknown"]
+          "enum": ["upside", "downside", "contradiction", "priced_in", "neutral", "unknown"]
         },
         "related_topics": {
           "type": "array",
           "items": { "type": "string" }
         },
         "hypothesis_impact": { "type": "string", "minLength": 1 },
-        "usable_for_judgement": { "type": "boolean" }
+        "usable_for_market_readout": { "type": "boolean" }
       }
     },
     "workflow": {

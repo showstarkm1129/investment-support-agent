@@ -10,15 +10,15 @@ investment-support-agent/
 │  │  └─ AGENTS.md
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
 │  │  └─ AGENTS.md
-│  ├─ bull/                        # 強気材料を整理する Agent。
+│  ├─ bull/                        # 上方向材料を整理する Agent。
 │  │  └─ AGENTS.md
-│  ├─ bear/                        # 弱気材料やリスクを整理する Agent。
+│  ├─ bear/                        # 下方向材料やリスクを整理する Agent。
 │  │  └─ AGENTS.md
 │  ├─ contradiction/               # 仮説に反する材料や矛盾を探す Agent。
 │  │  └─ AGENTS.md
 │  ├─ pricing/                     # 材料が価格に織り込まれているかを見る Agent。
 │  │  └─ AGENTS.md
-│  ├─ report_judge/                # レポート用の最終判断をまとめる Agent。
+│  ├─ report_judge/                # レポート用の最終整理をまとめる Agent。
 │  │  └─ AGENTS.md
 │  └─ chat_judge/                  # チャット質問の重さに応じて回答経路を選ぶ Agent。
 │     └─ AGENTS.md

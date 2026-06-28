@@ -33,4 +33,4 @@ bull and bear case" questions.
 
 - Do not run connectors.
 - Do not create new evidence unless the flow escalates to `chat_research`.
-- Do not convert an agent stance into a trade recommendation.
+- Do not convert an agent stance into a trade recommendation or investment instruction.

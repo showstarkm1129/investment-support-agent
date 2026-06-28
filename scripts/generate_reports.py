@@ -18,8 +18,8 @@ from typing import Any
 
 
 LABELS = {
-    "bullish_evidence_leading": "強気材料優勢",
-    "bearish_evidence_leading": "弱気材料優勢",
+    "upside_evidence_leading": "上方向材料優勢",
+    "downside_evidence_leading": "下方向材料優勢",
     "mixed": "材料拮抗",
     "insufficient_information": "情報不足",
     "no_material_change": "大きな変化なし",
@@ -28,11 +28,11 @@ LABELS = {
     "neutral": "中立",
     "slightly_negative": "やや悪化",
     "negative": "悪化",
-    "undetermined": "判定不能",
-    "slightly_bullish": "やや強気",
-    "bullish": "強気",
-    "slightly_bearish": "やや弱気",
-    "bearish": "弱気",
+    "undetermined": "整理不能",
+    "slightly_upside": "やや上方向",
+    "upside": "上方向",
+    "slightly_downside": "やや下方向",
+    "downside": "下方向",
     "pending": "保留",
     "priced_in": "織り込み",
     "high": "高",
@@ -126,7 +126,7 @@ def build_analysis_markdown(
     judge: dict[str, Any],
 ) -> str:
     target = judge["target"]
-    judgement = judge["judgement"]
+    market_readout = judge["market_readout"]
     info = judge["information_status"]
     hypo = judge["hypothesis_impact"]
     uncertainty = judge["uncertainty"]
@@ -180,13 +180,13 @@ def build_analysis_markdown(
 
 ## 1. 今日の一言結論
 
-{judgement["summary"]}
+{market_readout["summary"]}
 
-## 2. 判定サマリー
+## 2. 材料整理サマリー
 
-- 判定: {label(judgement["label"])}
-- 方向スコア: {judgement["direction_score"]:+}
-- confidence: {label(judgement["confidence"])}
+- 材料の読み: {label(market_readout["label"])}
+- 材料バランス: {market_readout["evidence_balance_score"]:+}
+- confidence: {label(market_readout["confidence"])}
 - 情報状態: {label(info["label"])}
 - 仮説への影響: {label(hypo["label"])}
 - 不確実性: {label(uncertainty["level"])}
@@ -203,8 +203,8 @@ def build_analysis_markdown(
 
 | 方向 | 重み |
 |---|---:|
-| 強気 | {weights["bullish"]}% |
-| 弱気 | {weights["bearish"]}% |
+| 上方向材料 | {weights["upside"]}% |
+| 下方向材料 | {weights["downside"]}% |
 | 反証 | {weights["contradiction"]}% |
 | 織り込み | {weights["priced_in"]}% |
 
@@ -251,7 +251,7 @@ def build_audio_markdown(
     judge: dict[str, Any],
 ) -> str:
     target = judge["target"]
-    judgement = judge["judgement"]
+    market_readout = judge["market_readout"]
     info = judge["information_status"]
     hypo = judge["hypothesis_impact"]
     uncertainty = judge["uncertainty"]
@@ -285,14 +285,14 @@ def build_audio_markdown(
 ## 今日の一言
 
 今日は、{target["company_name"]}について、{label(info["label"])}です。
-方向スコアは{judgement["direction_score"]:+}、判定は{label(judgement["label"])}、confidenceは{label(judgement["confidence"])}です。
+材料バランスは{market_readout["evidence_balance_score"]:+}、材料の読みは{label(market_readout["label"])}、confidenceは{label(market_readout["confidence"])}です。
 
 ## 情報状態
 
 {info["summary"]}
 
-この見方の中心は、強気材料の重みが{judge["evidence_weight"]["bullish"]}%で最も大きい一方、短期過熱や未確認情報も残っている点です。
-つまり、方向感は強気寄りですが、まだ断定ではありません。
+この見方の中心は、上方向材料の重みが{judge["evidence_weight"]["upside"]}%で最も大きい一方、短期過熱や未確認情報も残っている点です。
+つまり、材料の傾きは上方向寄りですが、まだ断定ではありません。
 
 ## 中期仮説への影響
 
@@ -398,7 +398,7 @@ def build_html_report(
     judge: dict[str, Any],
 ) -> str:
     target = judge["target"]
-    judgement = judge["judgement"]
+    market_readout = judge["market_readout"]
     info = judge["information_status"]
     hypo = judge["hypothesis_impact"]
     uncertainty = judge["uncertainty"]
@@ -455,13 +455,13 @@ def build_html_report(
   <section class="panel">
     <div class="muted">{html.escape(judge["run_at"])} / 引け後</div>
     <h1>{html.escape(target["stock_code"])} {html.escape(target["company_name"])} 日次レポート</h1>
-    <p>{html.escape(judgement["summary"])}</p>
+    <p>{html.escape(market_readout["summary"])}</p>
   </section>
 
   <section class="grid-4">
-    <div class="panel"><div class="muted">判定</div><div class="value">{html.escape(label(judgement["label"]))}</div></div>
-    <div class="panel"><div class="muted">方向スコア</div><div class="value">{judgement["direction_score"]:+}</div></div>
-    <div class="panel"><div class="muted">confidence</div><div class="value">{html.escape(label(judgement["confidence"]))}</div></div>
+    <div class="panel"><div class="muted">材料の読み</div><div class="value">{html.escape(label(market_readout["label"]))}</div></div>
+    <div class="panel"><div class="muted">材料バランス</div><div class="value">{market_readout["evidence_balance_score"]:+}</div></div>
+    <div class="panel"><div class="muted">confidence</div><div class="value">{html.escape(label(market_readout["confidence"]))}</div></div>
     <div class="panel"><div class="muted">不確実性</div><div class="value">{html.escape(label(uncertainty["level"]))}</div></div>
   </section>
 
@@ -477,7 +477,7 @@ def build_html_report(
 
   <section class="panel">
     <h2>証拠重み</h2>
-    <p>強気 {weights["bullish"]}% / 弱気 {weights["bearish"]}% / 反証 {weights["contradiction"]}% / 織り込み {weights["priced_in"]}%</p>
+    <p>上方向材料 {weights["upside"]}% / 下方向材料 {weights["downside"]}% / 反証 {weights["contradiction"]}% / 織り込み {weights["priced_in"]}%</p>
   </section>
 
   <section class="panel">

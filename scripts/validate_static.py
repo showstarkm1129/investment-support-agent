@@ -167,8 +167,8 @@ ALLOWED_SOURCE_TYPES = {
 ALLOWED_RELIABILITY = {"A", "B", "C", "D", "E"}
 ALLOWED_LEVELS = {"high", "medium", "low"}
 ALLOWED_DIRECTION_HINTS = {
-    "bullish",
-    "bearish",
+    "upside",
+    "downside",
     "contradiction",
     "priced_in",
     "neutral",
@@ -177,17 +177,17 @@ ALLOWED_DIRECTION_HINTS = {
 ALLOWED_REVIEW_STATUS = {"unread", "reviewed", "ignored"}
 ALLOWED_AGENTS = {"bull", "bear", "contradiction", "pricing"}
 ALLOWED_CONFIDENCE = {"high", "medium", "low"}
-ALLOWED_JUDGE_LABELS = {
-    "bullish",
-    "slightly_bullish",
+ALLOWED_MARKET_READOUT_LABELS = {
+    "upside",
+    "slightly_upside",
     "neutral",
     "pending",
-    "slightly_bearish",
-    "bearish",
+    "slightly_downside",
+    "downside",
 }
 ALLOWED_INFORMATION_STATUS = {
-    "bullish_evidence_leading",
-    "bearish_evidence_leading",
+    "upside_evidence_leading",
+    "downside_evidence_leading",
     "mixed",
     "insufficient_information",
     "no_material_change",
@@ -415,7 +415,7 @@ def check_evidence(v: Validator, evidence: Any) -> set[str]:
             (identity, ["target_id", "stock_code", "company_name", "collected_at", "published_at"], f"{path}.identity"),
             (source, ["source_type", "source_name", "source_reliability", "save_policy"], f"{path}.source"),
             (content, ["title", "summary", "metrics"], f"{path}.content"),
-            (evaluation, ["directness", "freshness", "impact_level", "direction_hint", "hypothesis_impact", "usable_for_judgement"], f"{path}.evaluation"),
+            (evaluation, ["directness", "freshness", "impact_level", "direction_hint", "hypothesis_impact", "usable_for_market_readout"], f"{path}.evaluation"),
             (workflow, ["human_review_status", "used_in_decision", "review_due_date", "related_evidence_ids"], f"{path}.workflow"),
         ]:
             ensure_type(v, obj, dict, obj_path)
@@ -513,7 +513,7 @@ def check_judge(v: Validator, judge: Any, evidence_ids: set[str]) -> None:
             "agent_name",
             "run_at",
             "target",
-            "judgement",
+            "market_readout",
             "information_status",
             "hypothesis_impact",
             "uncertainty",
@@ -527,13 +527,13 @@ def check_judge(v: Validator, judge: Any, evidence_ids: set[str]) -> None:
     if isinstance(judge.get("run_at"), str):
         v.check(is_iso_datetime(judge["run_at"]), "report_judge.run_at: must be ISO datetime with timezone")
 
-    judgement = judge.get("judgement", {})
-    ensure_type(v, judgement, dict, "report_judge.judgement")
-    if isinstance(judgement, dict):
-        v.check(judgement.get("label") in ALLOWED_JUDGE_LABELS, f"report_judge.judgement.label: unknown value {judgement.get('label')!r}")
-        score = judgement.get("direction_score")
-        v.check(isinstance(score, int) and -100 <= score <= 100, "report_judge.judgement.direction_score: must be -100..100")
-        v.check(judgement.get("confidence") in ALLOWED_CONFIDENCE, f"report_judge.judgement.confidence: unknown value {judgement.get('confidence')!r}")
+    market_readout = judge.get("market_readout", {})
+    ensure_type(v, market_readout, dict, "report_judge.market_readout")
+    if isinstance(market_readout, dict):
+        v.check(market_readout.get("label") in ALLOWED_MARKET_READOUT_LABELS, f"report_judge.market_readout.label: unknown value {market_readout.get('label')!r}")
+        score = market_readout.get("evidence_balance_score")
+        v.check(isinstance(score, int) and -100 <= score <= 100, "report_judge.market_readout.evidence_balance_score: must be -100..100")
+        v.check(market_readout.get("confidence") in ALLOWED_CONFIDENCE, f"report_judge.market_readout.confidence: unknown value {market_readout.get('confidence')!r}")
 
     info = judge.get("information_status", {})
     hypo = judge.get("hypothesis_impact", {})
@@ -547,10 +547,10 @@ def check_judge(v: Validator, judge: Any, evidence_ids: set[str]) -> None:
         v.check(uncertainty.get("level") in ALLOWED_CONFIDENCE, f"report_judge.uncertainty.level: unknown value {uncertainty.get('level')!r}")
         ensure_type(v, uncertainty.get("factors"), list, "report_judge.uncertainty.factors")
     if isinstance(weights, dict):
-        for key in ["bullish", "bearish", "contradiction", "priced_in"]:
+        for key in ["upside", "downside", "contradiction", "priced_in"]:
             v.check(isinstance(weights.get(key), int), f"report_judge.evidence_weight.{key}: must be integer")
-        if all(isinstance(weights.get(key), int) for key in ["bullish", "bearish", "contradiction", "priced_in"]):
-            total = sum(weights[key] for key in ["bullish", "bearish", "contradiction", "priced_in"])
+        if all(isinstance(weights.get(key), int) for key in ["upside", "downside", "contradiction", "priced_in"]):
+            total = sum(weights[key] for key in ["upside", "downside", "contradiction", "priced_in"])
             v.check(total == 100, f"report_judge.evidence_weight: must sum to 100, got {total}")
 
     for list_key in ["view_change_conditions", "missing_information", "used_evidence"]:

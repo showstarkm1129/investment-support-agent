@@ -31,10 +31,10 @@
       "directness": "high",
       "freshness": "high",
       "impact_level": "medium",
-      "direction_hint": "bullish",
+      "direction_hint": "upside",
       "related_topics": ["出来高", "価格維持", "買い需要"],
       "hypothesis_impact": "中期トレンド継続仮説を補強する可能性",
-      "usable_for_judgement": true
+      "usable_for_market_readout": true
     },
     "workflow": {
       "human_review_status": "unread",
@@ -74,10 +74,10 @@
       "directness": "high",
       "freshness": "high",
       "impact_level": "high",
-      "direction_hint": "bullish",
+      "direction_hint": "upside",
       "related_topics": ["AIインフラ", "受注", "中期仮説"],
       "hypothesis_impact": "AIインフラ需要継続仮説を補強する可能性",
-      "usable_for_judgement": true
+      "usable_for_market_readout": true
     },
     "workflow": {
       "human_review_status": "unread",
@@ -121,7 +121,7 @@
       "direction_hint": "priced_in",
       "related_topics": ["短期過熱", "価格反応", "織り込み"],
       "hypothesis_impact": "中期仮説を否定しないが、短期価格反応として注意材料",
-      "usable_for_judgement": true
+      "usable_for_market_readout": true
     },
     "workflow": {
       "human_review_status": "unread",

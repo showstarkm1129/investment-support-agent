@@ -2,6 +2,7 @@
 
 Report Judgeは、日次、週次、中期レビューなどの定型レポートの最終整理者である。
 売買判断の命令者ではない。
+`market_readout` は投資判断ではなく、市場材料の読みを整理するための出力である。
 
 ## 役割
 
@@ -13,9 +14,9 @@ Report Judgeは、日次、週次、中期レビューなどの定型レポー�
 
 ## 出力
 
-- `judgement.label`
-- `judgement.direction_score`
-- `judgement.confidence`
+- `market_readout.label`
+- `market_readout.evidence_balance_score`
+- `market_readout.confidence`
 - `information_status`
 - `hypothesis_impact`
 - `uncertainty`
@@ -24,6 +25,14 @@ Report Judgeは、日次、週次、中期レビューなどの定型レポー�
 - `missing_information`
 - `used_evidence`
 - `warnings`
+
+## スコアの扱い
+
+- `market_readout.evidence_balance_score` は売買判断スコアではなく、Evidenceの材料バランスをUI表示用に圧縮した数値である。
+- 正の値は「上方向に解釈されやすい材料が相対的に多い」、負の値は「下方向に解釈されやすい材料が相対的に多い」ことを示す。
+- この数値を期待リターン、上昇確率、目標株価、推奨度として説明してはならない。
+- 人間向け表示では、「材料バランス」または「材料バランススコア」と表現する。
+- `evidence_weight` は各材料群の相対的な存在感であり、売買配分やポートフォリオ比率ではない。
 
 ## 禁止
 

@@ -131,22 +131,24 @@ investment-support-agent/
 
 ## 基本的な使い方
 
+よく使う入口は `Makefile` にまとめています。迷った場合は [docs/ai_commands.md](docs/ai_commands.md) の順に実行してください。
+
 ### 静的検証
 
 ```bash
-python scripts/validate_static.py --skip-generated
+make validate
 ```
 
 生成済みレポートや画面との差分まで確認する場合:
 
 ```bash
-python scripts/validate_static.py
+make validate-generated
 ```
 
 ### テスト
 
 ```bash
-python -m unittest discover -s tests
+make test
 ```
 
 ### flow 実行準備
@@ -154,7 +156,7 @@ python -m unittest discover -s tests
 Agent Teams に渡す `context.json` と実行記録用の `manifest.json` を作成します。
 
 ```bash
-python scripts/run_flow.py --flow close_report --target-id TARGET-SAMPLE-6501
+make flow FLOW=close_report TARGET=TARGET-SAMPLE-6501
 ```
 
 作成先の例:
@@ -168,13 +170,13 @@ runs/{YYYY-MM-DD}/TARGET-SAMPLE-6501/close/
 ### サンプルからレポート生成
 
 ```bash
-python scripts/generate_reports.py
+make reports
 ```
 
 ### サンプルからアプリ画面生成
 
 ```bash
-python scripts/generate_app_pages.py
+make app
 ```
 
 ## 重要な考え方

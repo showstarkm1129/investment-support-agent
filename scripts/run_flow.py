@@ -8,7 +8,6 @@ import json
 import os
 import re
 import subprocess
-import sys
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -173,13 +172,13 @@ def agent_order_from_script(script: dict[str, Any], flow: str) -> list[list[str]
 
     agents = script.get("agents")
     if isinstance(agents, list) and agents:
-        clean_agents = [
-            item.get("agent_id") if isinstance(item, dict) else item
-            for item in agents
-        ]
-        clean_agents = [item for item in clean_agents if isinstance(item, str) and item]
-        if clean_agents:
-            return [[item] for item in clean_agents]
+        step_agents: list[str] = []
+        for item in agents:
+            agent_id = item.get("agent_id") if isinstance(item, dict) else item
+            if isinstance(agent_id, str) and agent_id:
+                step_agents.append(agent_id)
+        if step_agents:
+            return [[item] for item in step_agents]
 
     return FLOW_AGENT_ORDER[flow]
 
@@ -561,7 +560,7 @@ def write_simulated_outputs(*, context: dict[str, Any], run_dir: Path) -> dict[s
                         "No market data was fetched in simulation mode."
                     ],
                     "limitations": [
-                        "This is not an investment judgement.",
+                        "This is not an investment readout.",
                         "Run the planned Agent prompts to produce evidence-backed analysis."
                     ],
                 }
@@ -574,15 +573,15 @@ def write_simulated_outputs(*, context: dict[str, Any], run_dir: Path) -> dict[s
     if "report_judge" in context["outputs"]:
         report_path = run_dir / "report_judge.json"
         report = {
-            "schema_version": "report_judge_output_v1",
+            "schema_version": "report_readout_v1",
             "run_id": context["run_id"],
             "agent_name": "report_judge",
             "run_at": now,
             "decision_stage": "draft",
             "target": report_target(target),
-            "judgement": {
+            "market_readout": {
                 "label": "pending",
-                "direction_score": 0,
+                "evidence_balance_score": 0,
                 "confidence": "low",
                 "summary": "Simulation only. Real evidence and Agent outputs have not been produced yet.",
             },
@@ -599,8 +598,8 @@ def write_simulated_outputs(*, context: dict[str, Any], run_dir: Path) -> dict[s
                 "factors": ["No connector output", "No evidence IDs", "No real Agent execution"],
             },
             "evidence_weight": {
-                "bullish": 0,
-                "bearish": 0,
+                "upside": 0,
+                "downside": 0,
                 "contradiction": 0,
                 "priced_in": 100,
             },
@@ -675,7 +674,7 @@ def build_manifest(
     mode: str | None = None,
     script: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    manifest = {
+    manifest: dict[str, Any] = {
         "schema_version": "run_manifest_v1",
         "created_at": now_jst(),
         "updated_at": now_jst(),

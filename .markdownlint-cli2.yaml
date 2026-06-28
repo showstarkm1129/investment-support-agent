@@ -1,0 +1,16 @@
+config:
+  default: true
+  MD013: false
+  MD033: false
+  MD041: false
+  MD024:
+    siblings_only: true
+globs:
+  - "**/*.md"
+ignores:
+  - "node_modules/**"
+  - "playwright-report/**"
+  - "test-results/**"
+  - "blob-report/**"
+  - "runs/YYYY-MM-DD/**"
+  - "reports/**"
