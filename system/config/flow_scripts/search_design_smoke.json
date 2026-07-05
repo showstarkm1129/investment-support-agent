@@ -1,0 +1,53 @@
+{
+  "schema_version": "flow_script_v1",
+  "script_id": "search_design_smoke",
+  "display_name": "探索設計スモークテスト",
+  "description": "AI live 実行の最小確認用。search_design Agent だけを呼び、search_plan.json を書けるか確認する。",
+  "flow": "morning_report",
+  "provider": "codex",
+  "model": "default",
+  "mode": "simulate",
+  "depth": "quick",
+  "execution": {
+    "type": "cli"
+  },
+  "timezone": "Asia/Tokyo",
+  "target": {
+    "target_id": "SMOKE-SEARCH-DESIGN",
+    "target_type": "theme",
+    "stock_code": "",
+    "company_name": "探索設計スモークテスト",
+    "market": "test",
+    "themes": ["AI実行基盤", "AgentTeam", "スモークテスト"],
+    "auto_report_enabled": false
+  },
+  "variables": {
+    "focus_questions": [
+      "この最小テストで次に確認すべき入力と出力は何か",
+      "外部データ取得を行わずに、探索計画として何を残すべきか"
+    ],
+    "lookback_hours": 0
+  },
+  "agent_groups": [
+    {
+      "group_id": "search_plan",
+      "parallel": false,
+      "agents": ["search_design"]
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "search_design",
+      "inputs": ["target", "variables.focus_questions", "system/flows/morning_report.md"],
+      "outputs": ["{run_dir}/search_plan.json"],
+      "notes": [
+        "これはAI実行基盤のスモークテストであり、外部データ取得は行わない。",
+        "search_plan.json には research_questions, required_sources, fetch_modules, priority, expected_evidence_types, stop_conditions, health_notes を含める。"
+      ]
+    }
+  ],
+  "outputs": ["search_plan"],
+  "automation": {
+    "eligible": false
+  }
+}

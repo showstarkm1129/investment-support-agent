@@ -1,0 +1,31 @@
+{
+  "agent_order": [
+    "search_design",
+    "evidence_builder",
+    "bull",
+    "bear",
+    "contradiction",
+    "pricing",
+    "report_judge"
+  ],
+  "codex_reasoning_effort": "low",
+  "model": "gpt-5.4-mini",
+  "paths": {
+    "agent_outputs": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_outputs.json",
+    "agent_sequence_health": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_sequence_health.json",
+    "agent_sequence_status": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_sequence_status.json",
+    "agent_steps_dir": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_steps",
+    "evidence": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/evidence.json",
+    "health": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/health.json",
+    "report_judge": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/report_judge.json"
+  },
+  "provider": "codex_cli",
+  "resume": true,
+  "resumed_steps": [
+    "search_design"
+  ],
+  "run_at": "2026-07-05T10:16:30+09:00",
+  "run_id": "PIPE-20250328-TARGET-SAMPLE-8697-RESEARCH",
+  "schema_version": "agent_sequence_manifest_v1",
+  "status": "ok"
+}

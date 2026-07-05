@@ -1,0 +1,42 @@
+{
+  "agent_execution": "sequential",
+  "bucket": "research",
+  "codex_reasoning_effort": "low",
+  "date": "2025-03-28",
+  "loaded_env_keys": [
+    "ANTHROPIC_API_KEY",
+    "EDINET_API_KEY",
+    "GEMINI_API_KEY",
+    "JQUANTS_API_KEY",
+    "NEWS_API_KEY",
+    "OPENAI_API_KEY"
+  ],
+  "model": "gpt-5.4-mini",
+  "paths": {
+    "agent_outputs": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_outputs.json",
+    "agent_sequence_health": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_sequence_health.json",
+    "agent_sequence_manifest": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_sequence_manifest.json",
+    "agent_sequence_status": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_sequence_status.json",
+    "agent_steps_dir": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_steps",
+    "comparison_normalized_JPXSelf": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/normalized/jquants_comparison/2025-03-28/JPXSelf.json",
+    "comparison_raw_JPXSelf": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants_comparison/2025-03-28/TARGET-SAMPLE-8697/JPXSelf_86970_20250328_raw.json",
+    "edinet_raw": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/edinet/2025-03-28/TARGET-SAMPLE-8697/documents_2025-03-28_raw.json",
+    "evidence": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/evidence.json",
+    "health": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/health.json",
+    "ir_raw": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/ir/2025-03-28/TARGET-SAMPLE-8697/https_www.jpx.co.jp_corporate_investor-relations_raw.json",
+    "jquants_indicators": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/derived/jquants/indicators.json",
+    "jquants_relative_comparison": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/derived/jquants/relative_comparison.json",
+    "news_raw": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/news/2025-03-28/TARGET-SAMPLE-8697/rss_articles_2025-03-28_raw.json",
+    "normalized": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/normalized/jquants/2025-03-28/TARGET-SAMPLE-8697.json",
+    "published_reports_dir": "/home/unix/Github/investment-support-agent/reports/research",
+    "raw": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-28/TARGET-SAMPLE-8697/daily_quotes_86970_20250328_raw.json",
+    "report_judge": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/report_judge.json",
+    "reports_dir": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/reports"
+  },
+  "provider": "codex_cli",
+  "run_at": "2026-07-05T10:16:30+09:00",
+  "run_id": "PIPE-20250328-TARGET-SAMPLE-8697-RESEARCH",
+  "schema_version": "research_pipeline_manifest_v1",
+  "status": "ok",
+  "target_id": "TARGET-SAMPLE-8697"
+}

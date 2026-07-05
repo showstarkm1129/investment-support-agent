@@ -29,11 +29,12 @@ REQUIRED_DIRS = [
 ]
 
 SCHEMA_BY_OUTPUT = {
-    "evidence": "contracts/evidence.schema.json",
-    "agent_outputs": "contracts/agent_output.schema.json",
-    "report_judge": "contracts/report_judge.schema.json",
-    "chat_judge": "contracts/chat_judge.schema.json",
-    "health": "contracts/health.schema.json",
+    "evidence": "system/contracts/evidence.schema.json",
+    "agent_outputs": "system/contracts/agent_output.schema.json",
+    "report_judge": "system/contracts/report_judge.schema.json",
+    "chat_judge": "system/contracts/chat_judge.schema.json",
+    "health": "system/contracts/health.schema.json",
+    "agent_sequence_health": "system/contracts/health.schema.json",
 }
 
 
@@ -144,6 +145,10 @@ def check_run_dir(report: ArtifactReport, run_dir: Path, root: Path, strict: boo
     report.checked += 1
     manifest_path = run_dir / "manifest.json"
     context_path = run_dir / "context.json"
+    pipeline_manifest_path = run_dir / "pipeline_manifest.json"
+    if pipeline_manifest_path.is_file() and not manifest_path.is_file() and not context_path.is_file():
+        check_pipeline_run_dir(report, run_dir, root, pipeline_manifest_path)
+        return
     report.check(manifest_path.is_file(), f"{rel(run_dir)}: manifest.json is missing")
     report.check(context_path.is_file(), f"{rel(run_dir)}: context.json is missing")
     if not manifest_path.exists() or not context_path.exists():
@@ -193,6 +198,32 @@ def check_run_dir(report: ArtifactReport, run_dir: Path, root: Path, strict: boo
                 report.error(f"{rel(context_path)} outputs.{output_name}: missing {path_text}")
             else:
                 report.warn(f"{rel(context_path)} outputs.{output_name}: not created yet ({status})")
+
+
+def check_pipeline_run_dir(report: ArtifactReport, run_dir: Path, root: Path, manifest_path: Path) -> None:
+    manifest = load_json(manifest_path, report)
+    if not isinstance(manifest, dict):
+        return
+    for key in ["schema_version", "run_id", "target_id", "date", "bucket", "provider", "model", "agent_execution", "paths", "status"]:
+        if key not in manifest:
+            report.error(f"{rel(manifest_path)}: missing key {key}")
+    if manifest.get("schema_version") != "research_pipeline_manifest_v1":
+        report.error(f"{rel(manifest_path)}: unexpected schema_version {manifest.get('schema_version')!r}")
+    if manifest.get("bucket") != run_dir.name:
+        report.error(f"{rel(run_dir)}: bucket does not match directory name")
+    paths = manifest.get("paths", {})
+    if not isinstance(paths, dict):
+        report.error(f"{rel(manifest_path)} paths: must be an object")
+        return
+    for name, path_text in paths.items():
+        if not isinstance(path_text, str):
+            report.error(f"{rel(manifest_path)} paths.{name}: must be a string")
+            continue
+        artifact_path = project_path(path_text, root)
+        if not artifact_path.exists():
+            report.error(f"{rel(manifest_path)} paths.{name}: missing {path_text}")
+            continue
+        validate_artifact_json(report, name, artifact_path, root)
 
 
 def main() -> int:

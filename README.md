@@ -10,24 +10,24 @@
 
 処理の安定性を上げるために、役割は次の 3 層に分けています。
 
-- `agents/`: 各 Agent の性格、役割、禁止事項を定義します。
-- `flows/`: 朝、引け後、チャット、調査で誰をどの順番に呼ぶかを定義します。
-- `contracts/`: Evidence や Agent 出力など、入出力 JSON の正しい形を定義します。
+- `system/agents/`: 各 Agent の性格、役割、禁止事項を定義します。
+- `system/flows/`: 朝、引け後、チャット、調査で誰をどの順番に呼ぶかを定義します。
+- `system/contracts/`: Evidence や Agent 出力など、入出力 JSON の正しい形を定義します。
 
 ## 初めて読む人向けの順番
 
 1. この `README.md` で全体像をつかむ。
 2. [docs/project_structure.md](docs/project_structure.md) で詳細な階層構造を見る。
 3. [docs/architecture.md](docs/architecture.md) で処理の流れを確認する。
-4. [flows/README.md](flows/README.md) と使いたい flow を読む。
-5. [contracts/README.md](contracts/README.md) と対象 schema を確認する。
-6. [agents/AGENTS.md](agents/AGENTS.md) と各 Agent の `AGENTS.md` を読む。
+4. [system/flows/README.md](system/flows/README.md) と使いたい flow を読む。
+5. [system/contracts/README.md](system/contracts/README.md) と対象 schema を確認する。
+6. [system/agents/AGENTS.md](system/agents/AGENTS.md) と各 Agent の `AGENTS.md` を読む。
 
 ## 階層構造
 
 ```text
 investment-support-agent/
-├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
+├─ system/agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
 │  ├─ AGENTS.md                    # 全 Agent 共通の基本ルール。
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
@@ -38,7 +38,7 @@ investment-support-agent/
 │  ├─ report_judge/                # レポート用の最終判断をまとめる Agent。
 │  └─ chat_judge/                  # チャット質問の重さに応じて回答経路を選ぶ Agent。
 │
-├─ flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
+├─ system/flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
 │  ├─ README.md                    # flow 全体の考え方と run 保存方針。
 │  ├─ morning_report.md            # 朝レポートの実行順。
 │  ├─ close_report.md              # 引け後レポートの実行順。
@@ -48,7 +48,7 @@ investment-support-agent/
 │  ├─ chat_research.md             # 新規調査を伴うチャット手順。
 │  └─ error_policy.md              # エラー時や部分失敗時の扱い。
 │
-├─ contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
+├─ system/contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
 │  ├─ README.md                    # contract の役割と更新ルール。
 │  ├─ evidence.schema.json         # Evidence の JSON Schema。
 │  ├─ agent_output.schema.json     # 分析 Agent 出力の JSON Schema。
@@ -57,7 +57,7 @@ investment-support-agent/
 │  ├─ health.schema.json           # 実行状態・健全性チェック出力の JSON Schema。
 │  └─ artifact_contract.md         # runs や reports に保存する成果物の命名・配置ルール。
 │
-├─ config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
+├─ system/config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
 │  ├─ app.example.json             # アプリ全体の最小設定サンプル。
 │  ├─ targets.example.json         # 調査対象銘柄・テーマの設定サンプル。
 │  ├─ sources.example.json         # 情報源の設定サンプル。
@@ -122,10 +122,10 @@ investment-support-agent/
 │  └─ project_structure.md         # より詳しい階層構造説明。
 │
 ├─ LICENSE                         # ライセンス情報。
-├─ 要件定義書.md                  # プロジェクトの要件定義。
-├─ 会話決定事項メモ.md            # 会話の中で決まった仕様や方針のメモ。
-├─ 保守検証チェック.md            # 保守・検証観点のメモ。
-├─ レポート出力テンプレート案.md  # レポート出力テンプレートの案。
+├─ docs/planning/要件定義書.md                  # プロジェクトの要件定義。
+├─ docs/planning/会話決定事項メモ.md            # 会話の中で決まった仕様や方針のメモ。
+├─ docs/planning/保守検証チェック.md            # 保守・検証観点のメモ。
+├─ docs/planning/レポート出力テンプレート案.md  # レポート出力テンプレートの案。
 └─ *.html                          # 初期プロトタイプや構成説明用の HTML。
 ```
 

@@ -26,44 +26,44 @@ ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
     "README.md",
-    "agents/AGENTS.md",
-    "agents/search_design/AGENTS.md",
-    "agents/evidence_builder/AGENTS.md",
-    "agents/bull/AGENTS.md",
-    "agents/bear/AGENTS.md",
-    "agents/contradiction/AGENTS.md",
-    "agents/pricing/AGENTS.md",
-    "agents/report_judge/AGENTS.md",
-    "agents/chat_judge/AGENTS.md",
+    "system/agents/AGENTS.md",
+    "system/agents/search_design/AGENTS.md",
+    "system/agents/evidence_builder/AGENTS.md",
+    "system/agents/bull/AGENTS.md",
+    "system/agents/bear/AGENTS.md",
+    "system/agents/contradiction/AGENTS.md",
+    "system/agents/pricing/AGENTS.md",
+    "system/agents/report_judge/AGENTS.md",
+    "system/agents/chat_judge/AGENTS.md",
     "app/assets/app.css",
     "app/dashboard.html",
     "app/evidence.html",
     "app/health.html",
     "app/agents.html",
     "app/flow_builder.html",
-    "config/app.example.json",
-    "config/targets.example.json",
-    "config/sources.example.json",
-    "config/runtime.example.json",
-    "config/auto_search.example.json",
-    "config/flow_scripts/README.md",
-    "config/flow_scripts/semiconductor_sector_morning.json",
-    "flows/README.md",
-    "flows/morning_report.md",
-    "flows/close_report.md",
-    "flows/chat_quick.md",
-    "flows/chat_context.md",
-    "flows/chat_agent.md",
-    "flows/chat_research.md",
-    "flows/error_policy.md",
-    "contracts/README.md",
-    "contracts/evidence.schema.json",
-    "contracts/agent_output.schema.json",
-    "contracts/report_judge.schema.json",
-    "contracts/chat_judge.schema.json",
-    "contracts/health.schema.json",
-    "contracts/flow_script.schema.json",
-    "contracts/artifact_contract.md",
+    "system/config/app.example.json",
+    "system/config/targets.example.json",
+    "system/config/sources.example.json",
+    "system/config/runtime.example.json",
+    "system/config/auto_search.example.json",
+    "system/config/flow_scripts/README.md",
+    "system/config/flow_scripts/semiconductor_sector_morning.json",
+    "system/flows/README.md",
+    "system/flows/morning_report.md",
+    "system/flows/close_report.md",
+    "system/flows/chat_quick.md",
+    "system/flows/chat_context.md",
+    "system/flows/chat_agent.md",
+    "system/flows/chat_research.md",
+    "system/flows/error_policy.md",
+    "system/contracts/README.md",
+    "system/contracts/evidence.schema.json",
+    "system/contracts/agent_output.schema.json",
+    "system/contracts/report_judge.schema.json",
+    "system/contracts/chat_judge.schema.json",
+    "system/contracts/health.schema.json",
+    "system/contracts/flow_script.schema.json",
+    "system/contracts/artifact_contract.md",
     "connectors/README.md",
     "connectors/jquants/README.md",
     "connectors/edinet/README.md",
@@ -114,7 +114,7 @@ HTML_FILES = [
     "app/health.html",
     "app/agents.html",
     "app/flow_builder.html",
-    "Evidence画面プロトタイプ.html",
+    "reports/prototypes/Evidence画面プロトタイプ.html",
 ]
 
 EXPECTED_NAV_LABELS = ["Dashboard", "Evidence", "Report", "Health", "Flow", "Agent指示書"]
@@ -129,29 +129,29 @@ SCRIPT_FILES = [
 ]
 
 FLOW_FILES = [
-    "flows/morning_report.md",
-    "flows/close_report.md",
-    "flows/chat_quick.md",
-    "flows/chat_context.md",
-    "flows/chat_agent.md",
-    "flows/chat_research.md",
+    "system/flows/morning_report.md",
+    "system/flows/close_report.md",
+    "system/flows/chat_quick.md",
+    "system/flows/chat_context.md",
+    "system/flows/chat_agent.md",
+    "system/flows/chat_research.md",
 ]
 
 CONTRACT_SCHEMA_FILES = [
-    "contracts/evidence.schema.json",
-    "contracts/agent_output.schema.json",
-    "contracts/report_judge.schema.json",
-    "contracts/chat_judge.schema.json",
-    "contracts/health.schema.json",
-    "contracts/flow_script.schema.json",
+    "system/contracts/evidence.schema.json",
+    "system/contracts/agent_output.schema.json",
+    "system/contracts/report_judge.schema.json",
+    "system/contracts/chat_judge.schema.json",
+    "system/contracts/health.schema.json",
+    "system/contracts/flow_script.schema.json",
 ]
 
 CONFIG_EXAMPLE_FILES = [
-    "config/app.example.json",
-    "config/targets.example.json",
-    "config/sources.example.json",
-    "config/runtime.example.json",
-    "config/auto_search.example.json",
+    "system/config/app.example.json",
+    "system/config/targets.example.json",
+    "system/config/sources.example.json",
+    "system/config/runtime.example.json",
+    "system/config/auto_search.example.json",
 ]
 
 ALLOWED_SOURCE_TYPES = {
@@ -330,15 +330,15 @@ def check_flow_docs(v: Validator) -> None:
         for section in ["## Inputs", "## Order", "## Outputs"]:
             if section not in text:
                 v.error(f"{rel}: missing flow section {section}")
-        if "contracts/" not in text and "schema" not in text:
+        if "system/contracts/" not in text and "schema" not in text:
             v.warn(f"{rel}: no contract reference found")
 
-    error_policy = v.root / "flows/error_policy.md"
+    error_policy = v.root / "system/flows/error_policy.md"
     if error_policy.exists():
         text = error_policy.read_text(encoding="utf-8")
         for token in ["## Principles", "## Severity", "## Required Handling"]:
             if token not in text:
-                v.error(f"flows/error_policy.md: missing section {token}")
+                v.error(f"system/flows/error_policy.md: missing section {token}")
 
 
 def check_contract_schemas(v: Validator) -> None:
@@ -356,12 +356,12 @@ def check_contract_schemas(v: Validator) -> None:
         if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
             v.error(f"{rel}: unexpected JSON Schema draft")
 
-    artifact_contract = v.root / "contracts/artifact_contract.md"
+    artifact_contract = v.root / "system/contracts/artifact_contract.md"
     if artifact_contract.exists():
         text = artifact_contract.read_text(encoding="utf-8")
         for token in ["manifest.json", "context.json", "runs/{YYYY-MM-DD}/{target_id}/{bucket}/"]:
             if token not in text:
-                v.error(f"contracts/artifact_contract.md: missing artifact rule {token}")
+                v.error(f"system/contracts/artifact_contract.md: missing artifact rule {token}")
 
 
 def check_config_examples(v: Validator) -> None:
@@ -615,7 +615,7 @@ def check_health(v: Validator, health: Any, evidence_count: int, agent_count: in
 
 
 def check_config(v: Validator, config: Any) -> None:
-    ensure_type(v, config, dict, "config/app.example.json")
+    ensure_type(v, config, dict, "system/config/app.example.json")
     if not isinstance(config, dict):
         return
     require_keys(v, config, ["schema_version", "timezone", "targets", "report_schedule", "notebooklm"], "config")
@@ -631,10 +631,10 @@ def check_config(v: Validator, config: Any) -> None:
 
 def check_flow_scripts(v: Validator) -> set[str]:
     script_ids: set[str] = set()
-    script_dir = v.root / "config/flow_scripts"
+    script_dir = v.root / "system/config/flow_scripts"
     paths = sorted(script_dir.glob("*.json"))
     if not paths:
-        v.error("config/flow_scripts: no flow scripts found")
+        v.error("system/config/flow_scripts: no flow scripts found")
         return script_ids
 
     for path in paths:
@@ -694,21 +694,21 @@ def check_flow_scripts(v: Validator) -> set[str]:
 
 
 def check_auto_search(v: Validator, script_ids: set[str]) -> None:
-    path = v.root / "config/auto_search.example.json"
+    path = v.root / "system/config/auto_search.example.json"
     if not path.exists():
         return
     config = load_json(path)
-    ensure_type(v, config, dict, "config/auto_search.example.json")
+    ensure_type(v, config, dict, "system/config/auto_search.example.json")
     if not isinstance(config, dict):
         return
-    require_keys(v, config, ["schema_version", "timezone", "routes"], "config/auto_search.example.json")
-    v.check(config.get("schema_version") == "auto_search_config_v1", "config/auto_search.example.json: unexpected schema_version")
+    require_keys(v, config, ["schema_version", "timezone", "routes"], "system/config/auto_search.example.json")
+    v.check(config.get("schema_version") == "auto_search_config_v1", "system/config/auto_search.example.json: unexpected schema_version")
     routes = config.get("routes", [])
-    ensure_type(v, routes, list, "config/auto_search.example.json.routes")
+    ensure_type(v, routes, list, "system/config/auto_search.example.json.routes")
     if not isinstance(routes, list):
         return
     for index, route in enumerate(routes):
-        route_path = f"config/auto_search.example.json.routes[{index}]"
+        route_path = f"system/config/auto_search.example.json.routes[{index}]"
         ensure_type(v, route, dict, route_path)
         if not isinstance(route, dict):
             continue
@@ -728,7 +728,7 @@ def check_html_links(v: Validator) -> None:
             continue
         parser = LinkParser()
         parser.feed(path.read_text(encoding="utf-8"))
-        if rel.startswith("app/") or rel.startswith("reports/"):
+        if rel.startswith("app/") or rel.startswith("reports/daily/"):
             v.check(
                 parser.nav_labels == EXPECTED_NAV_LABELS,
                 f"{rel}: nav labels must be {EXPECTED_NAV_LABELS}, got {parser.nav_labels}",
@@ -758,7 +758,7 @@ def check_forbidden_advice(v: Validator) -> None:
     scan_files = [
         *Path(v.root / "app").glob("*.html"),
         *Path(v.root / "reports/daily").glob("*"),
-        *Path(v.root / "agents").glob("**/AGENTS.md"),
+        *Path(v.root / "system/agents").glob("**/AGENTS.md"),
         v.root / "data/sample/report_judge.json",
         v.root / "data/sample/agent_outputs.json",
     ]
@@ -834,7 +834,7 @@ def run_all_checks(check_generated: bool) -> int:
     agents = load_json(ROOT / "data/sample/agent_outputs.json")
     judge = load_json(ROOT / "data/sample/report_judge.json")
     health = load_json(ROOT / "data/sample/health.json")
-    config = load_json(ROOT / "config/app.example.json")
+    config = load_json(ROOT / "system/config/app.example.json")
 
     evidence_ids = check_evidence(v, evidence)
     check_agents(v, agents, evidence_ids)

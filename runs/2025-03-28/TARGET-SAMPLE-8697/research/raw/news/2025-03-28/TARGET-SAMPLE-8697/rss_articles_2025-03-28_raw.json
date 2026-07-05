@@ -1,0 +1,153 @@
+{
+  "date": "2025-03-28",
+  "endpoint": "https://news.google.com/rss/search?q=Japan+Exchange+Group+OR+JPX&hl=en-US&gl=US&ceid=US%3Aen",
+  "fetched_at": "2026-07-05T10:05:01+09:00",
+  "provider": "rss",
+  "query": "Japan Exchange Group OR JPX",
+  "request": {
+    "auth": "none",
+    "query": "Japan Exchange Group OR JPX",
+    "url": "https://news.google.com/rss/search?q=Japan+Exchange+Group+OR+JPX&hl=en-US&gl=US&ceid=US%3Aen"
+  },
+  "response": {
+    "articles": [
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMib0FVX3lxTE4wZlItcWx6clZXemlvQVNBWmxBcnA5MUFLZ3QxYjhMOUlzbkowRERuN2pWcDJfSzNfb1FNNUQtTVZsWUcyQWNDcmJONnBZZE1SZVpBYXFjRWNDYVhvNndkTkZ1alo3emRHYXVMTTJLdw?oc=5\" target=\"_blank\">If You Invested $1,000 in Japan Exchange Group Inc (JPXGY)</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Stock Titan</font>",
+        "publishedAt": "2026-07-04T07:44:58+00:00",
+        "source": {
+          "id": "https://www.stocktitan.net",
+          "name": "Stock Titan"
+        },
+        "title": "If You Invested $1,000 in Japan Exchange Group Inc (JPXGY) - Stock Titan",
+        "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE4wZlItcWx6clZXemlvQVNBWmxBcnA5MUFLZ3QxYjhMOUlzbkowRERuN2pWcDJfSzNfb1FNNUQtTVZsWUcyQWNDcmJONnBZZE1SZVpBYXFjRWNDYVhvNndkTkZ1alo3emRHYXVMTTJLdw?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMihwFBVV95cUxNcWl1NTdpQnhydkN6NUY0OG1tR3gwSm14TF9vbjNZcmduX0hoRjZjOU5ISlNQQmQwS2I4Yl9sUk56ME5rbHRJUVBiUDYtZDZKU3JLWmtCRkJleHJvQ3hpYVdlTEhlSk9tMmtSQWFzRHZTU3ZSbnZta1dnZU9pZW4xdnc2dUpsWkU?oc=5\" target=\"_blank\">Launch of 10-Level Order Book Historical Data</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">jpx.co.jp</font>",
+        "publishedAt": "2026-06-29T00:56:39+00:00",
+        "source": {
+          "id": "https://www.jpx.co.jp",
+          "name": "jpx.co.jp"
+        },
+        "title": "Launch of 10-Level Order Book Historical Data - jpx.co.jp",
+        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNcWl1NTdpQnhydkN6NUY0OG1tR3gwSm14TF9vbjNZcmduX0hoRjZjOU5ISlNQQmQwS2I4Yl9sUk56ME5rbHRJUVBiUDYtZDZKU3JLWmtCRkJleHJvQ3hpYVdlTEhlSk9tMmtSQWFzRHZTU3ZSbnZta1dnZU9pZW4xdnc2dUpsWkU?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMingFBVV95cUxQLWJMYk5YdFBaRXowWEU3dU8yQjViQ0dlRW1teGIzNTB4VEJwQWhENXZHdjBBcFFITzNsbVc2clltVnZEcFBQZ2VJaDY4NU10a1Q2UWtwa0d5RGZNNEplZHlXT2xoS3pTZ2hUcjBTMkUzS0JCVFJvOUNKY3l5eTVLMHdCUXQ3akozUjR3YUpRUTlJcnVRVnFrX1pyTlZpUQ?oc=5\" target=\"_blank\">Price to earnings forward of Japan Exchange Group, Inc. – TSE:8697</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TradingView</font>",
+        "publishedAt": "2026-07-02T04:42:03+00:00",
+        "source": {
+          "id": "https://www.tradingview.com",
+          "name": "TradingView"
+        },
+        "title": "Price to earnings forward of Japan Exchange Group, Inc. – TSE:8697 - TradingView",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQLWJMYk5YdFBaRXowWEU3dU8yQjViQ0dlRW1teGIzNTB4VEJwQWhENXZHdjBBcFFITzNsbVc2clltVnZEcFBQZ2VJaDY4NU10a1Q2UWtwa0d5RGZNNEplZHlXT2xoS3pTZ2hUcjBTMkUzS0JCVFJvOUNKY3l5eTVLMHdCUXQ3akozUjR3YUpRUTlJcnVRVnFrX1pyTlZpUQ?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi9wFBVV95cUxOXzZYRXFoY2xrN0NtUVNLLUxmYkxmeENFcXBFNU5pRHdLTm1md2F3bzdBRjBBYzIya3dpYkFmaFM2c01nWThVS3BGMlJJNVNiWHVFc096cVFtdUtVcjhXMF9XUDBjVGlvYTlValFSTVpFN3ZOTjlwalF1SlBTY0pYU0h2eU1FUFdENzVvYmpCMDlibFUxM2NtYmhOLVRTVWh1WVZranFuVmRkSHg3d2FrTFl0NVFxejA0S012NjA5YzgtUzNFVmVCNng1VHRnbkttcVFkaU05RVJhMkdkaDg5NVlFVEN4TVc3VXIxeGNZTGtOLUJEcTE0?oc=5\" target=\"_blank\">Japan Exchange Group Today: Nikkei 225 Climbs Toward 70,500 as Yen Hits 40-Year Low and AI Stocks Drive Tokyo's Second-Half Opener</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">BBN Times</font>",
+        "publishedAt": "2026-07-01T10:40:38+00:00",
+        "source": {
+          "id": "https://www.bbntimes.com",
+          "name": "BBN Times"
+        },
+        "title": "Japan Exchange Group Today: Nikkei 225 Climbs Toward 70,500 as Yen Hits 40-Year Low and AI Stocks Drive Tokyo's Second-Half Opener - BBN Times",
+        "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxOXzZYRXFoY2xrN0NtUVNLLUxmYkxmeENFcXBFNU5pRHdLTm1md2F3bzdBRjBBYzIya3dpYkFmaFM2c01nWThVS3BGMlJJNVNiWHVFc096cVFtdUtVcjhXMF9XUDBjVGlvYTlValFSTVpFN3ZOTjlwalF1SlBTY0pYU0h2eU1FUFdENzVvYmpCMDlibFUxM2NtYmhOLVRTVWh1WVZranFuVmRkSHg3d2FrTFl0NVFxejA0S012NjA5YzgtUzNFVmVCNng1VHRnbkttcVFkaU05RVJhMkdkaDg5NVlFVEN4TVc3VXIxeGNZTGtOLUJEcTE0?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi3AFBVV95cUxNT0NJdE5VdGhhRFRKbzg0SGZrdXhKN1o5WFNUb2tMcEFJc1YzeU5WQWZFQ2JxeEtsdXJfMHNRazMybEFvOERSSExnQWoxdHBnLXhBWE1qX09DRkp5bEgxLVN1bWQ5cmRRbThoeUV1OVhfcHc5YWxjejM0MmljdHRFQWhuZTdTaHhYQkNsRkFiMk9NcHJRUS04Wm9lVG5xSzY1b2JOc0dsRnFQOEJlenhKYXVaU0F0UXVwcW9LYmcxUi1ydU9EZzN5SnR1bC1abHpuTDBHWndwRVhGWURL?oc=5\" target=\"_blank\">Tranche Update on Japan Exchange Group, Inc.'s Equity Buyback Plan announced on April 28, 2026.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">marketscreener.com</font>",
+        "publishedAt": "2026-07-01T10:12:35+00:00",
+        "source": {
+          "id": "https://www.marketscreener.com",
+          "name": "marketscreener.com"
+        },
+        "title": "Tranche Update on Japan Exchange Group, Inc.'s Equity Buyback Plan announced on April 28, 2026. - marketscreener.com",
+        "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxNT0NJdE5VdGhhRFRKbzg0SGZrdXhKN1o5WFNUb2tMcEFJc1YzeU5WQWZFQ2JxeEtsdXJfMHNRazMybEFvOERSSExnQWoxdHBnLXhBWE1qX09DRkp5bEgxLVN1bWQ5cmRRbThoeUV1OVhfcHc5YWxjejM0MmljdHRFQWhuZTdTaHhYQkNsRkFiMk9NcHJRUS04Wm9lVG5xSzY1b2JOc0dsRnFQOEJlenhKYXVaU0F0UXVwcW9LYmcxUi1ydU9EZzN5SnR1bC1abHpuTDBHWndwRVhGWURL?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi-AFBVV95cUxQOVF0Zm5BQkdfOVFNai1rYThiTFpRdEhrbUtYZ1ZMaFVIaFFoZEFsMjVQenAwd1BXb213U0o2SVd2YU16UlVEc1lzd2V5akVsVVMtUjdNcVZMdUlQa1pEa3R4NEFnb2hFZEhtOFVPYlJ2Uk1QU1hGaGUxT0xhSVRmcjJHbHZGTmZ3b3NSWEthbUtvZVFYclZhd2wtVFc4X25sejNYZHZKUDBBeThMcGYyNTAzTEltbnhOc0M3RUxkY0JPVUVtejRCcXR5R2xtSGtWS1Zsd19ZeDNMSFB6cHhnWVhCYVZjWkZrWE9BVjNoLVhUZFNjVS1jMg?oc=5\" target=\"_blank\">RavenPack Partners with Japan Exchange Group's SCRIPTS Asia team to Provide AI-Ready Data on Japanese Equities</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">PR Newswire</font>",
+        "publishedAt": "2026-06-10T07:00:00+00:00",
+        "source": {
+          "id": "https://www.prnewswire.com",
+          "name": "PR Newswire"
+        },
+        "title": "RavenPack Partners with Japan Exchange Group's SCRIPTS Asia team to Provide AI-Ready Data on Japanese Equities - PR Newswire",
+        "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxQOVF0Zm5BQkdfOVFNai1rYThiTFpRdEhrbUtYZ1ZMaFVIaFFoZEFsMjVQenAwd1BXb213U0o2SVd2YU16UlVEc1lzd2V5akVsVVMtUjdNcVZMdUlQa1pEa3R4NEFnb2hFZEhtOFVPYlJ2Uk1QU1hGaGUxT0xhSVRmcjJHbHZGTmZ3b3NSWEthbUtvZVFYclZhd2wtVFc4X25sejNYZHZKUDBBeThMcGYyNTAzTEltbnhOc0M3RUxkY0JPVUVtejRCcXR5R2xtSGtWS1Zsd19ZeDNMSFB6cHhnWVhCYVZjWkZrWE9BVjNoLVhUZFNjVS1jMg?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMirwFBVV95cUxPbDk3dFlfUnRiejJ5a3BKSWFqY0NrbGFzYktBS2ZaYm1PRm1KUURFYkdqRGZiN3NYUk96SGxYSXBIUUFzWW9RT1QxMi1ONlJJNVdGYWNkdTktc1U2b2h2UEVwUzVMV1V0TnpUT2p0V3ZqNk9GNFBLcm82bmlVbldBenlsV0I4NGtRalZ0bGIwbU5TY2pwVlVTV3JOQUJoLXVJMnp4aS1LZjctOTZkUGdr?oc=5\" target=\"_blank\">Japan's Nikkei retreats from record high as AI rally sparks caution</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Reuters</font>",
+        "publishedAt": "2026-05-27T07:00:00+00:00",
+        "source": {
+          "id": "https://www.reuters.com",
+          "name": "Reuters"
+        },
+        "title": "Japan's Nikkei retreats from record high as AI rally sparks caution - Reuters",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPbDk3dFlfUnRiejJ5a3BKSWFqY0NrbGFzYktBS2ZaYm1PRm1KUURFYkdqRGZiN3NYUk96SGxYSXBIUUFzWW9RT1QxMi1ONlJJNVdGYWNkdTktc1U2b2h2UEVwUzVMV1V0TnpUT2p0V3ZqNk9GNFBLcm82bmlVbldBenlsV0I4NGtRalZ0bGIwbU5TY2pwVlVTV3JOQUJoLXVJMnp4aS1LZjctOTZkUGdr?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOUGRlSFo5eUZvZlBYcFVQeGkxZEt3clBWZ2RvVmtITWtjM24xVEMtR3dJU3Zwb2lObzZlSEd4QnMzRWR3bVdOR1lqb0M2UDJqcFVuX3Y3cm50bWVhQV8tcXYxd2ZXTjVSaU9YTkk5bUo4TGVpcFZlcUgwei1rSVB6MW5mc2hGcmZvVHhvaFp0VG5yOERzZUVQVDBHNDZzSHEyZzJLY0RnWDUxbmQyQmI2cXR6VQ?oc=5\" target=\"_blank\">Japan’s Stocks Set to Sink on Tech Selloff, Middle East Worries</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bloomberg.com</font>",
+        "publishedAt": "2026-06-07T07:00:00+00:00",
+        "source": {
+          "id": "https://www.bloomberg.com",
+          "name": "Bloomberg.com"
+        },
+        "title": "Japan’s Stocks Set to Sink on Tech Selloff, Middle East Worries - Bloomberg.com",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOUGRlSFo5eUZvZlBYcFVQeGkxZEt3clBWZ2RvVmtITWtjM24xVEMtR3dJU3Zwb2lObzZlSEd4QnMzRWR3bVdOR1lqb0M2UDJqcFVuX3Y3cm50bWVhQV8tcXYxd2ZXTjVSaU9YTkk5bUo4TGVpcFZlcUgwei1rSVB6MW5mc2hGcmZvVHhvaFp0VG5yOERzZUVQVDBHNDZzSHEyZzJLY0RnWDUxbmQyQmI2cXR6VQ?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMi8wFBVV95cUxPdTVONmRBVzVUR3RtM0VoeDVDYkJNbW5FSWQ3RjloUk1oSjlJTTdpUm9CWXJodUhyOXdRNEFhR05ZX0lkNmlJeTJQRThHU29HR000THFYYXVmcW1vMUE4Y1hpZHJ6b1lPQ1RyOTJVU3lfRm1mdldxYXdzNlF2MjU2UC1wTm95Y1ZraG53LXhZLXM5akF4TEdtOTZDMDI0bmNxTVlROEVWVUZOMEM4dld0ajhEc0l1SkEtRkpXeUhBampWQzU0VFo2bjhzVC1ISG9SOXhHUlV0emduMnUzWEpVYTZKUExXdUVNSUFENFplQ1dEQlnSAfMBQVVfeXFMT3U1TjZkQVc1VEd0bTNFaHg1Q2JCTW1uRUlkN0Y5aFJNaEo5SU03aVJvQllyaHVIcjl3UTRBYUdOWV9JZDZpSXkyUEU4R1NvR0dNNExxWGF1ZnFtbzFBOGNYaWRyem9ZT0NUcjkyVVN5X0ZtZnZXcWF3czZRdjI1NlAtcE5veWNWa2hudy14WS1zOWpBeExHbTk2QzAyNG5jcU1ZUThFVlVGTjBDOHZXdGo4RHNJdUpBLUZKV3lIQWpqVkM1NFRaNm44c1QtSEhvUjl4R1JVdHpnbjJ1M1hKVWE2SlBMV3VFTUlBRDRaZUNXREJZ?oc=5\" target=\"_blank\">Japan Exchange Group (TSE:8697) Stock Valuation After New AI Transcript Data Partnership</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">simplywall.st</font>",
+        "publishedAt": "2026-06-14T03:35:12+00:00",
+        "source": {
+          "id": "https://simplywall.st",
+          "name": "simplywall.st"
+        },
+        "title": "Japan Exchange Group (TSE:8697) Stock Valuation After New AI Transcript Data Partnership - simplywall.st",
+        "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPdTVONmRBVzVUR3RtM0VoeDVDYkJNbW5FSWQ3RjloUk1oSjlJTTdpUm9CWXJodUhyOXdRNEFhR05ZX0lkNmlJeTJQRThHU29HR000THFYYXVmcW1vMUE4Y1hpZHJ6b1lPQ1RyOTJVU3lfRm1mdldxYXdzNlF2MjU2UC1wTm95Y1ZraG53LXhZLXM5akF4TEdtOTZDMDI0bmNxTVlROEVWVUZOMEM4dld0ajhEc0l1SkEtRkpXeUhBampWQzU0VFo2bjhzVC1ISG9SOXhHUlV0emduMnUzWEpVYTZKUExXdUVNSUFENFplQ1dEQlnSAfMBQVVfeXFMT3U1TjZkQVc1VEd0bTNFaHg1Q2JCTW1uRUlkN0Y5aFJNaEo5SU03aVJvQllyaHVIcjl3UTRBYUdOWV9JZDZpSXkyUEU4R1NvR0dNNExxWGF1ZnFtbzFBOGNYaWRyem9ZT0NUcjkyVVN5X0ZtZnZXcWF3czZRdjI1NlAtcE5veWNWa2hudy14WS1zOWpBeExHbTk2QzAyNG5jcU1ZUThFVlVGTjBDOHZXdGo4RHNJdUpBLUZKV3lIQWpqVkM1NFRaNm44c1QtSEhvUjl4R1JVdHpnbjJ1M1hKVWE2SlBMV3VFTUlBRDRaZUNXREJZ?oc=5"
+      },
+      {
+        "author": null,
+        "content": null,
+        "description": "<a href=\"https://news.google.com/rss/articles/CBMiakFVX3lxTFBWem1MWmxXRXBfeFgwZWtEM1FLMzRITW1kQm9qcE1RNlgyMl9zLWlnSUFnLXhEeENyRmNyejBmcjJ6SGY4Z3R6NksweFpMcVZORjZKRW9TLVdjbExSazFpODhZUmt1WjA0UkE?oc=5\" target=\"_blank\">VIDEO| Exploring Japan: A visit to Tokyo Stock Exchange</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Stripes Japan</font>",
+        "publishedAt": "2026-06-09T07:00:00+00:00",
+        "source": {
+          "id": "https://japan.stripes.com",
+          "name": "Stripes Japan"
+        },
+        "title": "VIDEO| Exploring Japan: A visit to Tokyo Stock Exchange - Stripes Japan",
+        "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBWem1MWmxXRXBfeFgwZWtEM1FLMzRITW1kQm9qcE1RNlgyMl9zLWlnSUFnLXhEeENyRmNyejBmcjJ6SGY4Z3R6NksweFpMcVZORjZKRW9TLVdjbExSazFpODhZUmt1WjA0UkE?oc=5"
+      }
+    ],
+    "status": "ok",
+    "totalResults": 10
+  },
+  "schema_version": "rss_raw_articles_v1",
+  "status_code": 200,
+  "summary": {
+    "article_count": 10,
+    "first_article_keys": [
+      "author",
+      "content",
+      "description",
+      "publishedAt",
+      "source",
+      "title",
+      "url"
+    ]
+  },
+  "target_id": "TARGET-SAMPLE-8697"
+}

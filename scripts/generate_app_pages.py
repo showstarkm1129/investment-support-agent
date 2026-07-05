@@ -27,15 +27,15 @@ AGENT_LABELS = {
 }
 
 AGENT_DOCS = [
-    ("共通指示", "../agents/AGENTS.md", "全Agent共通の禁止事項、根拠ルール、出力方針。"),
-    ("探索設計Agent", "../agents/search_design/AGENTS.md", "銘柄やテーマから何を調べるべきかを設計する。"),
-    ("証拠化Agent", "../agents/evidence_builder/AGENTS.md", "取得素材をEvidenceカードへ整える。"),
-    ("上方向材料Agent", "../agents/bull/AGENTS.md", "中期仮説を補強する事実を整理する。"),
-    ("下方向材料Agent", "../agents/bear/AGENTS.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
-    ("反証Agent", "../agents/contradiction/AGENTS.md", "仮説の前提を壊し得る事実を探す。"),
-    ("織り込みAgent", "../agents/pricing/AGENTS.md", "材料の価格反映と短期過熱を整理する。"),
-    ("Report Judge", "../agents/report_judge/AGENTS.md", "定型レポートの最終情報整理を行う。"),
-    ("Chat Judge", "../agents/chat_judge/AGENTS.md", "質問の重さに応じて情報とAgentを振り分ける。"),
+    ("共通指示", "../system/agents/AGENTS.md", "全Agent共通の禁止事項、根拠ルール、出力方針。"),
+    ("探索設計Agent", "../system/agents/search_design/AGENTS.md", "銘柄やテーマから何を調べるべきかを設計する。"),
+    ("証拠化Agent", "../system/agents/evidence_builder/AGENTS.md", "取得素材をEvidenceカードへ整える。"),
+    ("上方向材料Agent", "../system/agents/bull/AGENTS.md", "中期仮説を補強する事実を整理する。"),
+    ("下方向材料Agent", "../system/agents/bear/AGENTS.md", "中期仮説を弱める事実や過熱リスクを整理する。"),
+    ("反証Agent", "../system/agents/contradiction/AGENTS.md", "仮説の前提を壊し得る事実を探す。"),
+    ("織り込みAgent", "../system/agents/pricing/AGENTS.md", "材料の価格反映と短期過熱を整理する。"),
+    ("Report Judge", "../system/agents/report_judge/AGENTS.md", "定型レポートの最終情報整理を行う。"),
+    ("Chat Judge", "../system/agents/chat_judge/AGENTS.md", "質問の重さに応じて情報とAgentを振り分ける。"),
 ]
 
 

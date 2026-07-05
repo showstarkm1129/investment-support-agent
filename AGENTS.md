@@ -1,5 +1,5 @@
 investment-support-agent/
-├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
+├─ system/agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
 │  ├─ AGENTS.md
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
 │  ├─ evidence_builder/            # 取得情報を Evidence 形式に整理する Agent。
@@ -10,7 +10,7 @@ investment-support-agent/
 │  ├─ report_judge/                # レポート用の最終判断をまとめる Agent。
 │  └─ chat_judge/                  # チャット質問の重さに応じて回答経路を選ぶ Agent。
 │
-├─ flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
+├─ system/flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
 │  ├─ README.md
 │  ├─ morning_report.md
 │  ├─ close_report.md
@@ -20,7 +20,7 @@ investment-support-agent/
 │  ├─ chat_research.md
 │  └─ error_policy.md
 │
-├─ contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
+├─ system/contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
 │  ├─ README.md
 │  ├─ evidence.schema.json
 │  ├─ agent_output.schema.json
@@ -29,7 +29,7 @@ investment-support-agent/
 │  ├─ health.schema.json
 │  └─ artifact_contract.md
 │
-├─ config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
+├─ system/config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
 │  ├─ app.example.json
 │  ├─ targets.example.json
 │  ├─ sources.example.json
@@ -94,8 +94,8 @@ investment-support-agent/
 │  └─ project_structure.md
 │
 ├─ LICENSE
-├─ 要件定義書.md
-├─ 会話決定事項メモ.md
-├─ 保守検証チェック.md
-├─ レポート出力テンプレート案.md
+├─ docs/planning/要件定義書.md
+├─ docs/planning/会話決定事項メモ.md
+├─ docs/planning/保守検証チェック.md
+├─ docs/planning/レポート出力テンプレート案.md
 └─ *.html

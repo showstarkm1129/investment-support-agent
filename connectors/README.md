@@ -12,7 +12,7 @@ Connector responsibilities:
 - Report failures to health instead of hiding them.
 
 Connector outputs are inputs, not evidence. Only `evidence_builder` writes
-objects that satisfy `contracts/evidence.schema.json`.
+objects that satisfy `system/contracts/evidence.schema.json`.
 
 Initial connector folders:
 

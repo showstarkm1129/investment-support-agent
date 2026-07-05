@@ -1,0 +1,131 @@
+{
+  "created_at": "2026-07-03T14:11:04+09:00",
+  "mode": "simulate",
+  "model": "default",
+  "provider": "codex",
+  "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+  "schema_version": "agent_trace_v1",
+  "script_id": "semiconductor_sector_morning",
+  "steps": [
+    {
+      "agent_id": "search_design",
+      "group": 1,
+      "instruction_path": "agents/search_design/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/01_search_design.md",
+      "sequence": 1,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/01_search_design.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "connector:jquants",
+      "group": 2,
+      "instruction_path": "connectors/jquants/README.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/02_connector_jquants.md",
+      "sequence": 2,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/02_connector_jquants.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "connector:ir",
+      "group": 2,
+      "instruction_path": "connectors/ir/README.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/03_connector_ir.md",
+      "sequence": 3,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/03_connector_ir.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "connector:news",
+      "group": 2,
+      "instruction_path": "connectors/news/README.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/04_connector_news.md",
+      "sequence": 4,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/04_connector_news.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "connector:macro_policy",
+      "group": 2,
+      "instruction_path": "connectors/macro_policy/README.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/05_connector_macro_policy.md",
+      "sequence": 5,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/05_connector_macro_policy.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "evidence_builder",
+      "group": 3,
+      "instruction_path": "agents/evidence_builder/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/06_evidence_builder.md",
+      "sequence": 6,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/06_evidence_builder.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "bull",
+      "group": 4,
+      "instruction_path": "agents/bull/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/07_bull.md",
+      "sequence": 7,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/07_bull.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "bear",
+      "group": 4,
+      "instruction_path": "agents/bear/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/08_bear.md",
+      "sequence": 8,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/08_bear.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "contradiction",
+      "group": 4,
+      "instruction_path": "agents/contradiction/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/09_contradiction.md",
+      "sequence": 9,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/09_contradiction.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "pricing",
+      "group": 4,
+      "instruction_path": "agents/pricing/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/10_pricing.md",
+      "sequence": 10,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/10_pricing.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "report_judge",
+      "group": 5,
+      "instruction_path": "agents/report_judge/AGENTS.md",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/11_report_judge.md",
+      "sequence": 11,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/11_report_judge.md and write the requested artifact files.\""
+    },
+    {
+      "agent_id": "health",
+      "group": 5,
+      "instruction_path": "contracts/health.schema.json",
+      "model": "default",
+      "prompt_path": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/12_health.md",
+      "sequence": 12,
+      "status": "planned",
+      "suggested_command": "codex exec --cd . \"Read runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts/12_health.md and write the requested artifact files.\""
+    }
+  ]
+}

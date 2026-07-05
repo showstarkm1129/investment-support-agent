@@ -1,0 +1,62 @@
+{
+  "agent_name": "report_judge",
+  "decision_stage": "draft",
+  "evidence_weight": {
+    "contradiction": 0,
+    "downside": 0,
+    "priced_in": 100,
+    "upside": 0
+  },
+  "hypothesis_impact": {
+    "label": "undetermined",
+    "summary": "No evidence-backed hypothesis update was made in simulation mode."
+  },
+  "information_status": {
+    "label": "insufficient_information",
+    "summary": "The flow routing was tested without external data collection."
+  },
+  "market_readout": {
+    "confidence": "low",
+    "evidence_balance_score": 0,
+    "label": "pending",
+    "summary": "Simulation only. Real evidence and Agent outputs have not been produced yet."
+  },
+  "missing_information": [
+    {
+      "importance": "high",
+      "item": "Latest semiconductor sector evidence",
+      "reason": "Simulation mode does not fetch or evaluate live information."
+    }
+  ],
+  "run_at": "2026-07-03T14:11:04+09:00",
+  "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+  "schema_version": "report_readout_v1",
+  "target": {
+    "company_name": "半導体セクター",
+    "market": "JP-US-watchlist",
+    "stock_code": "",
+    "target_id": "SECTOR-SEMICONDUCTOR",
+    "target_type": "sector",
+    "themes": [
+      "半導体",
+      "生成AI",
+      "データセンター",
+      "装置",
+      "メモリ",
+      "規制"
+    ]
+  },
+  "uncertainty": {
+    "factors": [
+      "No connector output",
+      "No evidence IDs",
+      "No real Agent execution"
+    ],
+    "level": "high"
+  },
+  "used_evidence": [],
+  "view_change_conditions": [],
+  "warnings": [
+    "simulation_only"
+  ]
+}

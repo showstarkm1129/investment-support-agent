@@ -32,12 +32,12 @@ FLOW_TO_BUCKET = {
 }
 
 FLOW_TO_DOC = {
-    "morning_report": "flows/morning_report.md",
-    "close_report": "flows/close_report.md",
-    "chat_quick": "flows/chat_quick.md",
-    "chat_context": "flows/chat_context.md",
-    "chat_agent": "flows/chat_agent.md",
-    "chat_research": "flows/chat_research.md",
+    "morning_report": "system/flows/morning_report.md",
+    "close_report": "system/flows/close_report.md",
+    "chat_quick": "system/flows/chat_quick.md",
+    "chat_context": "system/flows/chat_context.md",
+    "chat_agent": "system/flows/chat_agent.md",
+    "chat_research": "system/flows/chat_research.md",
 }
 
 FLOW_AGENT_ORDER = {
@@ -81,12 +81,12 @@ FLOW_AGENT_ORDER = {
 }
 
 CONTRACTS = {
-    "evidence": "contracts/evidence.schema.json",
-    "agent_output": "contracts/agent_output.schema.json",
-    "report_judge": "contracts/report_judge.schema.json",
-    "chat_judge": "contracts/chat_judge.schema.json",
-    "health": "contracts/health.schema.json",
-    "artifact": "contracts/artifact_contract.md",
+    "evidence": "system/contracts/evidence.schema.json",
+    "agent_output": "system/contracts/agent_output.schema.json",
+    "report_judge": "system/contracts/report_judge.schema.json",
+    "chat_judge": "system/contracts/chat_judge.schema.json",
+    "health": "system/contracts/health.schema.json",
+    "artifact": "system/contracts/artifact_contract.md",
 }
 
 
@@ -152,7 +152,7 @@ def build_context(
     target_id: str | None,
     run_id: str,
     run_dir: Path,
-    config_path: Path = ROOT / "config/app.example.json",
+    config_path: Path = ROOT / "system/config/app.example.json",
     root: Path = ROOT,
 ) -> dict[str, Any]:
     if flow not in FLOW_CHOICES:
@@ -175,14 +175,14 @@ def build_context(
         "target": target,
         "timezone": config.get("timezone", "Asia/Tokyo"),
         "flow_doc": FLOW_TO_DOC[flow],
-        "error_policy": "flows/error_policy.md",
+        "error_policy": "system/flows/error_policy.md",
         "agent_order": FLOW_AGENT_ORDER[flow],
         "contracts": CONTRACTS,
         "inputs": {
             "app_config": rel(config_path, root),
-            "targets_config": "config/targets.example.json",
-            "sources_config": "config/sources.example.json",
-            "runtime_config": "config/runtime.example.json",
+            "targets_config": "system/config/targets.example.json",
+            "sources_config": "system/config/sources.example.json",
+            "runtime_config": "system/config/runtime.example.json",
             "sample_evidence": "data/sample/evidence.json",
             "sample_agent_outputs": "data/sample/agent_outputs.json",
             "sample_report_judge": "data/sample/report_judge.json",
@@ -209,7 +209,7 @@ def main() -> None:
     parser.add_argument("--target-id")
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--config", type=Path, default=ROOT / "config/app.example.json")
+    parser.add_argument("--config", type=Path, default=ROOT / "system/config/app.example.json")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
 

@@ -1,0 +1,8 @@
+{
+  "agent_name": "evidence_builder",
+  "attempt": 1,
+  "error": "Command '['codex', 'exec', '-m', 'gpt-5.4-mini', '-c', 'model_reasoning_effort=low', '--ignore-user-config', '--ephemeral', '--cd', '/home/unix/Github/investment-support-agent', '--dangerously-bypass-approvals-and-sandbox', 'Read /mnt/c/Users/n1250128/AppData/Local/Temp/tmpa0z2dl7a.md and return only the requested JSON object.']' timed out after 180 seconds",
+  "failed_at": "2026-07-04T23:05:52+09:00",
+  "raw_text_excerpt": "",
+  "schema_version": "agent_step_failure_v1"
+}

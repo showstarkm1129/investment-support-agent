@@ -4,10 +4,10 @@ Use this checklist when handing work to Claude Code Agent Teams.
 
 ## Read First
 
-1. `agents/AGENTS.md`
-2. the specific `agents/{agent}/AGENTS.md`
-3. the selected flow in `flows/`
-4. the relevant schema in `contracts/`
+1. `system/agents/AGENTS.md`
+2. the specific `system/agents/{agent}/AGENTS.md`
+3. the selected flow in `system/flows/`
+4. the relevant schema in `system/contracts/`
 5. the run `context.json`
 
 ## Agent Rules
@@ -28,7 +28,7 @@ Each agent handoff should include:
 - input artifact paths
 - output artifact path
 - schema path
-- failure policy from `flows/error_policy.md`
+- failure policy from `system/flows/error_policy.md`
 
 ## Completion
 

@@ -1,0 +1,85 @@
+{
+  "schema_version": "flow_script_v1",
+  "script_id": "search_to_evidence_smoke",
+  "display_name": "探索からEvidence化スモークテスト",
+  "description": "AI live 実行の2 Agent確認用。search_design が search_plan.json を書き、evidence_builder がそれを読んで最小 Evidence を evidence.json に書けるか確認する。",
+  "flow": "morning_report",
+  "provider": "codex",
+  "model": "default",
+  "mode": "simulate",
+  "depth": "quick",
+  "execution": {
+    "type": "cli"
+  },
+  "timezone": "Asia/Tokyo",
+  "target": {
+    "target_id": "SMOKE-6501",
+    "target_type": "stock",
+    "stock_code": "6501",
+    "company_name": "日立製作所 スモークテスト",
+    "market": "TSE",
+    "themes": ["AI実行基盤", "Evidence化", "Agent間受け渡し"],
+    "auto_report_enabled": false
+  },
+  "variables": {
+    "focus_questions": [
+      "Agent間で search_plan.json から evidence.json へ受け渡しできるか",
+      "外部データ取得なしで、手元のテスト素材を低信頼の manual_note Evidence に変換できるか"
+    ],
+    "lookback_hours": 0,
+    "seed_materials": [
+      {
+        "material_id": "SMOKE-MAT-001",
+        "source_type": "event",
+        "source_name": "local smoke fixture",
+        "source_url": null,
+        "published_at": "2026-07-03T09:00:00+09:00",
+        "title": "AgentTeam live smoke test material",
+        "summary": "This is a local fixture used only to verify that evidence_builder can write schema-valid evidence without external data fetching.",
+        "excerpt": "Local fixture for AgentTeam evidence handoff.",
+        "metrics": {
+          "external_fetch": false,
+          "agent_steps": 2
+        }
+      }
+    ]
+  },
+  "agent_groups": [
+    {
+      "group_id": "search_plan",
+      "parallel": false,
+      "agents": ["search_design"]
+    },
+    {
+      "group_id": "build_evidence",
+      "parallel": false,
+      "agents": ["evidence_builder"]
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "search_design",
+      "inputs": ["target", "variables.focus_questions", "variables.seed_materials"],
+      "outputs": ["{run_dir}/search_plan.json"],
+      "notes": [
+        "これは2 Agent受け渡しのスモークテストであり、外部データ取得は行わない。",
+        "search_plan.json には seed_materials を evidence_builder に渡す方針を明記する。"
+      ]
+    },
+    {
+      "agent_id": "evidence_builder",
+      "inputs": ["{run_dir}/search_plan.json", "variables.seed_materials", "system/contracts/evidence.schema.json"],
+      "outputs": ["{run_dir}/evidence.json"],
+      "notes": [
+        "外部データは取得しない。",
+        "variables.seed_materials の1件を system/contracts/evidence.schema.json に合う Evidence 配列へ変換する。",
+        "source_reliability は E、save_policy は manual_note、direction_hint は neutral、usable_for_market_readout は false とする。",
+        "evidence_id は E20260703-001 を使う。"
+      ]
+    }
+  ],
+  "outputs": ["search_plan", "evidence"],
+  "automation": {
+    "eligible": false
+  }
+}

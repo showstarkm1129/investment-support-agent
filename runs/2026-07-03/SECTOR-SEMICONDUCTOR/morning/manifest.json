@@ -1,0 +1,32 @@
+{
+  "agent_command": null,
+  "bucket": "morning",
+  "created_at": "2026-07-03T14:11:04+09:00",
+  "date": "2026-07-03",
+  "flow": "morning_report",
+  "mode": "simulate",
+  "model": "default",
+  "paths": {
+    "agent_outputs": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/agent_outputs.json",
+    "agent_trace": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/agent_trace.json",
+    "context": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/context.json",
+    "evidence": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/evidence.json",
+    "health": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/health.json",
+    "manifest": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/manifest.json",
+    "prompts_dir": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/prompts",
+    "report_judge": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/report_judge.json",
+    "run_dir": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning"
+  },
+  "provider": "codex",
+  "returncode": null,
+  "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+  "schema_version": "run_manifest_v1",
+  "script": {
+    "description": "\u65e5\u672c\u682a\u3068\u7c73\u56fd\u682a\u3092\u307e\u305f\u3050\u534a\u5c0e\u4f53\u30bb\u30af\u30bf\u30fc\u306e\u671d\u7528\u30b5\u30fc\u30c1\u3002\u9700\u7d66\u3001\u6c7a\u7b97\u3001\u8a2d\u5099\u6295\u8cc7\u3001AI\u9700\u8981\u3001\u898f\u5236\u3001\u70ba\u66ff\u3001\u6307\u6570\u53cd\u5fdc\u3092Evidence\u5316\u3057\u3066\u6574\u7406\u3059\u308b\u3002",
+    "display_name": "\u534a\u5c0e\u4f53\u30bb\u30af\u30bf\u30fc\u671d\u30b5\u30fc\u30c1",
+    "script_id": "semiconductor_sector_morning"
+  },
+  "status": "prepared",
+  "target_id": "SECTOR-SEMICONDUCTOR",
+  "updated_at": "2026-07-03T14:11:04+09:00"
+}

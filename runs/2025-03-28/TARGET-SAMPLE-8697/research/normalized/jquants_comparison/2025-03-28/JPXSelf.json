@@ -1,0 +1,35 @@
+{
+  "code": "86970",
+  "date": "2025-03-28",
+  "normalized_at": "2026-07-05T10:05:00+09:00",
+  "provider": "jquants",
+  "quality": {
+    "has_records": true,
+    "source_row_count": 1,
+    "source_status_code": 200
+  },
+  "record_count": 1,
+  "records": [
+    {
+      "adjusted_close": 1580.0,
+      "adjusted_high": 1624.0,
+      "adjusted_low": 1559.0,
+      "adjusted_open": 1613.0,
+      "adjusted_volume": 4604900.0,
+      "adjustment_factor": 1.0,
+      "close": 1580.0,
+      "code": "86970",
+      "date": "2025-03-28",
+      "high": 1624.0,
+      "low": 1559.0,
+      "lower_limit": "0",
+      "open": 1613.0,
+      "turnover_value": 7282456700.0,
+      "upper_limit": "0",
+      "volume": 4604900.0
+    }
+  ],
+  "schema_version": "jquants_normalized_daily_quotes_v1",
+  "source_raw_path": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants_comparison/2025-03-28/TARGET-SAMPLE-8697/JPXSelf_86970_20250328_raw.json",
+  "target_id": "TARGET-SAMPLE-8697"
+}

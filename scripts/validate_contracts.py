@@ -19,24 +19,24 @@ from jsonschema.exceptions import SchemaError, ValidationError
 ROOT = Path(__file__).resolve().parents[1]
 
 SCHEMA_FILES = [
-    "contracts/evidence.schema.json",
-    "contracts/agent_output.schema.json",
-    "contracts/report_judge.schema.json",
-    "contracts/chat_judge.schema.json",
-    "contracts/health.schema.json",
-    "contracts/flow_script.schema.json",
+    "system/contracts/evidence.schema.json",
+    "system/contracts/agent_output.schema.json",
+    "system/contracts/report_judge.schema.json",
+    "system/contracts/chat_judge.schema.json",
+    "system/contracts/health.schema.json",
+    "system/contracts/flow_script.schema.json",
 ]
 
 SAMPLE_PAIRS = [
-    ("contracts/evidence.schema.json", "data/sample/evidence.json"),
-    ("contracts/agent_output.schema.json", "data/sample/agent_outputs.json"),
-    ("contracts/report_judge.schema.json", "data/sample/report_judge.json"),
-    ("contracts/chat_judge.schema.json", "tests/fixtures/chat_judge.sample.json"),
-    ("contracts/health.schema.json", "data/sample/health.json"),
+    ("system/contracts/evidence.schema.json", "data/sample/evidence.json"),
+    ("system/contracts/agent_output.schema.json", "data/sample/agent_outputs.json"),
+    ("system/contracts/report_judge.schema.json", "data/sample/report_judge.json"),
+    ("system/contracts/chat_judge.schema.json", "tests/fixtures/chat_judge.sample.json"),
+    ("system/contracts/health.schema.json", "data/sample/health.json"),
 ]
 
-FLOW_SCRIPT_SCHEMA = "contracts/flow_script.schema.json"
-FLOW_SCRIPT_DIR = "config/flow_scripts"
+FLOW_SCRIPT_SCHEMA = "system/contracts/flow_script.schema.json"
+FLOW_SCRIPT_DIR = "system/config/flow_scripts"
 
 
 @dataclass(frozen=True)
@@ -118,7 +118,7 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--schemas-only", action="store_true", help="Only validate schema documents.")
     parser.add_argument("--samples-only", action="store_true", help="Only validate sample JSON pairs.")
-    parser.add_argument("--flow-scripts-only", action="store_true", help="Only validate config/flow_scripts/*.json.")
+    parser.add_argument("--flow-scripts-only", action="store_true", help="Only validate system/config/flow_scripts/*.json.")
     parser.add_argument("--schema", type=Path, help="Schema for an explicit validation pair.")
     parser.add_argument("--instance", type=Path, help="JSON instance for an explicit validation pair.")
     args = parser.parse_args()

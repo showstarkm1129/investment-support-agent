@@ -1,0 +1,150 @@
+{
+  "overall_status": "ok",
+  "run_at": "2026-07-05T10:16:30+09:00",
+  "run_id": "PIPE-20250328-TARGET-SAMPLE-8697-RESEARCH",
+  "schema_version": "health_snapshot_v1",
+  "sections": [
+    {
+      "checks": [
+        {
+          "check_id": "jquants_raw",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-28/TARGET-SAMPLE-8697/daily_quotes_86970_20250328_raw.json",
+          "label": "J-Quants raw",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "Raw artifact copied into run directory.",
+          "status": "ok"
+        },
+        {
+          "check_id": "jquants_history",
+          "detail": "5 raw file(s)",
+          "label": "J-Quants history",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "5 historical record(s) combined.",
+          "status": "ok"
+        },
+        {
+          "check_id": "jquants_normalized",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/normalized/jquants/2025-03-28/TARGET-SAMPLE-8697.json",
+          "label": "J-Quants normalized",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "5 record(s) normalized.",
+          "status": "ok"
+        },
+        {
+          "check_id": "jquants_indicators",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/derived/jquants/indicators.json",
+          "label": "J-Quants derived indicators",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "1 derived indicator Evidence item(s) added.",
+          "status": "ok"
+        },
+        {
+          "check_id": "jquants_relative_comparison",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/derived/jquants/relative_comparison.json",
+          "label": "J-Quants relative comparison",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "1 relative comparison Evidence item(s) added.",
+          "status": "ok"
+        },
+        {
+          "check_id": "edinet_raw",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/edinet/2025-03-28/TARGET-SAMPLE-8697/documents_2025-03-28_raw.json",
+          "label": "EDINET raw",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "EDINET raw artifact fetched into run directory.",
+          "status": "ok"
+        },
+        {
+          "check_id": "edinet_evidence",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/edinet/2025-03-28/TARGET-SAMPLE-8697/documents_2025-03-28_raw.json",
+          "label": "EDINET Evidence",
+          "last_run_at": "2026-07-05T10:05:00+09:00",
+          "message": "1 EDINET Evidence item(s) added.",
+          "status": "ok"
+        },
+        {
+          "check_id": "news_raw",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/news/2025-03-28/TARGET-SAMPLE-8697/rss_articles_2025-03-28_raw.json",
+          "label": "News raw",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "RSS news raw artifact fetched into run directory.",
+          "status": "ok"
+        },
+        {
+          "check_id": "news_evidence",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/news/2025-03-28/TARGET-SAMPLE-8697/rss_articles_2025-03-28_raw.json",
+          "label": "News Evidence",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "10 News Evidence item(s) added.",
+          "status": "ok"
+        },
+        {
+          "check_id": "ir_raw",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/ir/2025-03-28/TARGET-SAMPLE-8697/https_www.jpx.co.jp_corporate_investor-relations_raw.json",
+          "label": "Official IR raw",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "Official IR raw artifact fetched into run directory.",
+          "status": "ok"
+        },
+        {
+          "check_id": "ir_evidence",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/ir/2025-03-28/TARGET-SAMPLE-8697/https_www.jpx.co.jp_corporate_investor-relations_raw.json",
+          "label": "Official IR Evidence",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "1 Official IR Evidence item(s) added.",
+          "status": "ok"
+        },
+        {
+          "check_id": "evidence_contract",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/evidence.json",
+          "label": "Evidence contract",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "19 Evidence item(s) validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "agentteam_contracts",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/agent_outputs.json; /home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/report_judge.json",
+          "label": "AgentTeam contracts",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "Agent outputs and report judge validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "report_generation",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/reports",
+          "label": "Report generation",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "3 report file(s) generated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "report_publish_copy",
+          "detail": "/home/unix/Github/investment-support-agent/reports/research",
+          "label": "Report publish copy",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "3 report file(s) copied to reports/research.",
+          "status": "ok"
+        },
+        {
+          "check_id": "secret_leak",
+          "detail": "",
+          "label": "Secret leak check",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "No loaded secret value found in core artifacts.",
+          "status": "ok"
+        }
+      ],
+      "section_id": "pipeline",
+      "title": "Research Pipeline"
+    }
+  ],
+  "stats": {
+    "agent_failed": 0,
+    "agent_success": 4,
+    "evidence_total": 19,
+    "report_outputs": 3
+  },
+  "summary": "Pipeline completed: raw, normalized, Evidence, AgentTeam, reports, and quality gates succeeded.",
+  "target_id": "TARGET-SAMPLE-8697"
+}

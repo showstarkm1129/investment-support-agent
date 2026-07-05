@@ -1,0 +1,30 @@
+{
+  "accepted_evidence_ids": [
+    "E20250328-001",
+    "E20250328-002",
+    "E20250328-003",
+    "E20250328-004",
+    "E20250328-005",
+    "E20250328-051",
+    "E20250328-061",
+    "E20250328-101",
+    "E20250328-201",
+    "E20250328-202",
+    "E20250328-203",
+    "E20250328-204",
+    "E20250328-205",
+    "E20250328-206",
+    "E20250328-207",
+    "E20250328-208",
+    "E20250328-209",
+    "E20250328-210",
+    "E20250328-301"
+  ],
+  "agent_name": "evidence_builder",
+  "notes": [
+    "All supplied Evidence entries are schema-compatible and usable as inputs to later agents.",
+    "The J-Quants price records include duplicates and should be treated as overlapping market data rather than independent signals.",
+    "News items are mostly existence confirmations with limited directionality until the underlying articles are read; keep them as context, not conclusions."
+  ],
+  "schema_version": "evidence_builder_review_v1"
+}

@@ -1,0 +1,79 @@
+{
+  "agent_outputs": [
+    {
+      "agent_name": "bull",
+      "claim_strength": 0,
+      "conclusion": "Simulation only. Replace this file with real Agent output after running the prompt.",
+      "confidence": "low",
+      "evidence_ids": [],
+      "key_points": [
+        "Prompt generation and artifact routing were verified.",
+        "No market data was fetched in simulation mode."
+      ],
+      "limitations": [
+        "This is not an investment readout.",
+        "Run the planned Agent prompts to produce evidence-backed analysis."
+      ],
+      "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+      "schema_version": "agent_output_v1",
+      "stance": "bull placeholder stance"
+    },
+    {
+      "agent_name": "bear",
+      "claim_strength": 0,
+      "conclusion": "Simulation only. Replace this file with real Agent output after running the prompt.",
+      "confidence": "low",
+      "evidence_ids": [],
+      "key_points": [
+        "Prompt generation and artifact routing were verified.",
+        "No market data was fetched in simulation mode."
+      ],
+      "limitations": [
+        "This is not an investment readout.",
+        "Run the planned Agent prompts to produce evidence-backed analysis."
+      ],
+      "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+      "schema_version": "agent_output_v1",
+      "stance": "bear placeholder stance"
+    },
+    {
+      "agent_name": "contradiction",
+      "claim_strength": 0,
+      "conclusion": "Simulation only. Replace this file with real Agent output after running the prompt.",
+      "confidence": "low",
+      "evidence_ids": [],
+      "key_points": [
+        "Prompt generation and artifact routing were verified.",
+        "No market data was fetched in simulation mode."
+      ],
+      "limitations": [
+        "This is not an investment readout.",
+        "Run the planned Agent prompts to produce evidence-backed analysis."
+      ],
+      "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+      "schema_version": "agent_output_v1",
+      "stance": "contradiction placeholder stance"
+    },
+    {
+      "agent_name": "pricing",
+      "claim_strength": 0,
+      "conclusion": "Simulation only. Replace this file with real Agent output after running the prompt.",
+      "confidence": "low",
+      "evidence_ids": [],
+      "key_points": [
+        "Prompt generation and artifact routing were verified.",
+        "No market data was fetched in simulation mode."
+      ],
+      "limitations": [
+        "This is not an investment readout.",
+        "Run the planned Agent prompts to produce evidence-backed analysis."
+      ],
+      "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+      "schema_version": "agent_output_v1",
+      "stance": "pricing placeholder stance"
+    }
+  ],
+  "report_date": "2026-07-03",
+  "schema_version": "agent_outputs_bundle_v1",
+  "target_id": "SECTOR-SEMICONDUCTOR"
+}

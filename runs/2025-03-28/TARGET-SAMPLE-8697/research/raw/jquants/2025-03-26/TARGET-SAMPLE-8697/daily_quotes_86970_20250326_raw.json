@@ -1,0 +1,62 @@
+{
+  "code": "86970",
+  "date": "2025-03-26",
+  "endpoint": "/equities/bars/daily",
+  "fetched_at": "2026-07-04T22:56:07+09:00",
+  "provider": "jquants",
+  "request": {
+    "auth": "x-api-key",
+    "code": "86970",
+    "date": "20250326",
+    "url": "https://api.jquants.com/v2/equities/bars/daily?code=86970&date=20250326"
+  },
+  "response": {
+    "data": [
+      {
+        "AdjC": 1651.5,
+        "AdjFactor": 1.0,
+        "AdjH": 1679.5,
+        "AdjL": 1643.5,
+        "AdjO": 1662.0,
+        "AdjVo": 4075900.0,
+        "C": 1651.5,
+        "Code": "86970",
+        "Date": "2025-03-26",
+        "H": 1679.5,
+        "L": 1643.5,
+        "LL": "0",
+        "O": 1662.0,
+        "UL": "0",
+        "Va": 6755232500.0,
+        "Vo": 4075900.0
+      }
+    ]
+  },
+  "schema_version": "jquants_raw_daily_quotes_v1",
+  "status_code": 200,
+  "summary": {
+    "first_row_keys": [
+      "AdjC",
+      "AdjFactor",
+      "AdjH",
+      "AdjL",
+      "AdjO",
+      "AdjVo",
+      "C",
+      "Code",
+      "Date",
+      "H",
+      "L",
+      "LL",
+      "O",
+      "UL",
+      "Va",
+      "Vo"
+    ],
+    "row_count": 1,
+    "top_level_keys": [
+      "data"
+    ]
+  },
+  "target_id": "TARGET-SAMPLE-8697"
+}

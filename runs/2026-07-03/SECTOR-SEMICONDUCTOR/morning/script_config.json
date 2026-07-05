@@ -1,0 +1,66 @@
+{
+  "notebooklm": {},
+  "report_schedule": {},
+  "schema_version": "flow_script_runtime_config_v1",
+  "targets": [
+    {
+      "auto_report_enabled": true,
+      "company_name": "半導体セクター",
+      "market": "JP-US-watchlist",
+      "stock_code": "",
+      "target_id": "SECTOR-SEMICONDUCTOR",
+      "target_type": "sector",
+      "themes": [
+        "半導体",
+        "生成AI",
+        "データセンター",
+        "装置",
+        "メモリ",
+        "規制"
+      ],
+      "watchlist": [
+        {
+          "market": "TSE",
+          "name": "東京エレクトロン",
+          "ticker": "8035"
+        },
+        {
+          "market": "TSE",
+          "name": "アドバンテスト",
+          "ticker": "6857"
+        },
+        {
+          "market": "TSE",
+          "name": "レーザーテック",
+          "ticker": "6920"
+        },
+        {
+          "market": "TSE",
+          "name": "ディスコ",
+          "ticker": "6146"
+        },
+        {
+          "market": "US",
+          "name": "NVIDIA",
+          "ticker": "NVDA"
+        },
+        {
+          "market": "US",
+          "name": "Advanced Micro Devices",
+          "ticker": "AMD"
+        },
+        {
+          "market": "US",
+          "name": "TSMC",
+          "ticker": "TSM"
+        },
+        {
+          "market": "US",
+          "name": "ASML",
+          "ticker": "ASML"
+        }
+      ]
+    }
+  ],
+  "timezone": "Asia/Tokyo"
+}

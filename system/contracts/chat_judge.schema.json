@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.investment-support-agent/system/contracts/chat_judge.schema.json",
+  "title": "Chat judge output",
+  "type": "object",
+  "required": ["schema_version", "run_id", "agent_name", "run_at", "target_id", "mode", "question", "routing", "answer", "used_evidence", "agent_outputs_used", "follow_up", "warnings"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "chat_judge_output_v1" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "agent_name": { "const": "chat_judge" },
+    "run_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$"
+    },
+    "target_id": { "type": "string", "minLength": 1 },
+    "mode": {
+      "type": "string",
+      "enum": ["quick", "context", "agent", "research"]
+    },
+    "question": {
+      "type": "object",
+      "required": ["text", "asked_at"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "asked_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$"
+        }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "required": ["selected_flow", "reason", "agents_called"],
+      "additionalProperties": false,
+      "properties": {
+        "selected_flow": {
+          "type": "string",
+          "enum": ["chat_quick", "chat_context", "chat_agent", "chat_research"]
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "agents_called": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["chat_judge", "search_design", "evidence_builder", "bull", "bear", "contradiction", "pricing"]
+          }
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": ["summary", "body", "confidence", "caveats"],
+      "additionalProperties": false,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "confidence": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "caveats": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "used_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "evidence_id": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "agent_outputs_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["agent_name", "run_id", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "agent_name": {
+            "type": "string",
+            "enum": ["bull", "bear", "contradiction", "pricing"]
+          },
+          "run_id": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "follow_up": {
+      "type": "object",
+      "required": ["needs_research", "suggested_flow", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "needs_research": { "type": "boolean" },
+        "suggested_flow": {
+          "anyOf": [
+            { "type": "string", "enum": ["chat_context", "chat_agent", "chat_research"] },
+            { "type": "null" }
+          ]
+        },
+        "reason": { "type": "string" }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

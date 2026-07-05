@@ -4,7 +4,7 @@
 
 ```text
 investment-support-agent/
-├─ agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
+├─ system/agents/                         # 各 Agent の役割、禁止事項、判断境界を定義する指示書置き場。
 │  ├─ AGENTS.md                    # 全 Agent 共通の基本ルール。
 │  ├─ search_design/               # 調査計画と検索方針を決める Agent。
 │  │  └─ AGENTS.md
@@ -23,7 +23,7 @@ investment-support-agent/
 │  └─ chat_judge/                  # チャット質問の重さに応じて回答経路を選ぶ Agent。
 │     └─ AGENTS.md
 │
-├─ flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
+├─ system/flows/                          # 朝・引け後・チャット・調査の実行順を固定する手順書置き場。
 │  ├─ README.md                    # flow 全体の考え方と run 保存方針。
 │  ├─ morning_report.md            # 朝レポートの実行順。
 │  ├─ close_report.md              # 引け後レポートの実行順。
@@ -33,7 +33,7 @@ investment-support-agent/
 │  ├─ chat_research.md             # 新規調査を伴うチャット手順。
 │  └─ error_policy.md              # エラー時や部分失敗時の扱い。
 │
-├─ contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
+├─ system/contracts/                      # Agent やスクリプトが読み書きする JSON の正しい形を定義する場所。
 │  ├─ README.md                    # contract の役割と更新ルール。
 │  ├─ evidence.schema.json         # Evidence の JSON Schema。
 │  ├─ agent_output.schema.json     # bull/bear など分析 Agent 出力の JSON Schema。
@@ -42,7 +42,7 @@ investment-support-agent/
 │  ├─ health.schema.json           # 実行状態・健全性チェック出力の JSON Schema。
 │  └─ artifact_contract.md         # runs や reports に保存する成果物の命名・配置ルール。
 │
-├─ config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
+├─ system/config/                         # 対象銘柄、情報源、実行時設定のサンプル設定置き場。
 │  ├─ app.example.json             # アプリ全体の最小設定サンプル。
 │  ├─ targets.example.json         # 調査対象銘柄・テーマの設定サンプル。
 │  ├─ sources.example.json         # J-Quants、EDINET、IR、News など情報源の設定サンプル。
@@ -108,10 +108,10 @@ investment-support-agent/
 │  └─ project_structure.md         # この階層構造説明ドキュメント。
 │
 ├─ LICENSE                         # ライセンス情報。
-├─ 要件定義書.md                  # プロジェクトの要件定義。
-├─ 会話決定事項メモ.md            # 会話の中で決まった仕様や方針のメモ。
-├─ 保守検証チェック.md            # 保守・検証観点のメモ。
-├─ レポート出力テンプレート案.md  # レポート出力テンプレートの案。
+├─ docs/planning/要件定義書.md                  # プロジェクトの要件定義。
+├─ docs/planning/会話決定事項メモ.md            # 会話の中で決まった仕様や方針のメモ。
+├─ docs/planning/保守検証チェック.md            # 保守・検証観点のメモ。
+├─ docs/planning/レポート出力テンプレート案.md  # レポート出力テンプレートの案。
 └─ *.html                          # 初期プロトタイプや構成説明用の HTML。
 ```
 
@@ -119,6 +119,6 @@ investment-support-agent/
 
 1. `docs/project_structure.md` で全体像をつかむ。
 2. `docs/architecture.md` で処理の流れを理解する。
-3. `flows/README.md` と対象 flow を読んで、実行順を確認する。
-4. `contracts/README.md` と対象 schema を読んで、入出力の形を確認する。
-5. `agents/` の各 `AGENTS.md` を読んで、Agent の役割を確認する。
+3. `system/flows/README.md` と対象 flow を読んで、実行順を確認する。
+4. `system/contracts/README.md` と対象 schema を読んで、入出力の形を確認する。
+5. `system/agents/` の各 `AGENTS.md` を読んで、Agent の役割を確認する。

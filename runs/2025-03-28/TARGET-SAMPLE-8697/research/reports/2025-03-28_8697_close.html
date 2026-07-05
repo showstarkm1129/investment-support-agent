@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>日本取引所グループ 引け後レポート</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../app/assets/app.css">
+  
+  <script>
+    (() => {
+      const storageKey = "investment-support-agent-theme";
+      const root = document.documentElement;
+      const initialTheme = localStorage.getItem(storageKey) || "light";
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.themeValue === theme));
+        });
+      };
+
+      applyTheme(initialTheme);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem(storageKey) || initialTheme);
+        document.querySelectorAll("[data-theme-value]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const theme = button.dataset.themeValue || "light";
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      });
+    })();
+  </script>
+
+</head>
+<body>
+  <div class="app">
+    
+      <aside class="nav">
+        <div class="brand">
+          <b>AI投資情報OS</b>
+          <span>MVP connected UI</span>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-link" href="../../app/dashboard.html"><i class="dot green"></i><span>Dashboard</span></a><a class="nav-link" href="../../app/evidence.html"><i class="dot blue"></i><span>Evidence</span></a><a class="nav-link active" href="2025-03-28_8697_close.html"><i class="dot green"></i><span>Report</span></a><a class="nav-link" href="../../app/health.html"><i class="dot amber"></i><span>Health</span></a><a class="nav-link" href="../../app/flow_builder.html"><i class="dot red"></i><span>Flow</span></a><a class="nav-link" href="../../app/agents.html"><i class="dot blue"></i><span>Agent指示書</span></a>
+        </nav>
+        <div class="theme-switch" aria-label="テーマ切替">
+          <button class="theme-button" type="button" data-theme-value="light" aria-pressed="true">White</button>
+          <button class="theme-button" type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+        </div>
+      </aside>
+    
+    <main>
+  <section class="panel">
+    <div class="muted">2026-07-05T10:05:01+09:00 / 引け後</div>
+    <h1>8697 日本取引所グループ 日次レポート</h1>
+    <p>Evidence 19件を確認。終値1645.5は始値1653.5を下回った。出来高は2480300.0。</p>
+  </section>
+
+  <section class="grid-4">
+    <div class="panel"><div class="muted">材料の読み</div><div class="value">下方向</div></div>
+    <div class="panel"><div class="muted">材料バランス</div><div class="value">-62</div></div>
+    <div class="panel"><div class="muted">confidence</div><div class="value">中</div></div>
+    <div class="panel"><div class="muted">不確実性</div><div class="value">中</div></div>
+  </section>
+
+  <section class="panel">
+    <h2>情報状態</h2>
+    <p><b>下方向材料優勢</b>: 価格・出来高EvidenceをAgentTeam形式に整理した。追加情報で判断精度を上げる余地がある。</p>
+  </section>
+
+  <section class="panel">
+    <h2>中期仮説への影響</h2>
+    <p><b>悪化</b>: 現段階では価格Evidence中心のため、仮説更新は暫定扱いにする。</p>
+  </section>
+
+  <section class="panel">
+    <h2>証拠重み</h2>
+    <p>上方向材料 16% / 下方向材料 78% / 反証 0% / 織り込み 6%</p>
+  </section>
+
+  <section class="panel">
+    <h2>重要Evidence</h2>
+    <div class="evidence-list">
+      
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants日次価格: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970日次価格データをJ-Quantsから取得。 終値は1645.5。 出来高は2480300.0。 売買代金は4084779250.0。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">下方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants日次価格: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970日次価格データをJ-Quantsから取得。 終値は1650.0。 出来高は3174600.0。 売買代金は5255286550.0。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">下方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants日次価格: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970日次価格データをJ-Quantsから取得。 終値は1651.5。 出来高は4075900.0。 売買代金は6755232500.0。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">下方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants日次価格: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970日次価格データをJ-Quantsから取得。 終値は1657.0。 出来高は4007000.0。 売買代金は6610263950.0。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">上方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants日次価格: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970日次価格データをJ-Quantsから取得。 終値は1580.0。 出来高は4604900.0。 売買代金は7282456700.0。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">下方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / price_volume</div>
+              <h3>J-Quants派生指標: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970についてJ-Quants価格データから派生指標を算出。 前日比は-4.647。 始値比は-2.0459。 日中レンジは4.0298。 5日平均比出来高は1.2552。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">下方向</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / market_supply</div>
+              <h3>J-Quants相対比較: 86970 2025-03-28</h3>
+              <p>2025-03-28の86970を比較対象と相対比較。 JPXSelf比のclose_to_open_pct差は0.0pt。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">中立</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / disclosure_edinet</div>
+              <h3>EDINET開示確認: 日本取引所グループ 2025-03-28</h3>
+              <p>2025-03-28のEDINET提出書類一覧を確認したが、日本取引所グループに一致する開示メタデータは見つからなかった。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 低</span>
+                <span class="chip">中立</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-07-04 / news</div>
+              <h3>If You Invested $1,000 in Japan Exchange Group Inc (JPXGY) - Stock Titan</h3>
+              <p>2025-03-28にStock Titanで関連ニュースを確認。タイトル: If You Invested $1,000 in Japan Exchange Group Inc (JPXGY) - Stock Titan 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMib0FVX3lxTE4wZlItcWx6clZXemlvQVNBWmxBcnA5MUFLZ3QxYjhMOUlzbkowRERuN2pWcDJfSzNfb1FNNUQtTVZsWUcyQWNDcmJONnBZZE1SZVpBYXFjRWNDYVhvNndkTk</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-06-29 / news</div>
+              <h3>Launch of 10-Level Order Book Historical Data - jpx.co.jp</h3>
+              <p>2025-03-28にjpx.co.jpで関連ニュースを確認。タイトル: Launch of 10-Level Order Book Historical Data - jpx.co.jp 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMihwFBVV95cUxNcWl1NTdpQnhydkN6NUY0OG1tR3gwSm14TF9vbjNZcmduX0hoRjZjOU5ISlNQQmQwS2I4Yl9sUk56ME5rbHRJUVBiUDYtZDZKU3JLWmtCRkJleHJvQ3hpYV</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-07-02 / news</div>
+              <h3>Price to earnings forward of Japan Exchange Group, Inc. – TSE:8697 - TradingView</h3>
+              <p>2025-03-28にTradingViewで関連ニュースを確認。タイトル: Price to earnings forward of Japan Exchange Group, Inc. – TSE:8697 - TradingView 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMingFBVV95cUxQLWJMYk5YdFBaRXowWEU3dU8yQjViQ0dlRW1teGIzNTB4VEJwQWhENXZHdjBBcFFITzNsbVc2clltVnZEcFBQZ2VJaDY4NU10a1Q2UWtwa0d5RGZNNEplZH</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-07-01 / news</div>
+              <h3>Japan Exchange Group Today: Nikkei 225 Climbs Toward 70,500 as Yen Hits 40-Year Low and AI Stocks Drive Tokyo&#x27;s Second-Half Opener - BBN Times</h3>
+              <p>2025-03-28にBBN Timesで関連ニュースを確認。タイトル: Japan Exchange Group Today: Nikkei 225 Climbs Toward 70,500 as Yen Hits 40-Year Low and AI Stocks Drive Tokyo&#x27;s Second-Half Opener - BBN Times 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMi9wFBVV95cUxOXzZYRXFoY2xrN0NtUVNLLUxmYkxmeENFcXBFNU5pRHdLTm1md2F3bzdBRjBBYzIya3dpYkFmaFM2c01nWThVS3BGMlJJNVNiWHVFc096cVFtdUtVcjhXMF</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-07-01 / news</div>
+              <h3>Tranche Update on Japan Exchange Group, Inc.&#x27;s Equity Buyback Plan announced on April 28, 2026. - marketscreener.com</h3>
+              <p>2025-03-28にmarketscreener.comで関連ニュースを確認。タイトル: Tranche Update on Japan Exchange Group, Inc.&#x27;s Equity Buyback Plan announced on April 28, 2026. - marketscreener.com 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMi3AFBVV95cUxNT0NJdE5VdGhhRFRKbzg0SGZrdXhKN1o5WFNUb2tMcEFJc1YzeU5WQWZFQ2JxeEtsdXJfMHNRazMybEFvOERSSExnQWoxdHBnLXhBWE1qX09DRkp5bEgxLV</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-06-10 / news</div>
+              <h3>RavenPack Partners with Japan Exchange Group&#x27;s SCRIPTS Asia team to Provide AI-Ready Data on Japanese Equities - PR Newswire</h3>
+              <p>2025-03-28にPR Newswireで関連ニュースを確認。タイトル: RavenPack Partners with Japan Exchange Group&#x27;s SCRIPTS Asia team to Provide AI-Ready Data on Japanese Equities - PR Newswire 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMi-AFBVV95cUxQOVF0Zm5BQkdfOVFNai1rYThiTFpRdEhrbUtYZ1ZMaFVIaFFoZEFsMjVQenAwd1BXb213U0o2SVd2YU16UlVEc1lzd2V5akVsVVMtUjdNcVZMdUlQa1pEa3</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-05-27 / news</div>
+              <h3>Japan&#x27;s Nikkei retreats from record high as AI rally sparks caution - Reuters</h3>
+              <p>2025-03-28にReutersで関連ニュースを確認。タイトル: Japan&#x27;s Nikkei retreats from record high as AI rally sparks caution - Reuters 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMirwFBVV95cUxPbDk3dFlfUnRiejJ5a3BKSWFqY0NrbGFzYktBS2ZaYm1PRm1KUURFYkdqRGZiN3NYUk96SGxYSXBIUUFzWW9RT1QxMi1ONlJJNVdGYWNkdTktc1U2b2h2UE</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-06-07 / news</div>
+              <h3>Japan’s Stocks Set to Sink on Tech Selloff, Middle East Worries - Bloomberg.com</h3>
+              <p>2025-03-28にBloomberg.comで関連ニュースを確認。タイトル: Japan’s Stocks Set to Sink on Tech Selloff, Middle East Worries - Bloomberg.com 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMiswFBVV95cUxOUGRlSFo5eUZvZlBYcFVQeGkxZEt3clBWZ2RvVmtITWtjM24xVEMtR3dJU3Zwb2lObzZlSEd4QnMzRWR3bVdOR1lqb0M2UDJqcFVuX3Y3cm50bWVhQV8tcX</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-06-14 / news</div>
+              <h3>Japan Exchange Group (TSE:8697) Stock Valuation After New AI Transcript Data Partnership - simplywall.st</h3>
+              <p>2025-03-28にsimplywall.stで関連ニュースを確認。タイトル: Japan Exchange Group (TSE:8697) Stock Valuation After New AI Transcript Data Partnership - simplywall.st 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMi8wFBVV95cUxPdTVONmRBVzVUR3RtM0VoeDVDYkJNbW5FSWQ3RjloUk1oSjlJTTdpUm9CWXJodUhyOXdRNEFhR05ZX0lkNmlJeTJQRThHU29HR000THFYYXVmcW1vMUE4Y1</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2026-06-09 / news</div>
+              <h3>VIDEO| Exploring Japan: A visit to Tokyo Stock Exchange - Stripes Japan</h3>
+              <p>2025-03-28にStripes Japanで関連ニュースを確認。タイトル: VIDEO| Exploring Japan: A visit to Tokyo Stock Exchange - Stripes Japan 概要: &lt;a href=&quot;https://news.google.com/rss/articles/CBMiakFVX3lxTFBWem1MWmxXRXBfeFgwZWtEM1FLMzRITW1kQm9qcE1RNlgyMl9zLWlnSUFnLXhEeENyRmNyejBmcjJ6SGY4Z3R6NksweFpMcVZORjZKRW9TLVdjbExSazFpOD</p>
+              <div class="chips">
+                <span class="chip">信頼C</span>
+                <span class="chip">直接 中</span>
+                <span class="chip">新鮮 高</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="meta">2025-03-28 / ir</div>
+              <h3>株主・投資家情報（IR） | 日本取引所グループ</h3>
+              <p>2025-03-28に日本取引所グループの公式IRページを確認。 タイトル: 株主・投資家情報（IR） | 日本取引所グループ。 概要: 株主・投資家情報（IR）のページ。東京証券取引所、大阪取引所、東京商品取引所等を運営する日本取引所グループ（JPX）のサイトです。</p>
+              <div class="chips">
+                <span class="chip">信頼A</span>
+                <span class="chip">直接 高</span>
+                <span class="chip">新鮮 中</span>
+                <span class="chip">影響 中</span>
+                <span class="chip">unknown</span>
+              </div>
+            </article>
+            
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>未確認情報</h2>
+    <ul><li><b>直近ニュースとIR</b><br>価格変動の背景に材料があるかを確認するため</li><li><b>EDINET開示と決算指標</b><br>短期価格反応と中期ファンダメンタルズを分けるため</li><li><b>同業比較と指数比較</b><br>個別要因か市場全体の動きかを切り分けるため</li></ul>
+  </section>
+
+  <section class="panel">
+    <h2>見方が変わる条件</h2>
+    <ul><li><b>同方向の価格・出来高Evidenceが複数営業日継続する</b><br>現在の方向性判断の信頼度が上がる</li><li><b>IR、EDINET、ニュースで反対方向の材料が確認される</b><br>価格Evidence中心の暫定判断を見直す</li></ul>
+  </section>
+    </main>
+  </div>
+</body>
+</html>

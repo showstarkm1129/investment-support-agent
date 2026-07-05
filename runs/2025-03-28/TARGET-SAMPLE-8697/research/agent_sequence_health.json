@@ -1,0 +1,94 @@
+{
+  "overall_status": "ok",
+  "run_at": "2026-07-05T10:16:30+09:00",
+  "run_id": "PIPE-20250328-TARGET-SAMPLE-8697-RESEARCH",
+  "schema_version": "health_snapshot_v1",
+  "sections": [
+    {
+      "checks": [
+        {
+          "check_id": "evidence_input",
+          "detail": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/evidence.json",
+          "label": "Evidence input",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "19 Evidence item(s) loaded.",
+          "status": "ok"
+        },
+        {
+          "check_id": "search_design",
+          "detail": "",
+          "label": "Search Design",
+          "last_run_at": "2026-07-05T10:05:01+09:00",
+          "message": "Research plan loaded from previous step output.",
+          "status": "skipped"
+        },
+        {
+          "check_id": "evidence_builder",
+          "detail": "",
+          "label": "Evidence Builder",
+          "last_run_at": "2026-07-05T10:06:53+09:00",
+          "message": "19 Evidence item(s) validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "bull",
+          "detail": "",
+          "label": "bull",
+          "last_run_at": "2026-07-05T10:08:18+09:00",
+          "message": "Agent output validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "bear",
+          "detail": "",
+          "label": "bear",
+          "last_run_at": "2026-07-05T10:10:01+09:00",
+          "message": "Agent output validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "contradiction",
+          "detail": "",
+          "label": "contradiction",
+          "last_run_at": "2026-07-05T10:11:34+09:00",
+          "message": "Agent output validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "pricing",
+          "detail": "",
+          "label": "pricing",
+          "last_run_at": "2026-07-05T10:13:40+09:00",
+          "message": "Agent output validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "report_judge",
+          "detail": "",
+          "label": "Report Judge",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "Report judge output validated.",
+          "status": "ok"
+        },
+        {
+          "check_id": "secret_leak",
+          "detail": "",
+          "label": "Secret leak check",
+          "last_run_at": "2026-07-05T10:16:30+09:00",
+          "message": "No loaded secret value found in final artifacts.",
+          "status": "ok"
+        }
+      ],
+      "section_id": "agent_sequence",
+      "title": "Sequential Agent Chain"
+    }
+  ],
+  "stats": {
+    "agent_failed": 0,
+    "agent_success": 7,
+    "evidence_total": 19,
+    "report_outputs": 0
+  },
+  "summary": "Sequential Agent chain completed.",
+  "target_id": "TARGET-SAMPLE-8697"
+}

@@ -29,7 +29,8 @@ from prepare_agent_context import (
 
 
 JST = timezone(timedelta(hours=9))
-FLOW_SCRIPT_DIR = ROOT / "config" / "flow_scripts"
+FLOW_SCRIPT_DIR = ROOT / "system" / "config" / "flow_scripts"
+LOCAL_CONFIG_PATH = ROOT / "system" / "config" / "local.json"
 PROVIDER_CHOICES = ("manual", "codex", "claude", "openai_api", "anthropic_api", "gemini_api")
 MODE_CHOICES = ("prepare", "dry-run", "simulate", "live")
 ANALYSIS_AGENTS = {"bull", "bear", "contradiction", "pricing"}
@@ -48,15 +49,15 @@ API_ENV_KEYS = {
 }
 
 AGENT_DOC_PATHS = {
-    "search_design": "agents/search_design/AGENTS.md",
-    "evidence_builder": "agents/evidence_builder/AGENTS.md",
-    "bull": "agents/bull/AGENTS.md",
-    "bear": "agents/bear/AGENTS.md",
-    "contradiction": "agents/contradiction/AGENTS.md",
-    "pricing": "agents/pricing/AGENTS.md",
-    "report_judge": "agents/report_judge/AGENTS.md",
-    "chat_judge": "agents/chat_judge/AGENTS.md",
-    "health": "contracts/health.schema.json",
+    "search_design": "system/agents/search_design/AGENTS.md",
+    "evidence_builder": "system/agents/evidence_builder/AGENTS.md",
+    "bull": "system/agents/bull/AGENTS.md",
+    "bear": "system/agents/bear/AGENTS.md",
+    "contradiction": "system/agents/contradiction/AGENTS.md",
+    "pricing": "system/agents/pricing/AGENTS.md",
+    "report_judge": "system/agents/report_judge/AGENTS.md",
+    "chat_judge": "system/agents/chat_judge/AGENTS.md",
+    "health": "system/contracts/health.schema.json",
     "generate_reports": "scripts/generate_reports.py",
     "generate_app_pages": "scripts/generate_app_pages.py",
 }
@@ -114,6 +115,77 @@ def load_flow_script(reference: str) -> tuple[Path, dict[str, Any]]:
     if not isinstance(targets, list) and not isinstance(target, dict):
         raise ValueError("flow script must contain target or targets")
     return path, script
+
+
+def strip_env_comment(value: str) -> str:
+    in_single = False
+    in_double = False
+    escaped = False
+    result = []
+    for char in value:
+        if escaped:
+            result.append(char)
+            escaped = False
+            continue
+        if char == "\\" and in_double:
+            escaped = True
+            result.append(char)
+            continue
+        if char == "'" and not in_double:
+            in_single = not in_single
+        elif char == '"' and not in_single:
+            in_double = not in_double
+        if char == "#" and not in_single and not in_double:
+            break
+        result.append(char)
+    return "".join(result).strip()
+
+
+def parse_env_line(line: str) -> tuple[str, str] | None:
+    text = line.strip()
+    if not text or text.startswith("#"):
+        return None
+    if text.startswith("export "):
+        text = text[7:].strip()
+    if "=" not in text:
+        return None
+    key, raw_value = text.split("=", 1)
+    key = key.strip()
+    if not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", key):
+        return None
+    value = strip_env_comment(raw_value)
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+        value = value[1:-1]
+    return key, value
+
+
+def load_env_file(env_file: Path | None, *, override: bool = False) -> list[str]:
+    if env_file is None:
+        return []
+    path = project_path(env_file)
+    if not path.exists():
+        return []
+    loaded = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        parsed = parse_env_line(line)
+        if parsed is None:
+            continue
+        key, value = parsed
+        if override or key not in os.environ:
+            os.environ[key] = value
+            loaded.append(key)
+    return loaded
+
+
+def configured_env_file() -> Path:
+    if LOCAL_CONFIG_PATH.exists():
+        try:
+            local_config = load_json(LOCAL_CONFIG_PATH)
+        except (OSError, json.JSONDecodeError):
+            local_config = {}
+        if isinstance(local_config, dict) and isinstance(local_config.get("env_file"), str):
+            return project_path(Path(local_config["env_file"]))
+    return ROOT / ".env"
 
 
 def model_for(provider: str, explicit_model: str | None, script: dict[str, Any] | None = None) -> str:
@@ -205,7 +277,15 @@ def instruction_path_for_agent(agent_id: str) -> str | None:
 def command_for_cli_provider(provider: str, model: str, prompt_path: Path) -> list[str]:
     rel_prompt = rel(prompt_path)
     if provider == "codex":
-        command = ["codex", "exec", "--cd", "."]
+        command = [
+            "codex",
+            "exec",
+            "--ignore-user-config",
+            "--ephemeral",
+            "--cd",
+            ".",
+            "--dangerously-bypass-approvals-and-sandbox",
+        ]
         if model and model != "default":
             command.extend(["--model", model])
         command.append(f"Read {rel_prompt} and write the requested artifact files.")
@@ -245,6 +325,8 @@ def build_agent_prompt(
     required_outputs = step.get("outputs") or []
     required_inputs = step.get("inputs") or []
     notes = step.get("notes") or []
+    variables = script.get("variables", {})
+    rendered_outputs = [render_artifact_path(item, context) for item in required_outputs]
 
     return f"""# Agent Task {sequence}: {agent_id}
 
@@ -271,6 +353,20 @@ Group: {group_index}
 
 {instruction_path or "No local instruction file. Follow the flow script step definition."}
 
+Read this instruction source before writing outputs.
+
+## Context
+
+- context_json: {context["outputs"]["context"]}
+- manifest_json: {context["outputs"]["manifest"]}
+- run_dir: {context["outputs"]["manifest"].rsplit("/", 1)[0]}
+
+## Variables
+
+```json
+{json.dumps(variables, indent=2, ensure_ascii=False, sort_keys=True)}
+```
+
 ## Inputs
 
 {json.dumps(required_inputs, indent=2, ensure_ascii=False)}
@@ -278,6 +374,10 @@ Group: {group_index}
 ## Required Outputs
 
 {json.dumps(required_outputs, indent=2, ensure_ascii=False)}
+
+## Write These Files
+
+{json.dumps(rendered_outputs, indent=2, ensure_ascii=False)}
 
 ## Notes
 
@@ -288,8 +388,26 @@ Group: {group_index}
 - Use evidence IDs when making factual claims.
 - Keep facts, interpretation, and uncertainty separate.
 - Do not produce trading instructions.
-- Write JSON artifacts only when the requested schema and path are clear.
+- Write JSON artifacts only to the concrete paths listed in "Write These Files".
+- If a requested path contains a parent directory that does not exist, create it.
+- If there is not enough evidence to make an investment-related claim, write a low-confidence planning artifact instead of inventing facts.
+- After the files in "Write These Files" are written, stop immediately and return a short completion message.
 """
+
+
+def render_artifact_path(template: str, context: dict[str, Any]) -> str:
+    run_dir = context["outputs"]["manifest"].rsplit("/", 1)[0]
+    values = {
+        "date": context["created_at"][:10],
+        "target_id": context["target_id"],
+        "run_id": context["run_id"],
+        "bucket": context["bucket"],
+        "run_dir": run_dir,
+    }
+    rendered = template
+    for key, value in values.items():
+        rendered = rendered.replace("{" + key + "}", str(value))
+    return rendered
 
 
 def write_flow_script_runtime_config(path: Path, config: dict[str, Any]) -> None:
@@ -335,6 +453,7 @@ def write_script_artifacts(
                     "instruction_path": instruction_path_for_agent(agent_id),
                     "model": model,
                     "prompt_path": rel(prompt_path),
+                    "expected_outputs": [render_artifact_path(item, context) for item in (step.get("outputs") or [])],
                     "suggested_command": suggested_command(provider, model, prompt_path),
                     "status": "planned",
                 }
@@ -362,6 +481,57 @@ def write_script_artifacts(
     return paths
 
 
+def rendered_script_outputs(script: dict[str, Any], context: dict[str, Any]) -> dict[str, str]:
+    outputs: dict[str, str] = {}
+    for step in script.get("agents", []):
+        if not isinstance(step, dict):
+            continue
+        agent_id = step.get("agent_id")
+        for index, template in enumerate(step.get("outputs", []), start=1):
+            if not isinstance(template, str):
+                continue
+            key_base = output_key_for_template(template, agent_id, index)
+            key = key_base
+            suffix = 2
+            while key in outputs:
+                key = f"{key_base}_{suffix}"
+                suffix += 1
+            outputs[key] = render_artifact_path(template, context)
+    return outputs
+
+
+def output_key_for_template(template: str, agent_id: Any, index: int) -> str:
+    filename = Path(template).name
+    canonical = {
+        "evidence.json": "evidence",
+        "agent_outputs.json": "agent_outputs",
+        "report_judge.json": "report_judge",
+        "chat_judge.json": "chat_judge",
+        "health.json": "health",
+    }
+    if filename in canonical:
+        return canonical[filename]
+    return safe_filename(f"{agent_id or 'agent'}_{filename or index}")
+
+
+def script_context_outputs(script: dict[str, Any], context: dict[str, Any]) -> dict[str, str]:
+    outputs = {
+        "manifest": context["outputs"]["manifest"],
+        "context": context["outputs"]["context"],
+    }
+    outputs.update(rendered_script_outputs(script, context))
+    return outputs
+
+
+def existing_script_output_paths(outputs: dict[str, str]) -> dict[str, str]:
+    existing = {}
+    for key, path_text in outputs.items():
+        path = project_path(Path(path_text))
+        if path.is_file() and path.stat().st_size > 0:
+            existing[f"script_output_{key}"] = path_text
+    return existing
+
+
 def write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
@@ -369,6 +539,31 @@ def write_json(path: Path, payload: Any) -> None:
 
 def read_prompt(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def text_or_empty(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
+
+
+def expected_outputs_exist(step: dict[str, Any]) -> bool:
+    outputs = step.get("expected_outputs")
+    if not isinstance(outputs, list) or not outputs:
+        return False
+    for item in outputs:
+        if not isinstance(item, str):
+            return False
+        path = project_path(Path(item))
+        if not path.is_file() or path.stat().st_size == 0:
+            return False
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return False
+    return True
 
 
 def api_request_json(url: str, headers: dict[str, str], payload: dict[str, Any]) -> dict[str, Any]:
@@ -434,6 +629,7 @@ def execute_trace_steps(
     provider: str,
     model: str,
     run_dir: Path,
+    step_timeout: int | None,
 ) -> tuple[int, dict[str, str]]:
     trace = load_json(trace_path)
     if not isinstance(trace, dict) or not isinstance(trace.get("steps"), list):
@@ -457,7 +653,15 @@ def execute_trace_steps(
         try:
             if provider in {"codex", "claude"}:
                 command = command_for_cli_provider(provider, model, prompt_path)
-                result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+                result = subprocess.run(
+                    command,
+                    cwd=ROOT,
+                    stdin=subprocess.DEVNULL,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                    timeout=step_timeout,
+                )
                 payload = {
                     "schema_version": "llm_response_v1",
                     "provider": provider,
@@ -499,8 +703,20 @@ def execute_trace_steps(
                 "agent_id": step.get("agent_id"),
                 "error": str(exc),
             }
-            step["status"] = "failed"
-            returncode = 1
+            if isinstance(exc, subprocess.TimeoutExpired):
+                payload["command"] = exc.cmd
+                payload["stdout"] = text_or_empty(exc.output)
+                payload["stderr"] = text_or_empty(exc.stderr)
+                payload["timeout_seconds"] = step_timeout
+                if expected_outputs_exist(step):
+                    payload["warning"] = "process_timed_out_after_expected_outputs_were_written"
+                    step["status"] = "completed_with_timeout"
+                else:
+                    step["status"] = "failed"
+                    returncode = 1
+            else:
+                step["status"] = "failed"
+                returncode = 1
 
         write_json(response_path, payload)
         step["response_path"] = rel(response_path)
@@ -510,6 +726,13 @@ def execute_trace_steps(
             break
 
     return returncode, {"llm_responses": rel(responses_dir)}
+
+
+def trace_has_timeout_completion(trace_path: Path) -> bool:
+    trace = load_json(trace_path)
+    if not isinstance(trace, dict) or not isinstance(trace.get("steps"), list):
+        return False
+    return any(step.get("status") == "completed_with_timeout" for step in trace["steps"] if isinstance(step, dict))
 
 
 def report_target(target: dict[str, Any]) -> dict[str, Any]:
@@ -673,6 +896,8 @@ def build_manifest(
     model: str | None = None,
     mode: str | None = None,
     script: dict[str, Any] | None = None,
+    env_file: Path | None = None,
+    loaded_env_keys: list[str] | None = None,
 ) -> dict[str, Any]:
     manifest: dict[str, Any] = {
         "schema_version": "run_manifest_v1",
@@ -704,6 +929,12 @@ def build_manifest(
             "display_name": script.get("display_name"),
             "description": script.get("description"),
         }
+    if env_file:
+        manifest["secrets"] = {
+            "env_file": rel(env_file),
+            "loaded_env_keys": sorted(loaded_env_keys or []),
+            "values_exposed": False,
+        }
     return manifest
 
 
@@ -718,21 +949,36 @@ def run_agent_command(command: list[str], context_path: Path, run_dir: Path) -> 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Prepare and optionally run an Agent Team flow.")
     parser.add_argument("--flow", choices=FLOW_CHOICES)
-    parser.add_argument("--script", help="Flow script id or JSON path under config/flow_scripts.")
+    parser.add_argument("--script", help="Flow script id or JSON path under system/config/flow_scripts.")
     parser.add_argument("--provider", choices=PROVIDER_CHOICES)
     parser.add_argument("--model", help="Model name for CLI/API providers. Use 'default' to let the provider choose.")
     parser.add_argument("--mode", choices=MODE_CHOICES)
     parser.add_argument("--target-id")
     parser.add_argument("--date", default=today_jst())
     parser.add_argument("--run-id")
-    parser.add_argument("--config", type=Path, default=ROOT / "config/app.example.json")
+    parser.add_argument("--config", type=Path, default=ROOT / "system/config/app.example.json")
     parser.add_argument("--runs-dir", type=Path, default=ROOT / "runs")
+    parser.add_argument(
+        "--env-file",
+        type=Path,
+        help="Load API keys and local secrets from this file. Defaults to system/config/local.json env_file or .env.",
+    )
+    parser.add_argument("--no-env-file", action="store_true", help="Do not load local secrets from an env file.")
+    parser.add_argument(
+        "--step-timeout",
+        type=int,
+        default=300,
+        help="Maximum seconds to allow each live Agent step to run. Use 0 to disable.",
+    )
     parser.add_argument(
         "--agent-command",
         nargs=argparse.REMAINDER,
         help="Optional command to run after context creation. Everything after this flag is executed.",
     )
     args = parser.parse_args()
+
+    env_file = None if args.no_env_file else project_path(args.env_file) if args.env_file else configured_env_file()
+    loaded_env_keys = load_env_file(env_file)
 
     script_path: Path | None = None
     script: dict[str, Any] | None = None
@@ -789,6 +1035,7 @@ def main() -> None:
             "automation": script.get("automation", {}),
         }
         context["agent_order"] = agent_order_from_script(script, flow)
+        context["outputs"] = script_context_outputs(script, context)
 
     write_context(context, context_path)
 
@@ -807,6 +1054,8 @@ def main() -> None:
         model=model,
         mode=mode,
         script=script,
+        env_file=env_file,
+        loaded_env_keys=loaded_env_keys,
     )
     if script:
         script_paths = write_script_artifacts(
@@ -818,6 +1067,9 @@ def main() -> None:
             mode=mode,
         )
         manifest["paths"].update(script_paths)
+        script_outputs = rendered_script_outputs(script, context)
+        if script_outputs:
+            manifest["expected_script_outputs"] = script_outputs
 
     write_manifest(manifest_path, manifest)
 
@@ -837,17 +1089,29 @@ def main() -> None:
         manifest["status"] = "running"
         manifest["updated_at"] = now_jst()
         write_manifest(manifest_path, manifest)
-        returncode, live_paths = execute_trace_steps(
-            trace_path=trace_path,
-            provider=provider,
-            model=model,
-            run_dir=run_dir,
-        )
-        manifest["paths"].update(live_paths)
-        manifest["status"] = "completed" if returncode == 0 else "failed"
-        manifest["returncode"] = returncode
-        manifest["updated_at"] = now_jst()
-        write_manifest(manifest_path, manifest)
+        try:
+            returncode, live_paths = execute_trace_steps(
+                trace_path=trace_path,
+                provider=provider,
+                model=model,
+                run_dir=run_dir,
+                step_timeout=None if args.step_timeout == 0 else args.step_timeout,
+            )
+            manifest["paths"].update(live_paths)
+            if script:
+                manifest["paths"].update(existing_script_output_paths(rendered_script_outputs(script, context)))
+            if returncode == 0 and trace_has_timeout_completion(trace_path):
+                manifest["status"] = "completed_with_warnings"
+            else:
+                manifest["status"] = "completed" if returncode == 0 else "failed"
+            manifest["returncode"] = returncode
+        except KeyboardInterrupt:
+            returncode = 130
+            manifest["status"] = "failed"
+            manifest["returncode"] = returncode
+        finally:
+            manifest["updated_at"] = now_jst()
+            write_manifest(manifest_path, manifest)
 
     print(f"manifest: {manifest_path}")
     print(f"context: {context_path}")

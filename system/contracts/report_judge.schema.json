@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.investment-support-agent/system/contracts/report_judge.schema.json",
+  "title": "Report readout output",
+  "type": "object",
+  "required": ["schema_version", "run_id", "agent_name", "run_at", "decision_stage", "target", "market_readout", "information_status", "hypothesis_impact", "uncertainty", "evidence_weight", "view_change_conditions", "missing_information", "used_evidence", "warnings"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "report_readout_v1" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "agent_name": { "const": "report_judge" },
+    "run_at": { "$ref": "#/$defs/isoDateTimeWithOffset" },
+    "decision_stage": {
+      "type": "string",
+      "enum": ["draft", "final"]
+    },
+    "target": { "$ref": "#/$defs/target" },
+    "market_readout": { "$ref": "#/$defs/marketReadout" },
+    "information_status": { "$ref": "#/$defs/informationStatus" },
+    "hypothesis_impact": { "$ref": "#/$defs/hypothesisImpact" },
+    "uncertainty": { "$ref": "#/$defs/uncertainty" },
+    "evidence_weight": { "$ref": "#/$defs/evidenceWeight" },
+    "view_change_conditions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/viewChangeCondition" }
+    },
+    "missing_information": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/missingInformation" }
+    },
+    "used_evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/usedEvidence" }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "string" },
+          { "type": "object" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "isoDateTimeWithOffset": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+    "target": {
+      "type": "object",
+      "required": ["target_id", "target_type", "stock_code", "company_name", "market", "themes"],
+      "additionalProperties": false,
+      "properties": {
+        "target_id": { "type": "string", "minLength": 1 },
+        "target_type": { "type": "string", "enum": ["stock", "index", "sector", "theme"] },
+        "stock_code": { "type": "string" },
+        "company_name": { "type": "string", "minLength": 1 },
+        "market": { "type": "string" },
+        "themes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "marketReadout": {
+      "type": "object",
+      "required": ["label", "evidence_balance_score", "confidence", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": ["upside", "slightly_upside", "neutral", "pending", "slightly_downside", "downside"]
+        },
+        "evidence_balance_score": {
+          "type": "integer",
+          "minimum": -100,
+          "maximum": 100
+        },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "informationStatus": {
+      "type": "object",
+      "required": ["label", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": ["upside_evidence_leading", "downside_evidence_leading", "mixed", "insufficient_information", "no_material_change"]
+        },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "hypothesisImpact": {
+      "type": "object",
+      "required": ["label", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "enum": ["supportive", "slightly_supportive", "neutral", "slightly_negative", "negative", "undetermined"]
+        },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "required": ["level", "factors"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "$ref": "#/$defs/confidence" },
+        "factors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "evidenceWeight": {
+      "type": "object",
+      "required": ["upside", "downside", "contradiction", "priced_in"],
+      "additionalProperties": false,
+      "properties": {
+        "upside": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "downside": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "contradiction": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "priced_in": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "viewChangeCondition": {
+      "type": "object",
+      "required": ["condition", "effect", "related_hypothesis", "related_evidence_ids"],
+      "additionalProperties": false,
+      "properties": {
+        "condition": { "type": "string", "minLength": 1 },
+        "effect": { "type": "string", "minLength": 1 },
+        "related_hypothesis": { "type": "string", "minLength": 1 },
+        "related_evidence_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "missingInformation": {
+      "type": "object",
+      "required": ["item", "importance", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "item": { "type": "string", "minLength": 1 },
+        "importance": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "usedEvidence": {
+      "type": "object",
+      "required": ["evidence_id", "role", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

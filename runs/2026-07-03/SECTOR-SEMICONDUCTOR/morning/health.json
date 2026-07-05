@@ -1,0 +1,28 @@
+{
+  "overall_status": "info",
+  "run_at": "2026-07-03T14:11:04+09:00",
+  "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+  "schema_version": "health_snapshot_v1",
+  "sections": [
+    {
+      "checks": [
+        {
+          "check_id": "prompt_generation",
+          "detail": "No external connector or LLM command was executed.",
+          "label": "Prompt generation",
+          "last_run_at": "2026-07-03T14:11:04+09:00",
+          "message": "Prompt files were generated for each planned Agent step.",
+          "status": "ok"
+        }
+      ],
+      "section_id": "simulation",
+      "title": "Simulation"
+    }
+  ],
+  "stats": {
+    "planned_steps": 12,
+    "simulated_agent_outputs": 4
+  },
+  "summary": "Simulation completed. Agent prompts and routing artifacts were generated.",
+  "target_id": "SECTOR-SEMICONDUCTOR"
+}

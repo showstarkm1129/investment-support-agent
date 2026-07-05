@@ -126,12 +126,12 @@ def validate(schema_node: dict[str, Any], instance: Any, root_schema: dict[str, 
 class ContractTests(unittest.TestCase):
     def test_schema_files_have_identity(self) -> None:
         for rel in [
-            "contracts/evidence.schema.json",
-            "contracts/agent_output.schema.json",
-            "contracts/report_judge.schema.json",
-            "contracts/chat_judge.schema.json",
-            "contracts/health.schema.json",
-            "contracts/flow_script.schema.json",
+            "system/contracts/evidence.schema.json",
+            "system/contracts/agent_output.schema.json",
+            "system/contracts/report_judge.schema.json",
+            "system/contracts/chat_judge.schema.json",
+            "system/contracts/health.schema.json",
+            "system/contracts/flow_script.schema.json",
         ]:
             schema = load_json(rel)
             self.assertIn("$schema", schema)
@@ -140,12 +140,12 @@ class ContractTests(unittest.TestCase):
 
     def test_samples_match_contracts(self) -> None:
         pairs = [
-            ("contracts/evidence.schema.json", "data/sample/evidence.json"),
-            ("contracts/agent_output.schema.json", "data/sample/agent_outputs.json"),
-            ("contracts/report_judge.schema.json", "data/sample/report_judge.json"),
-            ("contracts/health.schema.json", "data/sample/health.json"),
-            ("contracts/chat_judge.schema.json", "tests/fixtures/chat_judge.sample.json"),
-            ("contracts/flow_script.schema.json", "config/flow_scripts/semiconductor_sector_morning.json"),
+            ("system/contracts/evidence.schema.json", "data/sample/evidence.json"),
+            ("system/contracts/agent_output.schema.json", "data/sample/agent_outputs.json"),
+            ("system/contracts/report_judge.schema.json", "data/sample/report_judge.json"),
+            ("system/contracts/health.schema.json", "data/sample/health.json"),
+            ("system/contracts/chat_judge.schema.json", "tests/fixtures/chat_judge.sample.json"),
+            ("system/contracts/flow_script.schema.json", "system/config/flow_scripts/semiconductor_sector_morning.json"),
         ]
         for schema_rel, sample_rel in pairs:
             with self.subTest(schema=schema_rel, sample=sample_rel):

@@ -1,0 +1,156 @@
+{
+  "agent_order": [
+    [
+      "search_design"
+    ],
+    [
+      "connector:jquants",
+      "connector:ir",
+      "connector:news",
+      "connector:macro_policy"
+    ],
+    [
+      "evidence_builder"
+    ],
+    [
+      "bull",
+      "bear",
+      "contradiction",
+      "pricing"
+    ],
+    [
+      "report_judge",
+      "health"
+    ]
+  ],
+  "bucket": "morning",
+  "contracts": {
+    "agent_output": "contracts/agent_output.schema.json",
+    "artifact": "contracts/artifact_contract.md",
+    "chat_judge": "contracts/chat_judge.schema.json",
+    "evidence": "contracts/evidence.schema.json",
+    "health": "contracts/health.schema.json",
+    "report_judge": "contracts/report_judge.schema.json"
+  },
+  "created_at": "2026-07-03T14:11:04+09:00",
+  "error_policy": "flows/error_policy.md",
+  "flow": "morning_report",
+  "flow_doc": "flows/morning_report.md",
+  "guardrails": [
+    "Use evidence IDs for factual claims.",
+    "Keep facts, interpretation, and uncertainty separate.",
+    "Do not produce trade instructions.",
+    "Validate artifacts against contracts before downstream use."
+  ],
+  "inputs": {
+    "app_config": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/script_config.json",
+    "runtime_config": "config/runtime.example.json",
+    "sample_agent_outputs": "data/sample/agent_outputs.json",
+    "sample_evidence": "data/sample/evidence.json",
+    "sample_health": "data/sample/health.json",
+    "sample_report_judge": "data/sample/report_judge.json",
+    "sources_config": "config/sources.example.json",
+    "targets_config": "config/targets.example.json"
+  },
+  "outputs": {
+    "agent_outputs": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/agent_outputs.json",
+    "context": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/context.json",
+    "evidence": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/evidence.json",
+    "health": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/health.json",
+    "manifest": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/manifest.json",
+    "report_judge": "runs/2026-07-03/SECTOR-SEMICONDUCTOR/morning/report_judge.json"
+  },
+  "run_id": "RUN20260703-SECTOR-SEMICONDUCTOR-MORNING-REPORT",
+  "schema_version": "agent_context_v1",
+  "script": {
+    "automation": {
+      "default_route": "morning_search",
+      "eligible": true,
+      "recommended_time": "07:00"
+    },
+    "depth": "normal",
+    "description": "\u65e5\u672c\u682a\u3068\u7c73\u56fd\u682a\u3092\u307e\u305f\u3050\u534a\u5c0e\u4f53\u30bb\u30af\u30bf\u30fc\u306e\u671d\u7528\u30b5\u30fc\u30c1\u3002\u9700\u7d66\u3001\u6c7a\u7b97\u3001\u8a2d\u5099\u6295\u8cc7\u3001AI\u9700\u8981\u3001\u898f\u5236\u3001\u70ba\u66ff\u3001\u6307\u6570\u53cd\u5fdc\u3092Evidence\u5316\u3057\u3066\u6574\u7406\u3059\u308b\u3002",
+    "display_name": "\u534a\u5c0e\u4f53\u30bb\u30af\u30bf\u30fc\u671d\u30b5\u30fc\u30c1",
+    "mode": "simulate",
+    "model": "default",
+    "outputs": [
+      "markdown",
+      "html",
+      "notebooklm"
+    ],
+    "provider": "codex",
+    "script_id": "semiconductor_sector_morning",
+    "script_path": "config/flow_scripts/semiconductor_sector_morning.json",
+    "variables": {
+      "focus_questions": [
+        "AI\u9700\u8981\u3068\u30c7\u30fc\u30bf\u30bb\u30f3\u30bf\u30fc\u6295\u8cc7\u306b\u5909\u5316\u306f\u3042\u308b\u304b",
+        "\u534a\u5c0e\u4f53\u88fd\u9020\u88c5\u7f6e\u3068\u30e1\u30e2\u30ea\u3067\u6e29\u5ea6\u5dee\u306f\u3042\u308b\u304b",
+        "\u7c73\u56fd\u6642\u9593\u306e\u682a\u4fa1\u53cd\u5fdc\u306f\u65e5\u672c\u682a\u306b\u6ce2\u53ca\u3057\u305d\u3046\u304b",
+        "\u8f38\u51fa\u898f\u5236\u3001\u70ba\u66ff\u3001\u91d1\u5229\u304c\u9006\u98a8\u306b\u306a\u3063\u3066\u3044\u306a\u3044\u304b"
+      ],
+      "lookback_hours": 24,
+      "region": "JP-US",
+      "sector": "\u534a\u5c0e\u4f53"
+    }
+  },
+  "target": {
+    "auto_report_enabled": true,
+    "company_name": "\u534a\u5c0e\u4f53\u30bb\u30af\u30bf\u30fc",
+    "market": "JP-US-watchlist",
+    "stock_code": "",
+    "target_id": "SECTOR-SEMICONDUCTOR",
+    "target_type": "sector",
+    "themes": [
+      "\u534a\u5c0e\u4f53",
+      "\u751f\u6210AI",
+      "\u30c7\u30fc\u30bf\u30bb\u30f3\u30bf\u30fc",
+      "\u88c5\u7f6e",
+      "\u30e1\u30e2\u30ea",
+      "\u898f\u5236"
+    ],
+    "watchlist": [
+      {
+        "market": "TSE",
+        "name": "\u6771\u4eac\u30a8\u30ec\u30af\u30c8\u30ed\u30f3",
+        "ticker": "8035"
+      },
+      {
+        "market": "TSE",
+        "name": "\u30a2\u30c9\u30d0\u30f3\u30c6\u30b9\u30c8",
+        "ticker": "6857"
+      },
+      {
+        "market": "TSE",
+        "name": "\u30ec\u30fc\u30b6\u30fc\u30c6\u30c3\u30af",
+        "ticker": "6920"
+      },
+      {
+        "market": "TSE",
+        "name": "\u30c7\u30a3\u30b9\u30b3",
+        "ticker": "6146"
+      },
+      {
+        "market": "US",
+        "name": "NVIDIA",
+        "ticker": "NVDA"
+      },
+      {
+        "market": "US",
+        "name": "Advanced Micro Devices",
+        "ticker": "AMD"
+      },
+      {
+        "market": "US",
+        "name": "TSMC",
+        "ticker": "TSM"
+      },
+      {
+        "market": "US",
+        "name": "ASML",
+        "ticker": "ASML"
+      }
+    ]
+  },
+  "target_id": "SECTOR-SEMICONDUCTOR",
+  "timezone": "Asia/Tokyo"
+}

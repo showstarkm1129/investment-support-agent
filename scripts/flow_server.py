@@ -18,8 +18,8 @@ from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_DIR = ROOT / "app"
-FLOW_SCRIPT_DIR = ROOT / "config" / "flow_scripts"
-AUTO_SEARCH_PATH = ROOT / "config" / "auto_search.example.json"
+FLOW_SCRIPT_DIR = ROOT / "system" / "config" / "flow_scripts"
+AUTO_SEARCH_PATH = ROOT / "system" / "config" / "auto_search.example.json"
 SCRIPT_ID_RE = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
 JST = timezone(timedelta(hours=9))
 PROVIDERS = {"manual", "codex", "claude", "openai_api", "anthropic_api", "gemini_api"}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "local_config_v1",
+  "description": "Copy this file to system/config/local.json for machine-local settings. Do not commit system/config/local.json.",
+  "env_file": ".env",
+  "base_configs": {
+    "app": "system/config/app.example.json",
+    "targets": "system/config/targets.example.json",
+    "sources": "system/config/sources.example.json",
+    "runtime": "system/config/runtime.example.json",
+    "auto_search": "system/config/auto_search.example.json"
+  },
+  "runtime_overrides": {
+    "runs_dir": "runs",
+    "provider": "manual",
+    "mode": "prepare"
+  }
+}

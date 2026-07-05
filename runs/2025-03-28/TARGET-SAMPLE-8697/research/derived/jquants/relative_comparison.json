@@ -1,0 +1,49 @@
+{
+  "code": "86970",
+  "comparisons": [
+    {
+      "benchmark_close": 1580.0,
+      "benchmark_value_pct": -2.0459,
+      "benchmark_volume_ratio_5d": null,
+      "code": "86970",
+      "comparison_metric": "close_to_open_pct",
+      "date": "2025-03-28",
+      "label": "JPXSelf",
+      "relative_pct": 0.0,
+      "target_close": 1580.0,
+      "target_value_pct": -2.0459,
+      "target_volume_ratio_5d": 1.2552
+    }
+  ],
+  "date": "2025-03-28",
+  "derived_at": "2026-07-05T10:05:00+09:00",
+  "provider": "jquants",
+  "quality": {
+    "benchmark_count": 1,
+    "comparable_count": 1,
+    "has_relative_signal": true
+  },
+  "schema_version": "jquants_relative_comparison_v1",
+  "source_normalized_path": "/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-24/TARGET-SAMPLE-8697/daily_quotes_86970_20250324_raw.json,/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-25/TARGET-SAMPLE-8697/daily_quotes_86970_20250325_raw.json,/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-26/TARGET-SAMPLE-8697/daily_quotes_86970_20250326_raw.json,/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-27/TARGET-SAMPLE-8697/daily_quotes_86970_20250327_raw.json,/home/unix/Github/investment-support-agent/runs/2025-03-28/TARGET-SAMPLE-8697/research/raw/jquants/2025-03-28/TARGET-SAMPLE-8697/daily_quotes_86970_20250328_raw.json",
+  "target_id": "TARGET-SAMPLE-8697",
+  "target_metrics": {
+    "change_pct": -4.647,
+    "close": 1580.0,
+    "close_position_pct": 32.3077,
+    "close_to_open_pct": -2.0459,
+    "close_vs_ma_20_pct": null,
+    "close_vs_ma_5_pct": -3.4702,
+    "code": "86970",
+    "date": "2025-03-28",
+    "high": 1624.0,
+    "intraday_range_pct": 4.0298,
+    "low": 1559.0,
+    "ma_20": null,
+    "ma_5": 1636.8,
+    "open": 1613.0,
+    "previous_close": 1657.0,
+    "volume": 4604900.0,
+    "volume_ma_5": 3668540.0,
+    "volume_ratio_5d": 1.2552
+  }
+}

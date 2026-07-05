@@ -7,7 +7,7 @@ Flow Builder は、Agent Team 風の実行スクリプトを UI から選択、�
 最初のサンプルは次のファイルです。
 
 ```text
-config/flow_scripts/semiconductor_sector_morning.json
+system/config/flow_scripts/semiconductor_sector_morning.json
 ```
 
 このスクリプトは、半導体セクターを対象に次の順番で Agent を動かす想定です。
@@ -115,7 +115,7 @@ UI では次を操作できます。
 自動サーチが参照するスクリプトは次のファイルで管理します。
 
 ```text
-config/auto_search.example.json
+system/config/auto_search.example.json
 ```
 
 まだ scheduler は実装していません。このファイルは、Windows Task Scheduler や cron からどの Flow Script を呼ぶかを決めるための参照設定です。
